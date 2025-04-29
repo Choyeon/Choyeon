@@ -1,4 +1,4 @@
-### ChoyeonChern
+### Choyeon
 <center>
 
 [![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=ChoyeonChern&theme=radical)](https://github.com/Choyeon/Choyeon)
