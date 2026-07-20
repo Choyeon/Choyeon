@@ -11,7 +11,7 @@
 
 </div>
 
-## <picture><img src="https://github.com/7kms/assets/blob/main/svg/undraw/undraw_dev_productivity_re_fylf.svg" width="36" height="36"></picture> About Me
+## <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" width="28" height="28" alt="Python"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/coderhouse/coderhouse-original.svg" width="28" height="28" alt="Dev"> About Me
 
 ```python
 class Choyeon:
@@ -34,7 +34,7 @@ class Choyeon:
 
 ---
 
-## <img src="https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a9a3l8o5d8u3z7t&rid=giphy.gif" width="25"> Tech Stack
+## <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/terminal/terminal-original.svg" width="25" height="25" alt="Terminal"> Tech Stack
 
 <div align="center">
   <img src="https://skillicons.dev/icons?i=python,javascript,typescript,vue,html,css,fastapi,electron,git,linux,nginx,mysql,redis&perline=7&theme=github&gap=6" alt="Tech Stack" />
@@ -42,7 +42,7 @@ class Choyeon:
 
 ---
 
-## <picture><img src="https://github.com/7kms/assets/blob/main/svg/undraw/undraw_analytics_re_9oge.svg" width="32" height="32"></picture> GitHub Analytics
+## <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg" width="28" height="28" alt="GitHub"> GitHub Analytics
 
 <p>
   <img height="170" src="https://github-readme-stats.vercel.app/api?username=Choyeon&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&ring_color=58a6ff&include_all_commits=true&count_private=true" />
@@ -56,7 +56,7 @@ class Choyeon:
 
 ---
 
-## <picture><img src="https://github.com/7kms/assets/blob/main/svg/undraw/undraw_code_review_re_dmee.svg" width="32" height="32"></picture> Contribution Activity
+## <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/codepen/codepen-original.svg" width="28" height="28" alt="Code"> Contribution Activity
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Choyeon/Choyeon/blob/output/github-snake-dark.svg" />
@@ -70,7 +70,7 @@ class Choyeon:
 
 ---
 
-## <picture><img src="https://github.com/7kms/assets/blob/main/svg/undraw/undraw_pin_ub_s15.svg" width="32" height="32"></picture> Featured Projects
+## <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/repo/repo-original.svg" width="28" height="28" alt="Repo"> Featured Projects
 
 <p>
   <a href="https://github.com/Choyeon/viewing_system_configuration">
@@ -85,7 +85,7 @@ class Choyeon:
 
 <div align="center">
 
-  ## <img src="https://github.com/7kms/assets/blob/main/svg/undraw/undraw_social.svg" width="24" height="24"> Connect with me
+  ## <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linkedin/linkedin-original.svg" width="24" height="24" alt="Connect"> Connect with me
 
   <a href="https://choyeon.cc" target="_blank">
     <img src="https://img.shields.io/badge/Blog-choyeon.cc-58a6ff?style=for-the-badge&logo=About.me&logoColor=white" alt="Blog" />
