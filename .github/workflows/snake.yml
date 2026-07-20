@@ -1,4 +1,4 @@
-name: Generate All SVG Assets
+name: Generate Snake & Activity SVGs
 
 on:
   schedule:
@@ -20,39 +20,62 @@ jobs:
             dist/github-snake.svg
             dist/github-snake-dark.svg?palette=github-dark
 
-      - name: Generate Stats SVGs
+      - name: Generate Stats SVGs via Puppeteer
         env:
           USER: ${{ github.repository_owner }}
         run: |
           mkdir -p dist
-          # github-readme-stats returns SVG directly when Accept header is set
-          download_svg() {
-            local url="$1"
-            local output="$2"
-            echo "Downloading $output ..."
-            curl -sL -H "Accept: image/svg+xml" "$url" -o "$output"
-            # Verify it's actually SVG
-            if head -c 5 "$output" | grep -q "<svg"; then
-              echo "✅ $output is valid SVG"
-            else
-              echo "❌ $output is not SVG, retrying without header..."
-              curl -sL "$url" -o "$output"
-            fi
-          }
+
+          # Install puppeteer for SVG rendering
+          npm init -y
+          npm install puppeteer
+
+          # Generate SVGs by rendering pages and extracting SVGs
+          node -e "
+          const puppeteer = require('puppeteer');
+          const urls = [
+            { url: 'https://github-readme-stats.vercel.app/api?username=$USER&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&ring_color=58a6ff&include_all_commits=true&count_private=true', out: 'dist/github-stats.svg' },
+            { url: 'https://github-readme-stats.vercel.app/api/top-langs/?username=$USER&layout=donut-vertical&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=10&exclude_repo=fastapi,Rosetta', out: 'dist/top-langs.svg' },
+            { url: 'https://github-readme-streak-stats.herokuapp.com?user=$USER&theme=tokyonight&hide_border=true&background=0d1117&stroke=58a6ff&ring=58a6ff&fire=ff6b6b&currStreakLabel=58a6ff&sideLabels=c9d1d9&currStreakNum=ffffff&sideNums=c9d1d9&dates=555555', out: 'dist/streak-stats.svg' },
+            { url: 'https://github-profile-trophy.vercel.app/?username=$USER&theme=onestar&no-bg=true&no-frame=true&column=4&margin-w=8', out: 'dist/trophy.svg' },
+            { url: 'https://github-readme-activity-graph.vercel.app/graph?username=$USER&bg_color=0d1117&color=58a6ff&line=58a6ff&point=ffffff&area=true&hide_border=true&radius=8&height=300', out: 'dist/activity-graph.svg' },
+            { url: 'https://github-readme-stats.vercel.app/api/pin/?username=$USER&repo=Rosetta&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e', out: 'dist/pin-rosetta.svg' },
+            { url: 'https://github-readme-stats.vercel.app/api/pin/?username=$USER&repo=choyeon-todo&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e', out: 'dist/pin-choyeon-todo.svg' },
+            { url: 'https://github-readme-stats.vercel.app/api/pin/?username=$USER&repo=choyeon-note&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e', out: 'dist/pin-choyeon-note.svg' },
+            { url: 'https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=$USER&fontSize=42&fontColor=ffffff&animation=twinkling&fontAlignY=32&desc=Full-Stack%20Developer%20%7C%20Open%20Source%20Enthusiast&descSize=18&descAlignY=52', out: 'dist/header.svg' },
+            { url: 'https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=24&pause=1000&color=58A6FF&center=true&vCenter=true&random=false&width=600&lines=Hello+World+%F0%9F%91%8B;I%27m+$USER+%E9%9B%A8%E8%BF%87%E5%88%9D%E6%99%B4;Python+Developer+%7C+Vue.js+%7C+Electron;Building+things+that+matter+%F0%9F%9A%80&separator=%3B', out: 'dist/typing.svg' },
+          ];
           
-          download_svg "https://github-readme-stats.vercel.app/api?username=$USER&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&ring_color=58a6ff&include_all_commits=true&count_private=true" "dist/github-stats.svg"
-          download_svg "https://github-readme-stats.vercel.app/api/top-langs/?username=$USER&layout=donut-vertical&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=10&exclude_repo=fastapi,Rosetta" "dist/top-langs.svg"
-          download_svg "https://github-readme-streak-stats.herokuapp.com?user=$USER&theme=tokyonight&hide_border=true&background=0d1117&stroke=58a6ff&ring=58a6ff&fire=ff6b6b&currStreakLabel=58a6ff&sideLabels=c9d1d9&currStreakNum=ffffff&sideNums=c9d1d9&dates=555555" "dist/streak-stats.svg"
-          download_svg "https://github-profile-trophy.vercel.app/?username=$USER&theme=onestar&no-bg=true&no-frame=true&column=4&margin-w=8" "dist/trophy.svg"
-          download_svg "https://github-readme-activity-graph.vercel.app/graph?username=$USER&bg_color=0d1117&color=58a6ff&line=58a6ff&point=ffffff&area=true&hide_border=true&radius=8&height=300" "dist/activity-graph.svg"
-          download_svg "https://github-readme-stats.vercel.app/api/pin/?username=$USER&repo=Rosetta&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" "dist/pin-rosetta.svg"
-          download_svg "https://github-readme-stats.vercel.app/api/pin/?username=$USER&repo=choyeon-todo&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" "dist/pin-choyeon-todo.svg"
-          download_svg "https://github-readme-stats.vercel.app/api/pin/?username=$USER&repo=choyeon-note&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" "dist/pin-choyeon-note.svg"
-          download_svg "https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=$USER&fontSize=42&fontColor=ffffff&animation=twinkling&fontAlignY=32&desc=Full-Stack%20Developer%20%7C%20Open%20Source%20Enthusiast&descSize=18&descAlignY=52" "dist/header.svg"
-          download_svg "https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=24&pause=1000&color=58A6FF&center=true&vCenter=true&random=false&width=600&lines=Hello+World+%F0%9F%91%8B;I'm+$USER+%E9%9B%A8%E8%BF%87%E5%88%9D%E6%99%B4;Python+Developer+%7C+Vue.js+%7C+Electron;Building+things+that+matter+%F0%9F%9A%80&separator=%3B" "dist/typing.svg"
+          (async () => {
+            const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+            for (const item of urls) {
+              try {
+                const page = await browser.newPage();
+                await page.goto(item.url, { waitUntil: 'networkidle0', timeout: 30000 });
+                // Try to get SVG content from the page
+                const svgContent = await page.evaluate(() => {
+                  const svg = document.querySelector('svg');
+                  return svg ? svg.outerHTML : null;
+                });
+                if (svgContent) {
+                  require('fs').writeFileSync(item.out, svgContent);
+                  console.log('OK: ' + item.out);
+                } else {
+                  // Fallback: screenshot as PNG
+                  await page.screenshot({ path: item.out.replace('.svg', '.png'), fullPage: true });
+                  console.log('PNG fallback: ' + item.out.replace('.svg', '.png'));
+                }
+                await page.close();
+              } catch (e) {
+                console.error('FAIL: ' + item.out + ' - ' + e.message);
+              }
+            }
+            await browser.close();
+          })();
+          " 2>&1
 
       - name: List generated files
-        run: ls -la dist/ && file dist/*.svg
+        run: ls -la dist/
 
       - name: Push all SVGs to output branch
         uses: crazy-max/ghaction-github-pages@v4
