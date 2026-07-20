@@ -28,11 +28,16 @@ jobs:
           plugin_isocalendar_duration: half-year
           config_timezone: Asia/Shanghai
 
-      - name: Push metrics SVG to output branch
-        uses: crazy-max/ghaction-github-pages@v4
-        with:
-          target_branch: output
-          build_dir: .
-          keep_history: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push to output branch
+        run: |
+          git clone --depth 1 --branch output https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} output-branch 2>/dev/null || true
+          cd output-branch 2>/dev/null || mkdir output-branch && cd output-branch
+          git init
+          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          cp ../github-metrics.svg .
+          git add github-metrics.svg
+          git commit -m "Update metrics SVG" || echo "No changes"
+          git branch -M output
+          git push origin output --force
