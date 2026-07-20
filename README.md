@@ -4,14 +4,13 @@
 
 <div align="center">
 
-  <!-- Typing SVG -->
   <a href="https://github.com/Choyeon">
     <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=24&pause=1000&color=58A6FF&center=true&vCenter=true&random=false&width=600&lines=Hello+World+%F0%9F%91%8B;I'm+Choyeon+%E9%9B%A8%E8%BF%87%E5%88%9D%E6%99%B4;Python+Developer+%7C+Vue.js+%7C+Electron;Building+things+that+matter+%F0%9F%9A%80&separator=%3B" alt="Typing SVG" />
   </a>
 
 </div>
 
-## <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" width="28" height="28" alt="Python"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/coderhouse/coderhouse-original.svg" width="28" height="28" alt="Dev"> About Me
+## <img src="https://raw.githubusercontent.com/Choyeon/Choyeon/main/assets/python-original.svg" width="28" height="28"> About Me
 
 ```python
 class Choyeon:
@@ -34,15 +33,25 @@ class Choyeon:
 
 ---
 
-## <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/terminal/terminal-original.svg" width="25" height="25" alt="Terminal"> Tech Stack
+## 💻 Tech Stack
 
-<div align="center">
-  <img src="https://skillicons.dev/icons?i=python,javascript,typescript,vue,html,css,fastapi,electron,git,linux,nginx,mysql,redis&perline=7&theme=github&gap=6" alt="Tech Stack" />
-</div>
+<p>
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/Vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white" />
+  <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
+  <img src="https://img.shields.io/badge/Electron-47848F?style=for-the-badge&logo=electron&logoColor=white" />
+  <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" />
+  <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" />
+  <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" />
+  <img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white" />
+  <img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white" />
+</p>
 
 ---
 
-## <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg" width="28" height="28" alt="GitHub"> GitHub Analytics
+## 📊 GitHub Analytics
 
 <p>
   <img height="170" src="https://github-readme-stats.vercel.app/api?username=Choyeon&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&ring_color=58a6ff&include_all_commits=true&count_private=true" />
@@ -56,7 +65,7 @@ class Choyeon:
 
 ---
 
-## <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/codepen/codepen-original.svg" width="28" height="28" alt="Code"> Contribution Activity
+## 🐍 Contribution Activity
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Choyeon/Choyeon/blob/output/github-snake-dark.svg" />
@@ -70,7 +79,7 @@ class Choyeon:
 
 ---
 
-## <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/repo/repo-original.svg" width="28" height="28" alt="Repo"> Featured Projects
+## 📌 Featured Projects
 
 <p>
   <a href="https://github.com/Choyeon/viewing_system_configuration">
@@ -85,7 +94,7 @@ class Choyeon:
 
 <div align="center">
 
-  ## <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linkedin/linkedin-original.svg" width="24" height="24" alt="Connect"> Connect with me
+  ## 🔗 Connect with me
 
   <a href="https://choyeon.cc" target="_blank">
     <img src="https://img.shields.io/badge/Blog-choyeon.cc-58a6ff?style=for-the-badge&logo=About.me&logoColor=white" alt="Blog" />
