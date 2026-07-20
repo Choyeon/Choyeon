@@ -34,24 +34,44 @@ jobs:
           cd /tmp/grs
           npm install
 
-          # Generate stats cards using the local API
-          # Stats card
-          node src/index.js "?username=$USER&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&ring_color=58a6ff&include_all_commits=true&count_private=true" > $GITHUB_WORKSPACE/dist/github-stats.svg 2>/dev/null
-          # Top langs
-          node src/index.js "?username=$USER&layout=donut-vertical&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=10&exclude_repo=fastapi,Rosetta" > $GITHUB_WORKSPACE/dist/top-langs.svg 2>/dev/null
-          # Pin cards
-          node src/index.js "?username=$USER&repo=Rosetta&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" > $GITHUB_WORKSPACE/dist/pin-rosetta.svg 2>/dev/null
-          node src/index.js "?username=$USER&repo=choyeon-todo&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" > $GITHUB_WORKSPACE/dist/pin-choyeon-todo.svg 2>/dev/null
-          node src/index.js "?username=$USER&repo=choyeon-note&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" > $GITHUB_WORKSPACE/dist/pin-choyeon-note.svg 2>/dev/null
+          # The Vercel handler exports a handler(req, res) function
+          # We need to simulate a request with query parameters
+          # Use a helper script that calls the handler directly
+          cat > /tmp/gen.js << 'SCRIPT'
+          const { handler } = require('/tmp/grs/api/index.js');
+          const fs = require('fs');
+          const http = require('http');
 
-          echo "--- Checking generated files ---"
-          for f in github-stats.svg top-langs.svg pin-rosetta.svg pin-choyeon-todo.svg pin-choyeon-note.svg; do
-            if head -c 5 "$GITHUB_WORKSPACE/dist/$f" | grep -q "<svg"; then
-              echo "✅ $f"
-            else
-              echo "❌ $f (not SVG)"
-            fi
-          done
+          async function gen(queryStr, outFile) {
+            return new Promise((resolve) => {
+              const req = http.IncomingMessage({});
+              const res = new http.ServerResponse(req);
+              let body = '';
+              res.on('data', (c) => body += c);
+              res.end = () => {
+                fs.writeFileSync(outFile, body);
+                const ok = body.startsWith('<svg');
+                console.log((ok ? '✅' : '❌') + ' ' + outFile);
+                resolve();
+              };
+              res.setHeader = () => {};
+              req.url = '/?' + queryStr;
+              req.query = new URLSearchParams(queryStr);
+              handler(req, res);
+            });
+          }
+
+          (async () => {
+            const u = process.env.USER;
+            await gen('username='+u+'&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&ring_color=58a6ff&include_all_commits=true&count_private=true', process.env.OUTDIR+'/github-stats.svg');
+            await gen('username='+u+'&layout=donut-vertical&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=10&exclude_repo=fastapi,Rosetta', process.env.OUTDIR+'/top-langs.svg');
+            await gen('username='+u+'&repo=Rosetta&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e', process.env.OUTDIR+'/pin-rosetta.svg');
+            await gen('username='+u+'&repo=choyeon-todo&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e', process.env.OUTDIR+'/pin-choyeon-todo.svg');
+            await gen('username='+u+'&repo=choyeon-note&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e', process.env.OUTDIR+'/pin-choyeon-note.svg');
+          })();
+          SCRIPT
+
+          OUTDIR=$GITHUB_WORKSPACE/dist USER=$USER node /tmp/gen.js
 
       - name: Download other SVGs (streak, activity, header, typing)
         env:
