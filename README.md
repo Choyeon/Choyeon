@@ -1,16 +1,12 @@
-<h1 align="center">
-  <a href="https://github.com/Choyeon">
-    <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=Choyeon&fontSize=42&fontColor=ffffff&animation=twinkling&fontAlignY=32&desc=Full-Stack%20Developer%20%7C%20Open%20Source%20Enthusiast&descSize=18&descAlignY=52" />
-  </a>
-</h1>
+![header](https://github.com/Choyeon/Choyeon/blob/output/header.svg)
 
 <div align="center">
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=24&pause=1000&color=58A6FF&center=true&vCenter=true&random=false&width=600&lines=Hello+World+%F0%9F%91%8B;I'm+Choyeon+%E9%9B%A8%E8%BF%87%E5%88%9D%E6%99%B4;Python+Developer+%7C+Vue.js+%7C+Electron;Building+things+that+matter+%F0%9F%9A%80&separator=%3B)](https://github.com/Choyeon)
+![Typing SVG](https://github.com/Choyeon/Choyeon/blob/output/typing.svg)
 
 </div>
 
-## ![Python](https://raw.githubusercontent.com/Choyeon/Choyeon/main/assets/python-original.svg) About Me
+## 🧑‍💻 About Me
 
 ```python
 class Choyeon:
@@ -51,11 +47,11 @@ class Choyeon:
 
 ## 📊 GitHub Analytics
 
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=Choyeon&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&ring_color=58a6ff&include_all_commits=true&count_private=true)
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Choyeon&layout=donut-vertical&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=10&exclude_repo=fastapi,Rosetta)
+![GitHub Stats](https://github.com/Choyeon/Choyeon/blob/output/github-stats.svg)
+![Top Languages](https://github.com/Choyeon/Choyeon/blob/output/top-langs.svg)
 
-![Streak Stats](https://github-readme-streak-stats.herokuapp.com?user=Choyeon&theme=tokyonight&hide_border=true&background=0d1117&stroke=58a6ff&ring=58a6ff&fire=ff6b6b&currStreakLabel=58a6ff&sideLabels=c9d1d9&currStreakNum=ffffff&sideNums=c9d1d9&dates=555555)
-![Trophy](https://github-profile-trophy.vercel.app/?username=Choyeon&theme=onestar&no-bg=true&no-frame=true&column=4&margin-w=8)
+![Streak Stats](https://github.com/Choyeon/Choyeon/blob/output/streak-stats.svg)
+![Trophy](https://github.com/Choyeon/Choyeon/blob/output/trophy.svg)
 
 ---
 
@@ -69,20 +65,20 @@ class Choyeon:
 
 <br/>
 
-![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=Choyeon&bg_color=0d1117&color=58a6ff&line=58a6ff&point=ffffff&area=true&hide_border=true&radius=8&height=300)
+![Activity Graph](https://github.com/Choyeon/Choyeon/blob/output/activity-graph.svg)
 
 ---
 
 ## 📌 Featured Projects
 
-[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=Choyeon&repo=viewing_system_configuration&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e)](https://github.com/Choyeon/viewing_system_configuration)
-[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=Choyeon&repo=Rosetta&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e)](https://github.com/Choyeon/Rosetta)
+[![viewing_system_configuration](https://github.com/Choyeon/Choyeon/blob/output/pin-viewing.svg)](https://github.com/Choyeon/viewing_system_configuration)
+[![Rosetta](https://github.com/Choyeon/Choyeon/blob/output/pin-rosetta.svg)](https://github.com/Choyeon/Rosetta)
 
 ---
 
-<h3 align="center">🔗 Connect with me</h3>
-
 <div align="center">
+
+### 🔗 Connect with me
 
 [![Blog](https://img.shields.io/badge/Blog-choyeon.cc-58a6ff?style=for-the-badge&logo=About.me&logoColor=white)](https://choyeon.cc)
 [![GitHub](https://img.shields.io/badge/GitHub-Choyeon-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Choyeon)
@@ -90,13 +86,5 @@ class Choyeon:
 <br/><br/>
 
 ![Profile Views](https://komarev.com/ghpvc/?username=Choyeon&color=58a6ff&style=for-the-badge&label=PROFILE+VIEWS)
-
-</div>
-
----
-
-<div align="center">
-
-![GitHub Metrics](https://metrics.lecoq.io/Choyeon?template=classic&isocalendar=1&languages=1&languages.indepth=true&languages.details=bytes-size%2Cpercentage&activity=1&activity.limit=5&activity.days=14&activity.filter=all&config.timezone=Asia%2FShanghai)
 
 </div>
