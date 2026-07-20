@@ -30,10 +30,16 @@ jobs:
 
       - name: Push to output branch
         run: |
-          git clone --depth 1 --branch output https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} output-branch 2>/dev/null || true
-          cd output-branch 2>/dev/null || mkdir output-branch && cd output-branch
-          git init
-          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git clone --depth 1 --branch output https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} output-branch || true
+          if [ ! -d "output-branch/.git" ]; then
+            mkdir -p output-branch
+            cd output-branch
+            git init
+            git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          else
+            cd output-branch
+            git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           cp ../github-metrics.svg .
