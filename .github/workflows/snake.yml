@@ -1,8 +1,8 @@
-name: Generate Snake & Activity SVGs
+name: Generate All Profile SVGs
 
 on:
   schedule:
-    - cron: "0 0 * * *"  # Runs daily at midnight UTC
+    - cron: "0 0 * * *"
   workflow_dispatch:
 
 permissions:
@@ -12,6 +12,8 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - name: Generate Snake SVG
         uses: Platane/snk/svg-only@v3
         with:
@@ -20,61 +22,52 @@ jobs:
             dist/github-snake.svg
             dist/github-snake-dark.svg?palette=github-dark
 
-      - name: Generate Stats SVGs via Puppeteer
+      - name: Clone and run github-readme-stats locally
+        env:
+          USER: ${{ github.repository_owner }}
+          TOKEN: ${{ secrets.METRICS_TOKEN }}
+        run: |
+          mkdir -p dist
+
+          # Clone github-readme-stats (from our fork)
+          git clone --depth 1 https://github.com/Choyeon/github-readme-stats.git /tmp/grs
+          cd /tmp/grs
+          npm install
+
+          # Generate stats cards using the local API
+          # Stats card
+          node src/index.js "?username=$USER&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&ring_color=58a6ff&include_all_commits=true&count_private=true" > $GITHUB_WORKSPACE/dist/github-stats.svg 2>/dev/null
+          # Top langs
+          node src/index.js "?username=$USER&layout=donut-vertical&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=10&exclude_repo=fastapi,Rosetta" > $GITHUB_WORKSPACE/dist/top-langs.svg 2>/dev/null
+          # Pin cards
+          node src/index.js "?username=$USER&repo=Rosetta&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" > $GITHUB_WORKSPACE/dist/pin-rosetta.svg 2>/dev/null
+          node src/index.js "?username=$USER&repo=choyeon-todo&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" > $GITHUB_WORKSPACE/dist/pin-choyeon-todo.svg 2>/dev/null
+          node src/index.js "?username=$USER&repo=choyeon-note&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" > $GITHUB_WORKSPACE/dist/pin-choyeon-note.svg 2>/dev/null
+
+          echo "--- Checking generated files ---"
+          for f in github-stats.svg top-langs.svg pin-rosetta.svg pin-choyeon-todo.svg pin-choyeon-note.svg; do
+            if head -c 5 "$GITHUB_WORKSPACE/dist/$f" | grep -q "<svg"; then
+              echo "✅ $f"
+            else
+              echo "❌ $f (not SVG)"
+            fi
+          done
+
+      - name: Download other SVGs (streak, activity, header, typing)
         env:
           USER: ${{ github.repository_owner }}
         run: |
           mkdir -p dist
+          # Streak stats
+          curl -sL "https://github-readme-streak-stats.herokuapp.com?user=$USER&theme=tokyonight&hide_border=true&background=0d1117&stroke=58a6ff&ring=58a6ff&fire=ff6b6b&currStreakLabel=58a6ff&sideLabels=c9d1d9&currStreakNum=ffffff&sideNums=c9d1d9&dates=555555" -o dist/streak-stats.svg
+          # Activity graph
+          curl -sL "https://github-readme-activity-graph.vercel.app/graph?username=$USER&bg_color=0d1117&color=58a6ff&line=58a6ff&point=ffffff&area=true&hide_border=true&radius=8&height=300" -o dist/activity-graph.svg
+          # Header
+          curl -sL "https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=$USER&fontSize=42&fontColor=ffffff&animation=twinkling&fontAlignY=32&desc=Full-Stack%20Developer%20%7C%20Open%20Source%20Enthusiast&descSize=18&descAlignY=52" -o dist/header.svg
+          # Typing
+          curl -sL "https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=24&pause=1000&color=58A6FF&center=true&vCenter=true&random=false&width=600&lines=Hello+World+%F0%9F%91%8B;I%27m+$USER+%E9%9B%A8%E8%BF%87%E5%88%9D%E6%99%B4;Python+Developer+%7C+Vue.js+%7C+Electron;Building+things+that+matter+%F0%9F%9A%80&separator=%3B" -o dist/typing.svg
 
-          # Install puppeteer for SVG rendering
-          npm init -y
-          npm install puppeteer
-
-          # Generate SVGs by rendering pages and extracting SVGs
-          node -e "
-          const puppeteer = require('puppeteer');
-          const urls = [
-            { url: 'https://github-readme-stats.vercel.app/api?username=$USER&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&ring_color=58a6ff&include_all_commits=true&count_private=true', out: 'dist/github-stats.svg' },
-            { url: 'https://github-readme-stats.vercel.app/api/top-langs/?username=$USER&layout=donut-vertical&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=10&exclude_repo=fastapi,Rosetta', out: 'dist/top-langs.svg' },
-            { url: 'https://github-readme-streak-stats.herokuapp.com?user=$USER&theme=tokyonight&hide_border=true&background=0d1117&stroke=58a6ff&ring=58a6ff&fire=ff6b6b&currStreakLabel=58a6ff&sideLabels=c9d1d9&currStreakNum=ffffff&sideNums=c9d1d9&dates=555555', out: 'dist/streak-stats.svg' },
-            { url: 'https://github-profile-trophy.vercel.app/?username=$USER&theme=onestar&no-bg=true&no-frame=true&column=4&margin-w=8', out: 'dist/trophy.svg' },
-            { url: 'https://github-readme-activity-graph.vercel.app/graph?username=$USER&bg_color=0d1117&color=58a6ff&line=58a6ff&point=ffffff&area=true&hide_border=true&radius=8&height=300', out: 'dist/activity-graph.svg' },
-            { url: 'https://github-readme-stats.vercel.app/api/pin/?username=$USER&repo=Rosetta&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e', out: 'dist/pin-rosetta.svg' },
-            { url: 'https://github-readme-stats.vercel.app/api/pin/?username=$USER&repo=choyeon-todo&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e', out: 'dist/pin-choyeon-todo.svg' },
-            { url: 'https://github-readme-stats.vercel.app/api/pin/?username=$USER&repo=choyeon-note&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e', out: 'dist/pin-choyeon-note.svg' },
-            { url: 'https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=$USER&fontSize=42&fontColor=ffffff&animation=twinkling&fontAlignY=32&desc=Full-Stack%20Developer%20%7C%20Open%20Source%20Enthusiast&descSize=18&descAlignY=52', out: 'dist/header.svg' },
-            { url: 'https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=24&pause=1000&color=58A6FF&center=true&vCenter=true&random=false&width=600&lines=Hello+World+%F0%9F%91%8B;I%27m+$USER+%E9%9B%A8%E8%BF%87%E5%88%9D%E6%99%B4;Python+Developer+%7C+Vue.js+%7C+Electron;Building+things+that+matter+%F0%9F%9A%80&separator=%3B', out: 'dist/typing.svg' },
-          ];
-          
-          (async () => {
-            const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
-            for (const item of urls) {
-              try {
-                const page = await browser.newPage();
-                await page.goto(item.url, { waitUntil: 'networkidle0', timeout: 30000 });
-                // Try to get SVG content from the page
-                const svgContent = await page.evaluate(() => {
-                  const svg = document.querySelector('svg');
-                  return svg ? svg.outerHTML : null;
-                });
-                if (svgContent) {
-                  require('fs').writeFileSync(item.out, svgContent);
-                  console.log('OK: ' + item.out);
-                } else {
-                  // Fallback: screenshot as PNG
-                  await page.screenshot({ path: item.out.replace('.svg', '.png'), fullPage: true });
-                  console.log('PNG fallback: ' + item.out.replace('.svg', '.png'));
-                }
-                await page.close();
-              } catch (e) {
-                console.error('FAIL: ' + item.out + ' - ' + e.message);
-              }
-            }
-            await browser.close();
-          })();
-          " 2>&1
-
-      - name: List generated files
+      - name: List all generated files
         run: ls -la dist/
 
       - name: Push all SVGs to output branch

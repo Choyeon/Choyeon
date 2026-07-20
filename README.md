@@ -47,11 +47,10 @@ class Choyeon:
 
 ## 📊 GitHub Analytics
 
-![GitHub Stats](https://github.com/Choyeon/Choyeon/blob/output/github-stats.png)
-![Top Languages](https://github.com/Choyeon/Choyeon/blob/output/top-langs.png)
+![GitHub Stats](https://github.com/Choyeon/Choyeon/blob/output/github-stats.svg)
+![Top Languages](https://github.com/Choyeon/Choyeon/blob/output/top-langs.svg)
 
 ![Streak Stats](https://github.com/Choyeon/Choyeon/blob/output/streak-stats.svg)
-![Trophy](https://github.com/Choyeon/Choyeon/blob/output/trophy.png)
 
 ---
 
@@ -71,9 +70,9 @@ class Choyeon:
 
 ## 📌 Featured Projects
 
-[![Rosetta](https://github.com/Choyeon/Choyeon/blob/output/pin-rosetta.png)](https://github.com/Choyeon/Rosetta)
-[![choyeon-todo](https://github.com/Choyeon/Choyeon/blob/output/pin-choyeon-todo.png)](https://github.com/Choyeon/choyeon-todo)
-[![choyeon-note](https://github.com/Choyeon/Choyeon/blob/output/pin-choyeon-note.png)](https://github.com/Choyeon/choyeon-note)
+[![Rosetta](https://github.com/Choyeon/Choyeon/blob/output/pin-rosetta.svg)](https://github.com/Choyeon/Rosetta)
+[![choyeon-todo](https://github.com/Choyeon/Choyeon/blob/output/pin-choyeon-todo.svg)](https://github.com/Choyeon/choyeon-todo)
+[![choyeon-note](https://github.com/Choyeon/Choyeon/blob/output/pin-choyeon-note.svg)](https://github.com/Choyeon/choyeon-note)
 
 ---
 
@@ -83,9 +82,5 @@ class Choyeon:
 
 [![Blog](https://img.shields.io/badge/Blog-choyeon.cc-58a6ff?style=for-the-badge&logo=About.me&logoColor=white)](https://choyeon.cc)
 [![GitHub](https://img.shields.io/badge/GitHub-Choyeon-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Choyeon)
-
-<br/><br/>
-
-![Profile Views](https://img.shields.io/badge/Profile_Views-18-58a6ff?style=for-the-badge)
 
 </div>
