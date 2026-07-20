@@ -105,7 +105,7 @@ class Choyeon:
 <div align="center">
 
   <p>
-    <img src="https://github.com/Choyeon/Choyeon/blob/output/github-metrics.svg" alt="GitHub Metrics" />
+    <img width="900" src="https://metrics.lecoq.io/Choyeon?template=classic&isocalendar=1&languages=1&languages.indepth=true&languages.details=bytes-size%2Cpercentage&activity=1&activity.limit=5&activity.days=14&activity.filter=all&config.timezone=Asia%2FShanghai" alt="GitHub Metrics" />
   </p>
 
 </div>
