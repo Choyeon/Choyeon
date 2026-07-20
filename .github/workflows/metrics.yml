@@ -27,3 +27,12 @@ jobs:
           plugin_isocalendar: yes
           plugin_isocalendar_duration: half-year
           config_timezone: Asia/Shanghai
+
+      - name: Push metrics SVG to output branch
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: output
+          build_dir: .
+          keep_history: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
