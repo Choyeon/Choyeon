@@ -30,6 +30,8 @@ jobs:
 
       - name: Push to output branch
         run: |
+          cp github-metrics.svg /tmp/github-metrics.svg
+          cd $GITHUB_WORKSPACE
           git clone --depth 1 --branch output https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} output-branch || true
           if [ ! -d "output-branch/.git" ]; then
             mkdir -p output-branch
@@ -42,7 +44,7 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          cp ../github-metrics.svg .
+          cp /tmp/github-metrics.svg .
           git add github-metrics.svg
           git commit -m "Update metrics SVG" || echo "No changes"
           git branch -M output
