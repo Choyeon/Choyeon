@@ -49,10 +49,14 @@ class Choyeon:
 
 ## 📊 GitHub Stats
 
-![GitHub Stats](https://github-readme-stats-liart-five-72.vercel.app/api?username=Choyeon&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&ring_color=58a6ff&include_all_commits=true&count_private=true)
-![Top Languages](https://github-readme-stats-liart-five-72.vercel.app/api/top-langs/?username=Choyeon&layout=donut-vertical&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=10&exclude_repo=fastapi,Rosetta)
+<table>
+  <tr>
+    <td><img height="170" src="https://github-readme-stats-liart-five-72.vercel.app/api?username=Choyeon&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&ring_color=58a6ff&include_all_commits=true&count_private=true" /></td>
+    <td><img height="170" src="https://github-readme-stats-liart-five-72.vercel.app/api/top-langs/?username=Choyeon&layout=donut-vertical&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=10&exclude_repo=fastapi,Rosetta" /></td>
+  </tr>
+</table>
 
-![Streak Stats](https://github-readme-streak-stats.herokuapp.com?user=Choyeon&theme=tokyonight&hide_border=true&background=0d1117&stroke=58a6ff&ring=58a6ff&fire=ff6b6b&currStreakLabel=58a6ff&sideLabels=c9d1d9&currStreakNum=ffffff&sideNums=c9d1d9&dates=555555)
+<img height="150" src="https://github-readme-streak-stats.herokuapp.com?user=Choyeon&theme=tokyonight&hide_border=true&background=0d1117&stroke=58a6ff&ring=58a6ff&fire=ff6b6b&currStreakLabel=58a6ff&sideLabels=c9d1d9&currStreakNum=ffffff&sideNums=c9d1d9&dates=555555" />
 
 ---
 
@@ -72,9 +76,13 @@ class Choyeon:
 
 ## 📌 Featured Projects
 
-[![Rosetta](https://github-readme-stats-liart-five-72.vercel.app/api/pin/?username=Choyeon&repo=Rosetta&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e)](https://github.com/Choyeon/Rosetta)
-[![choyeon-todo](https://github-readme-stats-liart-five-72.vercel.app/api/pin/?username=Choyeon&repo=choyeon-todo&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e)](https://github.com/Choyeon/choyeon-todo)
-[![choyeon-note](https://github-readme-stats-liart-five-72.vercel.app/api/pin/?username=Choyeon&repo=choyeon-note&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e)](https://github.com/Choyeon/choyeon-note)
+<table>
+  <tr>
+    <td><a href="https://github.com/Choyeon/Rosetta"><img src="https://github-readme-stats-liart-five-72.vercel.app/api/pin/?username=Choyeon&repo=Rosetta&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" /></a></td>
+    <td><a href="https://github.com/Choyeon/choyeon-todo"><img src="https://github-readme-stats-liart-five-72.vercel.app/api/pin/?username=Choyeon&repo=choyeon-todo&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" /></a></td>
+    <td><a href="https://github.com/Choyeon/choyeon-note"><img src="https://github-readme-stats-liart-five-72.vercel.app/api/pin/?username=Choyeon&repo=choyeon-note&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" /></a></td>
+  </tr>
+</table>
 
 ---
 
