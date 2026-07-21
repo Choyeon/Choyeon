@@ -51,20 +51,9 @@ class Choyeon:
 
 ## 📊 GitHub Stats
 
-<p>
-  <a href="https://github-readme-stats-liart-five-72.vercel.app/api?username=Choyeon&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&ring_color=58a6ff&include_all_commits=true&count_private=true">
-    <img height="170" src="https://github-readme-stats-liart-five-72.vercel.app/api?username=Choyeon&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&ring_color=58a6ff&include_all_commits=true&count_private=true" />
-  </a>
-  <a href="https://github-readme-stats-liart-five-72.vercel.app/api/top-langs/?username=Choyeon&layout=donut&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=10&exclude_repo=fastapi,Rosetta">
-    <img height="170" src="https://github-readme-stats-liart-five-72.vercel.app/api/top-langs/?username=Choyeon&layout=donut&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=10&exclude_repo=fastapi,Rosetta" />
-  </a>
-</p>
-
-<p>
-  <a href="https://github-readme-streak-stats.herokuapp.com?user=Choyeon&theme=tokyonight&hide_border=true&background=0d1117&stroke=58a6ff&ring=58a6ff&fire=ff6b6b&currStreakLabel=58a6ff&sideLabels=c9d1d9&currStreakNum=ffffff&sideNums=c9d1d9&dates=555555">
-    <img height="150" src="https://github-readme-streak-stats.herokuapp.com?user=Choyeon&theme=tokyonight&hide_border=true&background=0d1117&stroke=58a6ff&ring=58a6ff&fire=ff6b6b&currStreakLabel=58a6ff&sideLabels=c9d1d9&currStreakNum=ffffff&sideNums=c9d1d9&dates=555555" />
-  </a>
-</p>
+<img width="100%" src="https://github-readme-stats-liart-five-72.vercel.app/api?username=Choyeon&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&ring_color=58a6ff&include_all_commits=true&count_private=true" />
+<img width="100%" src="https://github-readme-stats-liart-five-72.vercel.app/api/top-langs/?username=Choyeon&layout=donut-vertical&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=10&exclude_repo=fastapi,Rosetta" />
+<img width="100%" src="https://github-readme-streak-stats.herokuapp.com?user=Choyeon&theme=tokyonight&hide_border=true&background=0d1117&stroke=58a6ff&ring=58a6ff&fire=ff6b6b&currStreakLabel=58a6ff&sideLabels=c9d1d9&currStreakNum=ffffff&sideNums=c9d1d9&dates=555555" />
 
 ---
 
