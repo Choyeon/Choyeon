@@ -1,8 +1,10 @@
-![header](https://github.com/Choyeon/Choyeon/blob/output/header.svg)
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=Choyeon&fontSize=42&fontColor=ffffff&animation=twinkling&fontAlignY=32&desc=Full-Stack%20Developer%20%7C%20Open%20Source%20Enthusiast&descSize=18&descAlignY=52" width="100%" />
+</p>
 
 <div align="center">
 
-![Typing SVG](https://github.com/Choyeon/Choyeon/blob/output/typing.svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=24&pause=1000&color=58A6FF&center=true&vCenter=true&random=false&width=600&lines=Hello+World+%F0%9F%91%8B;I'm+Choyeon+%E9%9B%A8%E8%BF%87%E5%88%9D%E6%99%B4;Python+Developer+%7C+Vue.js+%7C+Electron;Building+things+that+matter+%F0%9F%9A%80&separator=%3B)](https://github.com/Choyeon)
 
 </div>
 
@@ -45,12 +47,12 @@ class Choyeon:
 
 ---
 
-## 📊 GitHub Analytics
+## 📊 GitHub Stats
 
-![GitHub Stats](https://github.com/Choyeon/Choyeon/blob/output/github-stats.svg)
-![Top Languages](https://github.com/Choyeon/Choyeon/blob/output/top-langs.svg)
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=Choyeon&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&ring_color=58a6ff&include_all_commits=true&count_private=true)
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Choyeon&layout=donut-vertical&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=10&exclude_repo=fastapi,Rosetta)
 
-![Streak Stats](https://github.com/Choyeon/Choyeon/blob/output/streak-stats.svg)
+![Streak Stats](https://github-readme-streak-stats.herokuapp.com?user=Choyeon&theme=tokyonight&hide_border=true&background=0d1117&stroke=58a6ff&ring=58a6ff&fire=ff6b6b&currStreakLabel=58a6ff&sideLabels=c9d1d9&currStreakNum=ffffff&sideNums=c9d1d9&dates=555555)
 
 ---
 
@@ -64,15 +66,15 @@ class Choyeon:
 
 <br/>
 
-![Activity Graph](https://github.com/Choyeon/Choyeon/blob/output/activity-graph.svg)
+![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=Choyeon&bg_color=0d1117&color=58a6ff&line=58a6ff&point=ffffff&area=true&hide_border=true&radius=8&height=300)
 
 ---
 
 ## 📌 Featured Projects
 
-[![Rosetta](https://github.com/Choyeon/Choyeon/blob/output/pin-rosetta.svg)](https://github.com/Choyeon/Rosetta)
-[![choyeon-todo](https://github.com/Choyeon/Choyeon/blob/output/pin-choyeon-todo.svg)](https://github.com/Choyeon/choyeon-todo)
-[![choyeon-note](https://github.com/Choyeon/Choyeon/blob/output/pin-choyeon-note.svg)](https://github.com/Choyeon/choyeon-note)
+[![Rosetta](https://github-readme-stats.vercel.app/api/pin/?username=Choyeon&repo=Rosetta&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e)](https://github.com/Choyeon/Rosetta)
+[![choyeon-todo](https://github-readme-stats.vercel.app/api/pin/?username=Choyeon&repo=choyeon-todo&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e)](https://github.com/Choyeon/choyeon-todo)
+[![choyeon-note](https://github-readme-stats.vercel.app/api/pin/?username=Choyeon&repo=choyeon-note&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e)](https://github.com/Choyeon/choyeon-note)
 
 ---
 

@@ -1,4 +1,4 @@
-name: Generate All Profile SVGs
+name: Generate Snake SVG
 
 on:
   schedule:
@@ -12,8 +12,6 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
       - name: Generate Snake SVG
         uses: Platane/snk/svg-only@v3
         with:
@@ -22,59 +20,7 @@ jobs:
             dist/github-snake.svg
             dist/github-snake-dark.svg?palette=github-dark
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Run github-readme-stats locally & download SVGs
-        env:
-          USER: ${{ github.repository_owner }}
-        run: |
-          mkdir -p dist
-
-          # Clone and setup github-readme-stats
-          git clone --depth 1 https://github.com/Choyeon/github-readme-stats.git /tmp/grs
-          cd /tmp/grs
-          npm install
-
-          # Start vercel dev server in background
-          npx vercel dev --listen 3000 &
-          sleep 30
-
-          # Download all cards from local server
-          BASE="http://localhost:3000"
-          OUT="$GITHUB_WORKSPACE/dist"
-
-          curl -sL "$BASE/api?username=$USER&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&ring_color=58a6ff&include_all_commits=true&count_private=true" -o "$OUT/github-stats.svg"
-          curl -sL "$BASE/api/top-langs/?username=$USER&layout=donut-vertical&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=10&exclude_repo=fastapi,Rosetta" -o "$OUT/top-langs.svg"
-          curl -sL "$BASE/api/pin/?username=$USER&repo=Rosetta&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" -o "$OUT/pin-rosetta.svg"
-          curl -sL "$BASE/api/pin/?username=$USER&repo=choyeon-todo&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" -o "$OUT/pin-choyeon-todo.svg"
-          curl -sL "$BASE/api/pin/?username=$USER&repo=choyeon-note&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" -o "$OUT/pin-choyeon-note.svg"
-
-          # Verify
-          for f in github-stats.svg top-langs.svg pin-rosetta.svg pin-choyeon-todo.svg pin-choyeon-note.svg; do
-            if head -c 5 "$OUT/$f" | grep -q "<svg"; then
-              echo "✅ $f"
-            else
-              echo "❌ $f ($(head -c 100 "$OUT/$f"))"
-            fi
-          done
-
-      - name: Download other SVGs (streak, activity, header, typing)
-        env:
-          USER: ${{ github.repository_owner }}
-        run: |
-          mkdir -p dist
-          curl -sL "https://github-readme-streak-stats.herokuapp.com?user=$USER&theme=tokyonight&hide_border=true&background=0d1117&stroke=58a6ff&ring=58a6ff&fire=ff6b6b&currStreakLabel=58a6ff&sideLabels=c9d1d9&currStreakNum=ffffff&sideNums=c9d1d9&dates=555555" -o dist/streak-stats.svg
-          curl -sL "https://github-readme-activity-graph.vercel.app/graph?username=$USER&bg_color=0d1117&color=58a6ff&line=58a6ff&point=ffffff&area=true&hide_border=true&radius=8&height=300" -o dist/activity-graph.svg
-          curl -sL "https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=$USER&fontSize=42&fontColor=ffffff&animation=twinkling&fontAlignY=32&desc=Full-Stack%20Developer%20%7C%20Open%20Source%20Enthusiast&descSize=18&descAlignY=52" -o dist/header.svg
-          curl -sL "https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=24&pause=1000&color=58A6FF&center=true&vCenter=true&random=false&width=600&lines=Hello+World+%F0%9F%91%8B;I%27m+$USER+%E9%9B%A8%E8%BF%87%E5%88%9D%E6%99%B4;Python+Developer+%7C+Vue.js+%7C+Electron;Building+things+that+matter+%F0%9F%9A%80&separator=%3B" -o dist/typing.svg
-
-      - name: List all generated files
-        run: ls -la dist/
-
-      - name: Push all SVGs to output branch
+      - name: Push Snake SVGs to output branch
         uses: crazy-max/ghaction-github-pages@v4
         with:
           target_branch: output
