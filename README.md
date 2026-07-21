@@ -3,10 +3,12 @@
 </p>
 
 <div align="center">
-
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=24&pause=1000&color=58A6FF&center=true&vCenter=true&random=false&width=600&lines=Hello+World+%F0%9F%91%8B;I'm+Choyeon+%E9%9B%A8%E8%BF%87%E5%88%9D%E6%99%B4;Python+Developer+%7C+Vue.js+%7C+Electron;Building+things+that+matter+%F0%9F%9A%80&separator=%3B)](https://github.com/Choyeon)
-
+  <a href="https://github.com/Choyeon">
+    <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=24&pause=1000&color=58A6FF&center=true&vCenter=true&random=false&width=600&lines=Hello+World+%F0%9F%91%8B;I'm+Choyeon+%E9%9B%A8%E8%BF%87%E5%88%9D%E6%99%B4;Python+Developer+%7C+Vue.js+%7C+Electron;Building+things+that+matter+%F0%9F%9A%80&separator=%3B" />
+  </a>
 </div>
+
+<br clear="both" />
 
 ## 🧑‍💻 About Me
 
@@ -25,9 +27,9 @@ class Choyeon:
         return f"{self.name} | Building with code and creativity"
 ```
 
-- Currently building full-stack applications with **Vue.js** + **Electron**
-- Exploring **AI-powered development** tools and workflows
-- Blog: [choyeon.cc](https://choyeon.cc/) 🌐
+- 🔭 Currently building full-stack applications with **Vue.js** + **Electron**
+- 🌱 Exploring **AI-powered development** tools and workflows
+- 📝 Blog: [choyeon.cc](https://choyeon.cc/) 🌐
 
 ---
 
@@ -51,9 +53,11 @@ class Choyeon:
 
 ## 📊 GitHub Stats
 
-<img width="100%" src="https://github-readme-stats-liart-five-72.vercel.app/api?username=Choyeon&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&ring_color=58a6ff&include_all_commits=true&count_private=true" />
-<img width="100%" src="https://github-readme-stats-liart-five-72.vercel.app/api/top-langs/?username=Choyeon&layout=donut-vertical&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=10&exclude_repo=fastapi,Rosetta" />
-<img width="100%" src="https://github-readme-streak-stats.herokuapp.com?user=Choyeon&theme=tokyonight&hide_border=true&background=0d1117&stroke=58a6ff&ring=58a6ff&fire=ff6b6b&currStreakLabel=58a6ff&sideLabels=c9d1d9&currStreakNum=ffffff&sideNums=c9d1d9&dates=555555" />
+<img align="left" height="170" src="https://github-readme-stats-liart-five-72.vercel.app/api?username=Choyeon&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&ring_color=58a6ff&include_all_commits=true&count_private=true" />
+<img align="left" height="170" src="https://github-readme-stats-liart-five-72.vercel.app/api/top-langs/?username=Choyeon&layout=donut&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=10&exclude_repo=fastapi,Rosetta" />
+<br clear="both" />
+
+<img height="150" src="https://github-readme-streak-stats.herokuapp.com?user=Choyeon&theme=tokyonight&hide_border=true&background=0d1117&stroke=58a6ff&ring=58a6ff&fire=ff6b6b&currStreakLabel=58a6ff&sideLabels=c9d1d9&currStreakNum=ffffff&sideNums=c9d1d9&dates=555555" />
 
 ---
 
@@ -65,7 +69,7 @@ class Choyeon:
   <img alt="github contribution graph snake animation" src="https://github.com/Choyeon/Choyeon/blob/output/github-snake-dark.svg" />
 </picture>
 
-<br/>
+<br clear="both" />
 
 <img src="https://github-readme-activity-graph.vercel.app/graph?username=Choyeon&bg_color=0d1117&color=58a6ff&line=58a6ff&point=ffffff&area=true&hide_border=true&radius=8&height=300" width="100%" />
 
@@ -73,18 +77,16 @@ class Choyeon:
 
 ## 📌 Featured Projects
 
-<p>
-  <a href="https://github.com/Choyeon/Rosetta">
-    <img align="left" src="https://github-readme-stats-liart-five-72.vercel.app/api/pin/?username=Choyeon&repo=Rosetta&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" />
-  </a>
-  <a href="https://github.com/Choyeon/choyeon-todo">
-    <img align="left" src="https://github-readme-stats-liart-five-72.vercel.app/api/pin/?username=Choyeon&repo=choyeon-todo&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" />
-  </a>
-  <a href="https://github.com/Choyeon/choyeon-note">
-    <img align="left" src="https://github-readme-stats-liart-five-72.vercel.app/api/pin/?username=Choyeon&repo=choyeon-note&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" />
-  </a>
-  <br clear="both" />
-</p>
+<a href="https://github.com/Choyeon/Rosetta">
+  <img align="left" height="120" src="https://github-readme-stats-liart-five-72.vercel.app/api/pin/?username=Choyeon&repo=Rosetta&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" />
+</a>
+<a href="https://github.com/Choyeon/choyeon-todo">
+  <img align="left" height="120" src="https://github-readme-stats-liart-five-72.vercel.app/api/pin/?username=Choyeon&repo=choyeon-todo&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" />
+</a>
+<a href="https://github.com/Choyeon/choyeon-note">
+  <img align="left" height="120" src="https://github-readme-stats-liart-five-72.vercel.app/api/pin/?username=Choyeon&repo=choyeon-note&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" />
+</a>
+<br clear="both" />
 
 ---
 
