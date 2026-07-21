@@ -10,7 +10,7 @@
 
 <br clear="both" />
 
-## <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" /> About Me
+## <img src="https://raw.githubusercontent.com/Choyeon/Choyeon/main/assets/python-original.svg" width="22" height="22" /> About Me
 
 ```python
 class Choyeon:
