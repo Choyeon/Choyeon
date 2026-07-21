@@ -33,28 +33,29 @@ class Choyeon:
 
 ## 💻 Tech Stack
 
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![Vue.js](https://img.shields.io/badge/Vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)
-![Electron](https://img.shields.io/badge/Electron-47848F?style=for-the-badge&logo=electron&logoColor=white)
-![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
-![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
-![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
-![Nginx](https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white)
+<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
+<img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
+<img src="https://img.shields.io/badge/Vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white" />
+<img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
+<img src="https://img.shields.io/badge/Electron-47848F?style=for-the-badge&logo=electron&logoColor=white" />
+<img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" />
+<img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" />
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" />
+<img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white" />
+<img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white" />
 
 ---
 
 ## 📊 GitHub Stats
 
-<table>
-  <tr>
-    <td><img height="170" src="https://github-readme-stats-liart-five-72.vercel.app/api?username=Choyeon&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&ring_color=58a6ff&include_all_commits=true&count_private=true" /></td>
-    <td><img height="170" src="https://github-readme-stats-liart-five-72.vercel.app/api/top-langs/?username=Choyeon&layout=donut-vertical&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=10&exclude_repo=fastapi,Rosetta" /></td>
-  </tr>
-</table>
+<a href="https://github-readme-stats-liart-five-72.vercel.app/api?username=Choyeon&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&ring_color=58a6ff&include_all_commits=true&count_private=true">
+  <img height="170" align="left" src="https://github-readme-stats-liart-five-72.vercel.app/api?username=Choyeon&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&ring_color=58a6ff&include_all_commits=true&count_private=true" />
+</a>
+<a href="https://github-readme-stats-liart-five-72.vercel.app/api/top-langs/?username=Choyeon&layout=donut-vertical&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=10&exclude_repo=fastapi,Rosetta">
+  <img height="170" align="left" src="https://github-readme-stats-liart-five-72.vercel.app/api/top-langs/?username=Choyeon&layout=donut-vertical&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=10&exclude_repo=fastapi,Rosetta" />
+</a>
+<br clear="both" />
 
 <img height="150" src="https://github-readme-streak-stats.herokuapp.com?user=Choyeon&theme=tokyonight&hide_border=true&background=0d1117&stroke=58a6ff&ring=58a6ff&fire=ff6b6b&currStreakLabel=58a6ff&sideLabels=c9d1d9&currStreakNum=ffffff&sideNums=c9d1d9&dates=555555" />
 
@@ -70,19 +71,22 @@ class Choyeon:
 
 <br/>
 
-![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=Choyeon&bg_color=0d1117&color=58a6ff&line=58a6ff&point=ffffff&area=true&hide_border=true&radius=8&height=300)
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=Choyeon&bg_color=0d1117&color=58a6ff&line=58a6ff&point=ffffff&area=true&hide_border=true&radius=8&height=300" width="100%" />
 
 ---
 
 ## 📌 Featured Projects
 
-<table>
-  <tr>
-    <td><a href="https://github.com/Choyeon/Rosetta"><img src="https://github-readme-stats-liart-five-72.vercel.app/api/pin/?username=Choyeon&repo=Rosetta&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" /></a></td>
-    <td><a href="https://github.com/Choyeon/choyeon-todo"><img src="https://github-readme-stats-liart-five-72.vercel.app/api/pin/?username=Choyeon&repo=choyeon-todo&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" /></a></td>
-    <td><a href="https://github.com/Choyeon/choyeon-note"><img src="https://github-readme-stats-liart-five-72.vercel.app/api/pin/?username=Choyeon&repo=choyeon-note&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" /></a></td>
-  </tr>
-</table>
+<a href="https://github.com/Choyeon/Rosetta">
+  <img align="left" src="https://github-readme-stats-liart-five-72.vercel.app/api/pin/?username=Choyeon&repo=Rosetta&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" />
+</a>
+<a href="https://github.com/Choyeon/choyeon-todo">
+  <img align="left" src="https://github-readme-stats-liart-five-72.vercel.app/api/pin/?username=Choyeon&repo=choyeon-todo&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" />
+</a>
+<a href="https://github.com/Choyeon/choyeon-note">
+  <img align="left" src="https://github-readme-stats-liart-five-72.vercel.app/api/pin/?username=Choyeon&repo=choyeon-note&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&desc_color=8b949e" />
+</a>
+<br clear="both" />
 
 ---
 
@@ -90,7 +94,7 @@ class Choyeon:
 
 ### 🔗 Connect with me
 
-[![Blog](https://img.shields.io/badge/Blog-choyeon.cc-58a6ff?style=for-the-badge&logo=About.me&logoColor=white)](https://choyeon.cc)
-[![GitHub](https://img.shields.io/badge/GitHub-Choyeon-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Choyeon)
+<a href="https://choyeon.cc"><img src="https://img.shields.io/badge/Blog-choyeon.cc-58a6ff?style=for-the-badge&logo=About.me&logoColor=white" /></a>
+<a href="https://github.com/Choyeon"><img src="https://img.shields.io/badge/GitHub-Choyeon-181717?style=for-the-badge&logo=github&logoColor=white" /></a>
 
 </div>
