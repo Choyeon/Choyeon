@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { Image } from 'expo-image';
 import type { WorkoutSession } from '@/types';
-import { colors, spacing, radius, layout } from '@/theme';
+import { useThemeColors, spacing, radius, layout } from '@/theme';
 import { useAppStore } from '@/store/useAppStore';
 import { getAllExercisesSync } from '@/data/queries';
 import {
@@ -26,6 +26,7 @@ import { safeHaptic } from '@/utils/haptic';
 import { formatDurationClock, formatDurationHuman } from '@/utils/format';
 
 export default function WorkoutScreen() {
+  const colors = useThemeColors();
   const { t } = useTranslation();
   const router = useRouter();
   // Subscribe to stable slices — avoid calling expensive stats getters from
@@ -145,6 +146,206 @@ export default function WorkoutScreen() {
     }
     return arr;
   }, [t]);
+
+  const styles = useMemo(() => StyleSheet.create({
+    screen: { flex: 1, backgroundColor: colors.bg },
+    content: { paddingHorizontal: layout.paddingHorizontal, paddingTop: spacing.sm },
+    header: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: spacing.lg,
+      gap: spacing.md,
+    },
+    brandLine: {
+      color: colors.accent,
+      letterSpacing: 1.4,
+      textTransform: 'uppercase',
+      fontSize: 11,
+      fontWeight: '800',
+      marginBottom: 2,
+    },
+    title: {
+      fontSize: 28,
+      fontWeight: '900',
+      letterSpacing: -0.6,
+      lineHeight: 34,
+      color: colors.textPrimary,
+    },
+    primaryCTA: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 6,
+      backgroundColor: colors.primary,
+      paddingHorizontal: spacing.lg,
+      paddingVertical: spacing.sm + 2,
+      borderRadius: 999,
+      flexShrink: 0,
+    },
+    primaryCTAHot: {
+      backgroundColor: colors.accent,
+    },
+    headerLeft: {
+      flex: 1,
+      minWidth: 0,
+    },
+    ctaIconTray: {
+      width: 20,
+      height: 20,
+      borderRadius: 10,
+      backgroundColor: colors.textInverse + '18',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    ctaIconTrayActive: {
+      backgroundColor: colors.textInverse + '20',
+    },
+    ctaText: {
+      fontSize: 12,
+      fontWeight: '800',
+      color: colors.textInverse,
+      letterSpacing: 0.3,
+    },
+    activeCard: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: spacing.lg,
+      borderRadius: radius.lg,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.accent + '55',
+      marginBottom: spacing.lg,
+      position: 'relative',
+      overflow: 'hidden',
+      gap: spacing.sm,
+    },
+    activeAccent: {
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      bottom: 0,
+      width: 4,
+      backgroundColor: colors.accent,
+    },
+    activeBody: {
+      flex: 1,
+    },
+    activeRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.sm,
+    },
+    activeBadge: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 6,
+      backgroundColor: colors.accent + '22',
+      paddingHorizontal: spacing.sm,
+      paddingVertical: 4,
+      borderRadius: 999,
+    },
+    activePulse: {
+      width: 7,
+      height: 7,
+      borderRadius: 4,
+      backgroundColor: colors.accent,
+    },
+    activeBadgeText: {
+      fontSize: 10,
+      fontWeight: '800',
+      color: colors.accent,
+      letterSpacing: 0.8,
+      textTransform: 'uppercase',
+    },
+    activeName: {
+      fontSize: 15,
+      fontWeight: '800',
+      color: colors.textPrimary,
+      marginLeft: spacing.sm,
+      letterSpacing: -0.1,
+    },
+    activeMeta: {
+      fontSize: 12,
+      fontWeight: '500',
+      color: colors.textSecondary,
+    },
+    activeChevron: {
+      width: 28,
+      height: 28,
+      borderRadius: 14,
+      backgroundColor: colors.accent + '18',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    statsStrip: {
+      flexDirection: 'row',
+      paddingVertical: spacing.md + 2,
+      paddingHorizontal: spacing.sm,
+      backgroundColor: colors.surface,
+      borderRadius: radius.lg,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      marginBottom: spacing.lg,
+    },
+    weekCard: {
+      padding: spacing.lg,
+      backgroundColor: colors.surface,
+      borderRadius: radius.lg,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      marginBottom: spacing.xl,
+    },
+    weekHeaderRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: spacing.md,
+    },
+    weekTitle: {
+      fontSize: 12,
+      fontWeight: '800',
+      color: colors.textSecondary,
+      textTransform: 'uppercase',
+      letterSpacing: 1,
+    },
+    barRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'flex-end',
+      height: 84,
+      gap: spacing.xs,
+    },
+    barCol: {
+      flex: 1,
+      alignItems: 'center',
+      gap: spacing.xs,
+    },
+    barBg: {
+      width: '100%',
+      maxWidth: 32,
+      height: 72,
+      backgroundColor: colors.surfaceElevated,
+      borderRadius: radius.sm,
+      justifyContent: 'flex-end',
+      overflow: 'hidden',
+    },
+    barFill: {
+      width: '100%',
+      borderRadius: radius.sm,
+      minHeight: 8,
+    },
+    barLabel: {
+      fontSize: 11,
+      fontWeight: '800',
+      color: colors.textTertiary,
+      letterSpacing: 0.4,
+    },
+    historyHeader: {
+      marginBottom: spacing.md,
+    },
+    gapSm: { height: spacing.sm },
+    bottomInset: { height: layout.tabBarHeight + spacing.xxl },
+  }), [colors]);
 
   return (
     <SafeAreaView style={styles.screen} edges={['top']}>
@@ -334,6 +535,7 @@ function WorkoutCard({
 }) {
   // i18n for nested card — intentionally NOT hoisted so translated labels
   // react to language toggle without a screen-level re-render boundary.
+  const colors = useThemeColors();
   const { t } = useTranslation();
   // Localized date formatting (not a module-level helper anymore because
   // the ZH/EN date pattern comes from i18n — ZH is "{{month}}月{{day}}日"
@@ -360,6 +562,137 @@ function WorkoutCard({
     () => session.exercises.slice(0, 4),
     [session.exercises]
   );
+
+  const cardStyles = useMemo(() => StyleSheet.create({
+    card: {
+      backgroundColor: colors.surface,
+      borderRadius: radius.lg,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      padding: spacing.lg,
+      marginBottom: spacing.md,
+    },
+    topRow: {
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      marginBottom: spacing.sm,
+      gap: spacing.sm,
+    },
+    dateCol: {
+      flex: 1,
+    },
+    dateRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 4,
+      marginBottom: 2,
+    },
+    date: {
+      fontSize: 17,
+      fontWeight: '800',
+      letterSpacing: -0.2,
+      lineHeight: 22,
+      color: colors.textPrimary,
+    },
+    time: {
+      fontSize: 12,
+      fontWeight: '500',
+      color: colors.textSecondary,
+      lineHeight: 18,
+    },
+    deleteBtn: {
+      width: 32,
+      height: 32,
+      borderRadius: radius.sm,
+      backgroundColor: colors.danger + '14',
+      borderWidth: 1,
+      borderColor: colors.danger + '30',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    sessionName: {
+      fontSize: 14,
+      fontWeight: '800',
+      color: colors.primary,
+      marginBottom: spacing.md,
+      letterSpacing: -0.1,
+    },
+    statRow: {
+      flexDirection: 'row',
+      marginBottom: spacing.md,
+      paddingVertical: spacing.md,
+      borderTopWidth: 1,
+      borderBottomWidth: 1,
+      borderColor: colors.surfaceDivider,
+    },
+    statCol: {
+      flex: 1,
+      alignItems: 'center',
+      gap: 4,
+    },
+    statIconTray: {
+      width: 24,
+      height: 24,
+      borderRadius: 12,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    statValue: {
+      fontSize: 13,
+      fontWeight: '800',
+      color: colors.textPrimary,
+      letterSpacing: -0.1,
+    },
+    statLabel: {
+      fontSize: 10,
+      fontWeight: '800',
+      color: colors.textTertiary,
+      letterSpacing: 0.8,
+      textTransform: 'uppercase',
+    },
+    previewRow: {
+      flexDirection: 'row',
+      gap: spacing.sm,
+      marginBottom: spacing.sm,
+      flexWrap: 'wrap',
+    },
+    previewItem: {
+      alignItems: 'center',
+      width: 58,
+      gap: 4,
+    },
+    previewImgWrap: {
+      borderRadius: radius.md,
+      borderWidth: 2,
+      overflow: 'hidden',
+    },
+    previewImg: {
+      width: 54,
+      height: 54,
+      backgroundColor: colors.surfaceElevated,
+    },
+    previewSets: {
+      fontSize: 11,
+      fontWeight: '800',
+      color: colors.textSecondary,
+      letterSpacing: 0.2,
+    },
+    noteRow: {
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      paddingTop: spacing.sm,
+      borderTopWidth: 1,
+      borderTopColor: colors.surfaceDivider,
+    },
+    note: {
+      flex: 1,
+      fontSize: 13,
+      fontWeight: '500',
+      color: colors.textSecondary,
+      lineHeight: 19,
+    },
+  }), [colors]);
 
   return (
     <View style={cardStyles.card}>
@@ -466,348 +799,41 @@ function Stat({
   icon: string;
   color: string;
 }) {
+  const colors = useThemeColors();
+  const s = useMemo(() => StyleSheet.create({
+    col: {
+      flex: 1,
+      alignItems: 'center',
+      gap: 4,
+    },
+    iconTray: {
+      width: 24,
+      height: 24,
+      borderRadius: 12,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    value: {
+      fontSize: 13,
+      fontWeight: '800',
+      color: colors.textPrimary,
+      letterSpacing: -0.1,
+    },
+    label: {
+      fontSize: 10,
+      fontWeight: '800',
+      color: colors.textTertiary,
+      letterSpacing: 0.8,
+      textTransform: 'uppercase',
+    },
+  }), [colors]);
   return (
-    <View style={cardStyles.statCol}>
-      <View style={[cardStyles.statIconTray, { backgroundColor: color + '18' }]}>
+    <View style={s.col}>
+      <View style={[s.iconTray, { backgroundColor: color + '18' }]}>
         <Icon name={icon} size={12} color={color} />
       </View>
-      <Text style={cardStyles.statValue}>{value}</Text>
-      <Text style={cardStyles.statLabel}>{label}</Text>
+      <Text style={s.value}>{value}</Text>
+      <Text style={s.label}>{label}</Text>
     </View>
   );
 }
-
-// ============================================================
-// Styles
-// ============================================================
-
-const styles = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: colors.bg },
-  content: { paddingHorizontal: layout.paddingHorizontal, paddingTop: spacing.sm },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: spacing.lg,
-    gap: spacing.md,
-  },
-  brandLine: {
-    color: colors.accent,
-    letterSpacing: 1.4,
-    textTransform: 'uppercase',
-    fontSize: 11,
-    fontWeight: '800',
-    marginBottom: 2,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: '900',
-    letterSpacing: -0.6,
-    lineHeight: 34,
-    color: colors.textPrimary,
-  },
-  primaryCTA: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    backgroundColor: colors.primary,
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.sm + 2,
-    borderRadius: 999,
-    flexShrink: 0,
-  },
-  primaryCTAHot: {
-    backgroundColor: colors.accent,
-  },
-  headerLeft: {
-    flex: 1,
-    minWidth: 0,
-  },
-  ctaIconTray: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: colors.textInverse + '18',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ctaIconTrayActive: {
-    backgroundColor: colors.textInverse + '20',
-  },
-  ctaText: {
-    fontSize: 12,
-    fontWeight: '800',
-    color: colors.textInverse,
-    letterSpacing: 0.3,
-  },
-  activeCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: spacing.lg,
-    borderRadius: radius.lg,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.accent + '55',
-    marginBottom: spacing.lg,
-    position: 'relative',
-    overflow: 'hidden',
-    gap: spacing.sm,
-  },
-  activeAccent: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    bottom: 0,
-    width: 4,
-    backgroundColor: colors.accent,
-  },
-  activeBody: {
-    flex: 1,
-  },
-  activeRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.sm,
-  },
-  activeBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    backgroundColor: colors.accent + '22',
-    paddingHorizontal: spacing.sm,
-    paddingVertical: 4,
-    borderRadius: 999,
-  },
-  activePulse: {
-    width: 7,
-    height: 7,
-    borderRadius: 4,
-    backgroundColor: colors.accent,
-  },
-  activeBadgeText: {
-    fontSize: 10,
-    fontWeight: '800',
-    color: colors.accent,
-    letterSpacing: 0.8,
-    textTransform: 'uppercase',
-  },
-  activeName: {
-    fontSize: 15,
-    fontWeight: '800',
-    color: colors.textPrimary,
-    marginLeft: spacing.sm,
-    letterSpacing: -0.1,
-  },
-  activeMeta: {
-    fontSize: 12,
-    fontWeight: '500',
-    color: colors.textSecondary,
-  },
-  activeChevron: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: colors.accent + '18',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  statsStrip: {
-    flexDirection: 'row',
-    paddingVertical: spacing.md + 2,
-    paddingHorizontal: spacing.sm,
-    backgroundColor: colors.surface,
-    borderRadius: radius.lg,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    marginBottom: spacing.lg,
-  },
-  weekCard: {
-    padding: spacing.lg,
-    backgroundColor: colors.surface,
-    borderRadius: radius.lg,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    marginBottom: spacing.xl,
-  },
-  weekHeaderRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: spacing.md,
-  },
-  weekTitle: {
-    fontSize: 12,
-    fontWeight: '800',
-    color: colors.textSecondary,
-    textTransform: 'uppercase',
-    letterSpacing: 1,
-  },
-  barRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
-    height: 84,
-    gap: spacing.xs,
-  },
-  barCol: {
-    flex: 1,
-    alignItems: 'center',
-    gap: spacing.xs,
-  },
-  barBg: {
-    width: '100%',
-    maxWidth: 32,
-    height: 72,
-    backgroundColor: colors.surfaceElevated,
-    borderRadius: radius.sm,
-    justifyContent: 'flex-end',
-    overflow: 'hidden',
-  },
-  barFill: {
-    width: '100%',
-    borderRadius: radius.sm,
-    minHeight: 8,
-  },
-  barLabel: {
-    fontSize: 11,
-    fontWeight: '800',
-    color: colors.textTertiary,
-    letterSpacing: 0.4,
-  },
-  historyHeader: {
-    marginBottom: spacing.md,
-  },
-  gapSm: { height: spacing.sm },
-  bottomInset: { height: layout.tabBarHeight + spacing.xxl },
-});
-
-const cardStyles = StyleSheet.create({
-  card: {
-    backgroundColor: colors.surface,
-    borderRadius: radius.lg,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    padding: spacing.lg,
-    marginBottom: spacing.md,
-  },
-  topRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    marginBottom: spacing.sm,
-    gap: spacing.sm,
-  },
-  dateCol: {
-    flex: 1,
-  },
-  dateRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    marginBottom: 2,
-  },
-  date: {
-    fontSize: 17,
-    fontWeight: '800',
-    letterSpacing: -0.2,
-    lineHeight: 22,
-    color: colors.textPrimary,
-  },
-  time: {
-    fontSize: 12,
-    fontWeight: '500',
-    color: colors.textSecondary,
-    lineHeight: 18,
-  },
-  deleteBtn: {
-    width: 32,
-    height: 32,
-    borderRadius: radius.sm,
-    backgroundColor: colors.danger + '14',
-    borderWidth: 1,
-    borderColor: colors.danger + '30',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  sessionName: {
-    fontSize: 14,
-    fontWeight: '800',
-    color: colors.primary,
-    marginBottom: spacing.md,
-    letterSpacing: -0.1,
-  },
-  statRow: {
-    flexDirection: 'row',
-    marginBottom: spacing.md,
-    paddingVertical: spacing.md,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: colors.surfaceDivider,
-  },
-  statCol: {
-    flex: 1,
-    alignItems: 'center',
-    gap: 4,
-  },
-  statIconTray: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  statValue: {
-    fontSize: 13,
-    fontWeight: '800',
-    color: colors.textPrimary,
-    letterSpacing: -0.1,
-  },
-  statLabel: {
-    fontSize: 10,
-    fontWeight: '800',
-    color: colors.textTertiary,
-    letterSpacing: 0.8,
-    textTransform: 'uppercase',
-  },
-  previewRow: {
-    flexDirection: 'row',
-    gap: spacing.sm,
-    marginBottom: spacing.sm,
-    flexWrap: 'wrap',
-  },
-  previewItem: {
-    alignItems: 'center',
-    width: 58,
-    gap: 4,
-  },
-  previewImgWrap: {
-    borderRadius: radius.md,
-    borderWidth: 2,
-    overflow: 'hidden',
-  },
-  previewImg: {
-    width: 54,
-    height: 54,
-    backgroundColor: colors.surfaceElevated,
-  },
-  previewSets: {
-    fontSize: 11,
-    fontWeight: '800',
-    color: colors.textSecondary,
-    letterSpacing: 0.2,
-  },
-  noteRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    paddingTop: spacing.sm,
-    borderTopWidth: 1,
-    borderTopColor: colors.surfaceDivider,
-  },
-  note: {
-    flex: 1,
-    fontSize: 13,
-    fontWeight: '500',
-    color: colors.textSecondary,
-    lineHeight: 19,
-  },
-});

@@ -13,6 +13,7 @@ import {
   setAppLanguage,
   i18n as i18nInstance,
   normalizeLanguage,
+  detectInitialLanguage,
 } from '@/i18n';
 
 // Used as a last-resort fallback when i18n hasn't finished bootstrapping and
@@ -86,7 +87,7 @@ function normalizeLegacySettings(raw: any): AppSettings {
   }
   if (base.units !== 'kg' && base.units !== 'lb') base.units = 'kg';
   if (base.theme !== 'dark' && base.theme !== 'light' && base.theme !== 'system') {
-    base.theme = 'dark';
+    base.theme = 'system';
   }
   if (typeof base.defaultRestSeconds !== 'number' || Number.isNaN(base.defaultRestSeconds)) {
     base.defaultRestSeconds = INITIAL_SETTINGS.defaultRestSeconds;
@@ -252,9 +253,37 @@ interface AppState {
   streakDays: () => number;
 }
 
+/**
+ * First-run language resolution: on a fresh install we want the language to
+ * follow the device's system locale, not a hard-coded "zh".  zustand persist
+ * calls `migrate` synchronously during `create()`, but we can't block on
+ * expo-localization's async `getLocales()` there.  Instead we resolve the
+ * system locale once at module-load time and bake the result into the
+ * initial settings.  This runs BEFORE any React component mounts, so the
+ * very first render already has the correct language.
+ */
+function resolveInitialLanguageSync(): LanguageCode {
+  try {
+    // expo-localization getLocales() is synchronous — it reads from the
+    // native Activity's Configuration which is always available by the
+    // time JS boots.
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { getLocales } = require('expo-localization');
+    const locales = getLocales();
+    const first = locales?.[0]?.languageCode;
+    const normalized = normalizeLanguage(first);
+    return normalized;
+  } catch {
+    // Module resolution failed (shouldn't happen).  Fall back to DEFAULT.
+    return DEFAULT_LANGUAGE;
+  }
+}
+
+const SYSTEM_LANGUAGE = resolveInitialLanguageSync();
+
 const INITIAL_SETTINGS: AppSettings = {
-  language: DEFAULT_LANGUAGE,
-  theme: 'dark',
+  language: SYSTEM_LANGUAGE, // follows device locale on first run
+  theme: 'system',
   units: 'kg',
   restTimer: 90, // legacy
   defaultRestSeconds: 90,
@@ -329,46 +358,53 @@ export const useAppStore = create<AppState>()(
       // ------------------------------
       activeWorkout: null,
       startWorkout: (name) =>
-        set({
-          activeWorkout: {
-            startedAt: Date.now(),
-            exercises: [],
-            // Resolve the session name from the current locale when the
-            // caller hasn't supplied one.  Previously this defaulted to a
-            // hard-coded Chinese string ("今日训练") which persisted into
-            // History entries even for English-speaking users.
-            //
-            // Resolution order:
-            //   1. Caller-provided `name` (non-empty) — wins outright.
-            //   2. `i18n.t('workout.defaultSessionName')` — only if resources
-            //      have finished loading (no raw key echo-back).
-            //   3. `DEFAULT_SESSION_NAME_FALLBACK` keyed by CANONICAL
-            //      normalizeLanguage() output — never by string-matching on
-            //      i18n.language directly (fixes en-US / zh-CN mismatches).
-            name:
-              (name && name.length > 0)
-                ? name
-                : (() => {
-                    try {
-                      const resolved = i18nInstance.t('workout.defaultSessionName');
-                      // `resolved` may fall back to the key itself when the
-                      // resource isn't loaded yet.  Guard against using the
-                      // raw "workout.defaultSessionName" key as a name.
-                      if (resolved && !resolved.includes('defaultSessionName')) {
-                        return resolved;
+        set((s) => {
+          // Defensive: if a workout is already active (e.g. user double-taps
+          // "Start" before the first tap navigates, or a new entry point forgets
+          // the `if (!activeWorkout)` guard), return the existing state as-is
+          // so in-progress exercises / sets are NOT silently overwritten.
+          if (s.activeWorkout) return s;
+          return {
+            activeWorkout: {
+              startedAt: Date.now(),
+              exercises: [],
+              // Resolve the session name from the current locale when the
+              // caller hasn't supplied one.  Previously this defaulted to a
+              // hard-coded Chinese string ("今日训练") which persisted into
+              // History entries even for English-speaking users.
+              //
+              // Resolution order:
+              //   1. Caller-provided `name` (non-empty) — wins outright.
+              //   2. `i18n.t('workout.defaultSessionName')` — only if resources
+              //      have finished loading (no raw key echo-back).
+              //   3. `DEFAULT_SESSION_NAME_FALLBACK` keyed by CANONICAL
+              //      normalizeLanguage() output — never by string-matching on
+              //      i18n.language directly (fixes en-US / zh-CN mismatches).
+              name:
+                (name && name.length > 0)
+                  ? name
+                  : (() => {
+                      try {
+                        const resolved = i18nInstance.t('workout.defaultSessionName');
+                        // `resolved` may fall back to the key itself when the
+                        // resource isn't loaded yet.  Guard against using the
+                        // raw "workout.defaultSessionName" key as a name.
+                        if (resolved && !resolved.includes('defaultSessionName')) {
+                          return resolved;
+                        }
+                      } catch {
+                        /* i18n pipeline not ready */
                       }
-                    } catch {
-                      /* i18n pipeline not ready */
-                    }
-                    // normalizeLanguage() guarantees a canonical 'zh' | 'en'
-                    // result regardless of whether i18n.language reports a
-                    // regional variant (en-US, zh-Hans-CN, …) or is empty.
-                    const canonical = normalizeLanguage(
-                      i18nInstance.language || get().settings.language || DEFAULT_LANGUAGE
-                    );
-                    return DEFAULT_SESSION_NAME_FALLBACK[canonical];
-                  })(),
-          },
+                      // normalizeLanguage() guarantees a canonical 'zh' | 'en'
+                      // result regardless of whether i18n.language reports a
+                      // regional variant (en-US, zh-Hans-CN, …) or is empty.
+                      const canonical = normalizeLanguage(
+                        i18nInstance.language || get().settings.language || DEFAULT_LANGUAGE
+                      );
+                      return DEFAULT_SESSION_NAME_FALLBACK[canonical];
+                    })(),
+            },
+          };
         }),
       endWorkout: (note) => {
         const { activeWorkout } = get();

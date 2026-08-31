@@ -10,7 +10,7 @@ import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import type { BodyPart } from '@/types';
-import { colors, spacing, layout } from '@/theme';
+import { useThemeColors, spacing, layout } from '@/theme';
 import {
   useBodyPartCounts,
   useEquipmentCounts,
@@ -20,34 +20,24 @@ import { ExerciseCard } from '@/components/ExerciseCard';
 import { BodyPartChip, EquipmentChip } from '@/components/FilterChips';
 import {
   SearchBar,
-  StatsHero,
   SectionHeader,
   EmptyState,
   PressableScale,
   Icon,
-  CategoryInfoNote,
   SlabDivider,
 } from '@/components/UIKit';
 import { useAppStore } from '@/store/useAppStore';
 import { safeHaptic } from '@/utils/haptic';
 
 export default function HomeScreen() {
+  const colors = useThemeColors();
   const { t } = useTranslation();
   const router = useRouter();
   const bodyParts = useBodyPartCounts();
   const equipments = useEquipmentCounts();
-  // ========================================================================
-  // STORE SUBSCRIPTIONS — granular slices only, NEVER call expensive
-  // derived getters (totalWorkouts / streakDays / totalVolumeKg) inside the
-  // selector callback.  Doing so runs the getter (which iterates the full
-  // `workouts` tree) on *every* zustand state publish (language toggle,
-  // favorites flip, activeWorkout set edits, etc.) — the classic
-  // "rerender-derived-state" anti-pattern that scales O(sessions × listeners).
-  // Instead we subscribe to the stable `workouts` reference, then
-  // recompute stats in a useMemo gated on the reference change alone.
-  // ========================================================================
+
+  // STORE SUBSCRIPTIONS — granular slices only
   const workouts = useAppStore((s) => s.workouts);
-  const units = useAppStore((s) => s.settings.units);
   const activeWorkout = useAppStore((s) => s.activeWorkout);
   const startWorkout = useAppStore((s) => s.startWorkout);
 
@@ -55,19 +45,6 @@ export default function HomeScreen() {
   const [selectedEquipment, setSelectedEquipment] = useState<string | null>(null);
   const [query, setQuery] = useState('');
   const [refreshing, setRefreshing] = useState(false);
-
-  // Stats derived purely from the `workouts` reference.  Reads from the
-  // store's canonical getters (single source of truth) but is gated so
-  // these O(n) traversals only fire when the workouts array identity
-  // actually changes (set, add, delete, reset — not on unrelated updates).
-  const { totalWorkouts, streak, volume } = useMemo(() => {
-    const store = useAppStore.getState();
-    return {
-      totalWorkouts: workouts.length,
-      streak: store.streakDays(),
-      volume: store.totalVolumeKg(),
-    };
-  }, [workouts]);
 
   const filters = useMemo(
     () => ({
@@ -79,8 +56,6 @@ export default function HomeScreen() {
   );
 
   const { filtered, total } = useFilteredExercises(filters);
-  // Memoize slice-derived display lists so re-renders triggered by unrelated
-  // store state (e.g. activeWorkout timer ticks) don't rebuild these arrays.
   const topEquipments = useMemo(() => equipments.slice(0, 8), [equipments]);
   const previewExercises = useMemo(() => filtered.slice(0, 10), [filtered]);
 
@@ -107,13 +82,130 @@ export default function HomeScreen() {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    // 600ms visual affordance — RefreshControl needs a state transition so
-    // users see the spinner even though we have no network layer here.
     const id = setTimeout(() => setRefreshing(false), 600);
     return () => clearTimeout(id);
   }, []);
 
   const hasFilter = !!selectedBodyPart || !!selectedEquipment || query.length > 0;
+
+  // Compute styles with current theme colors
+  const styles = useMemo(() => StyleSheet.create({
+    screen: {
+      flex: 1,
+      backgroundColor: colors.bg,
+    },
+    content: {
+      paddingHorizontal: layout.paddingHorizontal,
+      paddingTop: spacing.sm,
+    },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: spacing.xl,
+      marginTop: spacing.sm,
+      gap: spacing.md,
+    },
+    headerLeft: {
+      flex: 1,
+      minWidth: 0,
+    },
+    brandLine: {
+      color: colors.primary,
+      textTransform: 'uppercase',
+      letterSpacing: 1.4,
+      fontSize: 11,
+      fontWeight: '800',
+      marginBottom: 4,
+    },
+    helloText: {
+      fontSize: 28,
+      fontWeight: '900',
+      letterSpacing: -0.6,
+      lineHeight: 34,
+      color: colors.textPrimary,
+    },
+    ctaBtn: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: spacing.md,
+      paddingVertical: spacing.sm + 2,
+      borderRadius: 999,
+      borderWidth: 1,
+      borderColor: colors.primary,
+      gap: spacing.sm,
+      flexShrink: 0,
+    },
+    ctaBtnActive: {
+      backgroundColor: colors.accent,
+      borderColor: colors.accent,
+    },
+    ctaIconTray: {
+      width: 22,
+      height: 22,
+      borderRadius: 11,
+      backgroundColor: colors.primaryDim,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    ctaIconTrayActive: {
+      backgroundColor: colors.textInverse + '20',
+    },
+    ctaText: {
+      fontSize: 12,
+      fontWeight: '800',
+      color: colors.primary,
+      letterSpacing: 0.3,
+    },
+    ctaTextActive: {
+      color: colors.textInverse,
+    },
+    horizontalList: {
+      paddingVertical: spacing.xs,
+      marginBottom: spacing.lg,
+    },
+    wrapChips: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: spacing.xs,
+      paddingVertical: spacing.xs,
+      marginBottom: spacing.lg,
+    },
+    previewHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: spacing.md,
+      gap: spacing.md,
+    },
+    seeAllBtn: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 4,
+      paddingHorizontal: spacing.sm,
+      paddingVertical: spacing.xs,
+      borderRadius: 8,
+      backgroundColor: colors.primaryDim,
+      borderWidth: 1,
+      borderColor: colors.primary + '40',
+    },
+    seeAllText: {
+      fontSize: 12,
+      fontWeight: '800',
+      color: colors.primary,
+      letterSpacing: 0.2,
+    },
+    previewGrid: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'space-between',
+    },
+    gapLg: {
+      height: spacing.lg,
+    },
+    bottomInset: {
+      height: layout.tabBarHeight + spacing.xxl,
+    },
+  }), [colors]);
 
   return (
     <SafeAreaView style={styles.screen} edges={['top']}>
@@ -165,23 +257,6 @@ export default function HomeScreen() {
           </PressableScale>
         </View>
 
-        {/* STATS HERO — caller supplies i18n labels so the component itself
-            stays i18n-agnostic and doesn't import react-i18next directly. */}
-        <StatsHero
-          streak={streak}
-          workouts={totalWorkouts}
-          volume={volume}
-          units={units}
-          labelStreak={t('workout.heroLabelStreak')}
-          labelWorkouts={t('workout.heroLabelWorkouts')}
-          labelVolume={t('workout.heroLabelVolume')}
-          suffixStreak={t('workout.heroUnitStreak')}
-          suffixWorkouts={t('workout.heroUnitWorkouts')}
-          suffixVolume={units === 'kg'
-            ? (t('workout.heroUnitVolume') || 'kg')
-            : (t('workout.heroUnitVolume') || 'lb')}
-        />
-
         {/* SEARCH */}
         <SearchBar
           value={query}
@@ -197,27 +272,17 @@ export default function HomeScreen() {
           accent={colors.muscle.chest}
           note={t('home.bodySectionNote')}
         />
-        <CategoryInfoNote
-          icon="book-open-page-variant"
-          text={t('home.bodySectionDoc')}
-          accent={colors.info}
-        />
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.horizontalList}
-        >
+        <View style={styles.wrapChips}>
           {bodyParts.map(({ bodyPart, count }) => (
-            <View key={bodyPart} style={styles.chipWrap}>
-              <BodyPartChip
-                bodyPart={bodyPart}
-                count={count}
-                selected={selectedBodyPart === bodyPart}
-                onPress={onBodyPartPress}
-              />
-            </View>
+            <BodyPartChip
+              key={bodyPart}
+              bodyPart={bodyPart}
+              count={count}
+              selected={selectedBodyPart === bodyPart}
+              onPress={onBodyPartPress}
+            />
           ))}
-        </ScrollView>
+        </View>
 
         {/* EQUIPMENT FILTERS */}
         <SlabDivider accent={colors.primary} />
@@ -227,22 +292,17 @@ export default function HomeScreen() {
           accent={colors.info}
           note={t('home.equipmentSectionNote')}
         />
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.horizontalList}
-        >
+        <View style={styles.wrapChips}>
           {topEquipments.map(({ equipment, count }) => (
-            <View key={equipment} style={styles.chipWrap}>
-              <EquipmentChip
-                equipment={equipment}
-                count={count}
-                selected={selectedEquipment === equipment}
-                onPress={onEquipmentPress}
-              />
-            </View>
+            <EquipmentChip
+              key={equipment}
+              equipment={equipment}
+              count={count}
+              selected={selectedEquipment === equipment}
+              onPress={onEquipmentPress}
+            />
           ))}
-        </ScrollView>
+        </View>
 
         {/* EXERCISE PREVIEW */}
         <SlabDivider accent={hasFilter ? colors.accent : colors.primary} />
@@ -282,119 +342,3 @@ export default function HomeScreen() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: colors.bg,
-  },
-  content: {
-    paddingHorizontal: layout.paddingHorizontal,
-    paddingTop: spacing.sm,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: spacing.xl,
-    marginTop: spacing.sm,
-    gap: spacing.md,
-  },
-  headerLeft: {
-    flex: 1,
-    minWidth: 0,
-  },
-  brandLine: {
-    color: colors.primary,
-    textTransform: 'uppercase',
-    letterSpacing: 1.4,
-    fontSize: 11,
-    fontWeight: '800',
-    marginBottom: 4,
-  },
-  helloText: {
-    fontSize: 28,
-    fontWeight: '900',
-    letterSpacing: -0.6,
-    lineHeight: 34,
-    color: colors.textPrimary,
-  },
-  ctaBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm + 2,
-    borderRadius: 999,
-    borderWidth: 1,
-    borderColor: colors.primary,
-    gap: spacing.sm,
-    flexShrink: 0,
-  },
-  ctaBtnActive: {
-    backgroundColor: colors.accent,
-    borderColor: colors.accent,
-  },
-  ctaIconTray: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
-    backgroundColor: colors.primaryDim,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ctaIconTrayActive: {
-    backgroundColor: colors.textInverse + '20',
-  },
-  ctaText: {
-    fontSize: 12,
-    fontWeight: '800',
-    color: colors.primary,
-    letterSpacing: 0.3,
-  },
-  ctaTextActive: {
-    color: colors.textInverse,
-  },
-  horizontalList: {
-    paddingVertical: spacing.xs,
-    paddingRight: spacing.lg,
-    marginBottom: spacing.lg,
-  },
-  chipWrap: {
-    marginRight: spacing.sm,
-  },
-  previewHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: spacing.md,
-    gap: spacing.md,
-  },
-  seeAllBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.xs,
-    borderRadius: 8,
-    backgroundColor: colors.primaryDim,
-    borderWidth: 1,
-    borderColor: colors.primary + '40',
-  },
-  seeAllText: {
-    fontSize: 12,
-    fontWeight: '800',
-    color: colors.primary,
-    letterSpacing: 0.2,
-  },
-  previewGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-  // Spacer utilities (inline style extraction)
-  gapLg: {
-    height: spacing.lg,
-  },
-  bottomInset: {
-    height: layout.tabBarHeight + spacing.xxl,
-  },
-});

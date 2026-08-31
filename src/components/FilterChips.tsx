@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useMemo } from 'react';
 import { Text, StyleSheet, View, type GestureResponderEvent } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { colors, typography, spacing, radius } from '@/theme';
+import { useThemeColors, typography, spacing, radius } from '@/theme';
 import { safeHaptic } from '@/utils/haptic';
 import {
   BODY_PART_LABELS,
@@ -36,8 +36,43 @@ function BodyPartChipImpl({
   onPress,
   size = 'md',
 }: BodyPartChipProps) {
+  const colors = useThemeColors();
   const { i18n } = useTranslation();
   const lang: LanguageCode = i18n.language?.startsWith('en') ? 'en' : 'zh';
+
+  const styles = useMemo(() => StyleSheet.create({
+    chip: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderRadius: radius.pill,
+      borderWidth: 1,
+      gap: spacing.xs,
+    },
+    iconTray: {
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    label: {
+      ...typography.captionBold,
+      maxWidth: 160,
+      letterSpacing: -0.1,
+      marginLeft: 2,
+    },
+    countBadge: {
+      marginLeft: spacing.sm,
+      paddingHorizontal: 8,
+      paddingVertical: 2,
+      borderRadius: radius.pill,
+      minWidth: 26,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    count: {
+      fontSize: 11,
+      fontWeight: '800',
+      letterSpacing: 0.2,
+    },
+  }), []);
 
   const info = BODY_PART_LABELS[bodyPart] || {
     zh: labelForBodyPart(bodyPart),
@@ -155,8 +190,43 @@ function EquipmentChipImpl({
   onPress,
   size = 'md',
 }: EquipmentChipProps) {
+  const colors = useThemeColors();
   const { i18n } = useTranslation();
   const lang: LanguageCode = i18n.language?.startsWith('en') ? 'en' : 'zh';
+
+  const styles = useMemo(() => StyleSheet.create({
+    chip: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderRadius: radius.pill,
+      borderWidth: 1,
+      gap: spacing.xs,
+    },
+    iconTray: {
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    label: {
+      ...typography.captionBold,
+      maxWidth: 160,
+      letterSpacing: -0.1,
+      marginLeft: 2,
+    },
+    countBadge: {
+      marginLeft: spacing.sm,
+      paddingHorizontal: 8,
+      paddingVertical: 2,
+      borderRadius: radius.pill,
+      minWidth: 26,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    count: {
+      fontSize: 11,
+      fontWeight: '800',
+      letterSpacing: 0.2,
+    },
+  }), []);
 
   const info = EQUIPMENT_LABELS[equipment] || {
     zh: labelForEquipment(equipment),
@@ -246,40 +316,6 @@ function EquipmentChipImpl({
     </PressableScale>
   );
 }
-
-const styles = StyleSheet.create({
-  chip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: radius.pill,
-    borderWidth: 1,
-    gap: spacing.xs,
-  },
-  iconTray: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  label: {
-    ...typography.captionBold,
-    maxWidth: 160,
-    letterSpacing: -0.1,
-    marginLeft: 2,
-  },
-  countBadge: {
-    marginLeft: spacing.sm,
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: radius.pill,
-    minWidth: 26,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  count: {
-    fontSize: 11,
-    fontWeight: '800',
-    letterSpacing: 0.2,
-  },
-});
 
 export const BodyPartChip = memo(BodyPartChipImpl);
 export const EquipmentChip = memo(EquipmentChipImpl);

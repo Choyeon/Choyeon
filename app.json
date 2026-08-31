@@ -2,10 +2,10 @@
   "expo": {
     "name": "Choyeon Exercises",
     "slug": "ChoyeonExercises",
-    "version": "1.0.12",
+    "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "dark",
+    "icon": "./assets/play-store/icon-512.png",
+    "userInterfaceStyle": "automatic",
     "scheme": "choyeon-exercises",
     "ios": {
       "supportsTablet": true,
@@ -15,9 +15,8 @@
       "package": "com.choyeon.exercises",
       "adaptiveIcon": {
         "backgroundColor": "#0B0D12",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
+        "foregroundImage": "./assets/adaptive/ic_launcher_foreground.png",
+        "backgroundImage": "./assets/adaptive/ic_launcher_background.png"
       },
       "predictiveBackGestureEnabled": false
     },

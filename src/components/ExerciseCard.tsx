@@ -4,7 +4,7 @@ import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import type { Exercise, LanguageCode } from '@/types';
-import { colors, typography, spacing, radius } from '@/theme';
+import { useThemeColors, typography, spacing, radius } from '@/theme';
 import {
   getImageUrl,
   iconForBodyPart,
@@ -37,12 +37,107 @@ function ExerciseCardImpl({
   grid = false,
   showFavorite = true,
 }: ExerciseCardProps) {
+  const colors = useThemeColors();
   const { i18n } = useTranslation();
   // Resolve display language once per render: explicit prop wins, otherwise
   // fall back to the i18n instance's current language.  This keeps the
   // component language-correct even when a caller forgets to pass it.
   const effective: LanguageCode =
     languageProp ?? (i18n.language?.startsWith('en') ? 'en' : 'zh');
+
+  const styles = useMemo(() => StyleSheet.create({
+    card: {
+      backgroundColor: colors.surface,
+      borderRadius: radius.lg,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      overflow: 'hidden',
+      marginBottom: spacing.md,
+    },
+    cardCompact: {
+      borderRadius: radius.md,
+    },
+    imageWrap: {
+      position: 'relative',
+      width: '100%',
+      height: 160,
+      backgroundColor: colors.surfaceElevated,
+    },
+    imageWrapCompact: {
+      height: 104,
+    },
+    image: {
+      width: '100%',
+      height: '100%',
+    },
+    favBtn: {
+      width: 30,
+      height: 30,
+      borderRadius: 15,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginLeft: spacing.xs,
+    },
+    infoWrap: {
+      padding: spacing.md,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    name: {
+      ...typography.h3,
+      color: colors.textPrimary,
+      marginBottom: 2,
+      letterSpacing: -0.2,
+    },
+    nameZh: {
+      ...typography.caption,
+      color: colors.textSecondary,
+      marginBottom: spacing.sm,
+    },
+    metaRow: {
+      flexDirection: 'row',
+      gap: spacing.sm,
+      flexWrap: 'wrap',
+    },
+    quickAddBtn: {
+      width: 40,
+      height: 40,
+      borderRadius: radius.md,
+      backgroundColor: colors.primary,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginLeft: spacing.sm,
+    },
+    // ===================== GRID MODE (3 columns) =====================
+    cardGrid: {
+      width: '31%',
+    },
+    imageWrapGrid: {
+      height: 124,
+    },
+    infoWrapGrid: {
+      padding: spacing.sm,
+    },
+    nameGrid: {
+      fontSize: 13,
+      fontWeight: '800',
+      lineHeight: 17,
+      letterSpacing: -0.1,
+      marginBottom: 3,
+    },
+    metaRowGrid: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 4,
+      marginTop: 2,
+    },
+    metaTextGrid: {
+      fontSize: 11,
+      fontWeight: '600',
+      color: colors.textSecondary,
+      flex: 1,
+    },
+  }), [colors]);
 
   const router = useRouter();
   const isFavorite = useAppStore((s) => s.isFavorite(exercise.id));
@@ -61,7 +156,7 @@ function ExerciseCardImpl({
     () =>
       colors.muscle[exercise.body_part as keyof typeof colors.muscle] ||
       colors.primary,
-    [exercise.body_part]
+    [exercise.body_part, colors]
   );
 
   const { bodyPartIcon, bodyPartLabel, equipIcon, equipLabel } = useMemo(
@@ -114,48 +209,16 @@ function ExerciseCardImpl({
         <Image
           source={getImageUrl(exercise.image)}
           style={styles.image}
-          contentFit="cover"
+          contentFit="contain"
           transition={200}
           placeholder={require('@/../assets/icon.png')}
         />
-        {/* Muscle accent bar (bottom of image slab) */}
-        <View
-          style={[styles.imageAccent, { backgroundColor: muscleColor }]}
-        />
-        {/* Body-part icon badge top-left */}
-        <View
-          style={[
-            styles.bodyPartBadge,
-            grid && styles.bodyPartBadgeGrid,
-            {
-              backgroundColor: colors.surface + 'E6',
-              borderColor: muscleColor + '55',
-            },
-          ]}
-        >
-          <Icon name={bodyPartIcon} size={grid ? 11 : 12} color={muscleColor} />
-        </View>
-
-        {showFavorite && (
-          <PressableScale
-            onPress={handleFavorite}
-            style={[styles.favBtn, grid && styles.favBtnGrid]}
-            hitSlop={8}
-            scaleTo={0.88}
-          >
-            <Icon
-              name={isFavorite ? 'heart' : 'heart-outline'}
-              size={grid ? 16 : 18}
-              color={isFavorite ? colors.accent : colors.textPrimary}
-            />
-          </PressableScale>
-        )}
       </View>
 
       <View style={[styles.infoWrap, grid && styles.infoWrapGrid]}>
         <View style={{ flex: 1, minWidth: 0 }}>
           <Text style={[styles.name, grid && styles.nameGrid]} numberOfLines={grid ? 2 : 1}>
-            {displayNameZh(exercise)}
+            {effective === 'zh' ? displayNameZh(exercise) : exercise.name}
           </Text>
           {!grid && (
             <Text style={styles.nameZh} numberOfLines={1}>
@@ -190,6 +253,21 @@ function ExerciseCardImpl({
           )}
         </View>
 
+        {showFavorite && (
+          <PressableScale
+            onPress={handleFavorite}
+            style={styles.favBtn}
+            hitSlop={8}
+            scaleTo={0.88}
+          >
+            <Icon
+              name={isFavorite ? 'heart' : 'heart-outline'}
+              size={grid ? 14 : 18}
+              color={isFavorite ? colors.accent : colors.textSecondary}
+            />
+          </PressableScale>
+        )}
+
         {hasActiveWorkout && !grid && (
           <PressableScale
             onPress={handleQuickAdd}
@@ -204,138 +282,5 @@ function ExerciseCardImpl({
     </PressableScale>
   );
 }
-
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: colors.surface,
-    borderRadius: radius.lg,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    overflow: 'hidden',
-    marginBottom: spacing.md,
-  },
-  cardCompact: {
-    borderRadius: radius.md,
-  },
-  imageWrap: {
-    position: 'relative',
-    width: '100%',
-    height: 160,
-    backgroundColor: colors.surfaceElevated,
-  },
-  imageWrapCompact: {
-    height: 104,
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-  },
-  imageAccent: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    height: 2,
-  },
-  bodyPartBadge: {
-    position: 'absolute',
-    top: spacing.sm,
-    left: spacing.sm,
-    width: 26,
-    height: 26,
-    borderRadius: 13,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  favBtn: {
-    position: 'absolute',
-    top: spacing.sm,
-    right: spacing.sm,
-    width: 34,
-    height: 34,
-    borderRadius: 17,
-    backgroundColor: colors.surface + 'CC',
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  infoWrap: {
-    padding: spacing.md,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  name: {
-    ...typography.h3,
-    color: colors.textPrimary,
-    marginBottom: 2,
-    letterSpacing: -0.2,
-  },
-  nameZh: {
-    ...typography.caption,
-    color: colors.textSecondary,
-    marginBottom: spacing.sm,
-  },
-  metaRow: {
-    flexDirection: 'row',
-    gap: spacing.sm,
-    flexWrap: 'wrap',
-  },
-  quickAddBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: radius.md,
-    backgroundColor: colors.primary,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginLeft: spacing.sm,
-  },
-  // ===================== GRID MODE =====================
-  cardGrid: {
-    flexGrow: 0,
-    flexBasis: '48.5%',
-    marginBottom: spacing.sm + 2,
-  },
-  imageWrapGrid: {
-    height: 124,
-  },
-  bodyPartBadgeGrid: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
-    top: spacing.xs + 2,
-    left: spacing.xs + 2,
-  },
-  favBtnGrid: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    top: spacing.xs + 2,
-    right: spacing.xs + 2,
-  },
-  infoWrapGrid: {
-    padding: spacing.sm,
-  },
-  nameGrid: {
-    fontSize: 13,
-    fontWeight: '800',
-    lineHeight: 17,
-    letterSpacing: -0.1,
-    marginBottom: 3,
-  },
-  metaRowGrid: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    marginTop: 2,
-  },
-  metaTextGrid: {
-    fontSize: 11,
-    fontWeight: '600',
-    color: colors.textSecondary,
-    flex: 1,
-  },
-});
 
 export const ExerciseCard = memo(ExerciseCardImpl);

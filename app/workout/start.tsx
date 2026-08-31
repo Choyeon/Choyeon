@@ -15,7 +15,7 @@ import { Image } from 'expo-image';
 import { useTranslation } from 'react-i18next';
 import { safeHaptic } from '@/utils/haptic';
 import { formatDurationClock } from '@/utils/format';
-import { colors, typography, spacing, radius, layout } from '@/theme';
+import { useThemeColors, typography, spacing, radius, layout } from '@/theme';
 import { useAppStore } from '@/store/useAppStore';
 import { getAllExercisesSync } from '@/data/queries';
 import {
@@ -31,8 +31,10 @@ import type { WorkoutExercise, WorkoutSet, Exercise } from '@/types';
 import { Icon, PressableScale, SearchBar } from '@/components/UIKit';
 
 export default function WorkoutStartScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const effectiveLang: 'zh' | 'en' = i18n.language?.startsWith('en') ? 'en' : 'zh';
   const router = useRouter();
+  const colors = useThemeColors();
   const activeWorkout = useAppStore((s) => s.activeWorkout);
   const settings = useAppStore((s) => s.settings);
   const endWorkout = useAppStore((s) => s.endWorkout);
@@ -244,6 +246,342 @@ export default function WorkoutStartScreen() {
     [addExerciseToActive]
   );
 
+  // ====== Theme-aware styles ======
+  const styles = useMemo(() => StyleSheet.create({
+    screen: { flex: 1, backgroundColor: colors.bg },
+    headerCancel: {
+      color: colors.textSecondary,
+      fontWeight: '700',
+    },
+    summaryBar: {
+      flexDirection: 'row',
+      paddingHorizontal: layout.paddingHorizontal,
+      paddingVertical: spacing.md,
+      gap: spacing.sm,
+      backgroundColor: colors.bg,
+    },
+    restAccentDot: {
+      width: 7,
+      height: 7,
+      borderRadius: 4,
+      backgroundColor: colors.accent,
+    },
+    restBar: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.sm,
+      marginHorizontal: layout.paddingHorizontal,
+      marginBottom: spacing.md,
+      paddingHorizontal: spacing.md,
+      paddingVertical: spacing.md,
+      backgroundColor: colors.surface,
+      borderRadius: radius.md,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+    },
+    restIconTray: {
+      width: 30,
+      height: 30,
+      borderRadius: radius.sm,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: colors.info + '18',
+    },
+    restBarText: {
+      ...typography.bodyBold,
+      color: colors.textSecondary,
+      flex: 1,
+    },
+    restBarActive: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginHorizontal: layout.paddingHorizontal,
+      marginBottom: spacing.md,
+      paddingHorizontal: spacing.lg,
+      paddingVertical: spacing.md,
+      backgroundColor: colors.accent + '14',
+      borderRadius: radius.md,
+      borderWidth: 1,
+      borderColor: colors.accent + '55',
+      gap: spacing.md,
+    },
+    restLabel: {
+      ...typography.captionBold,
+      color: colors.accent,
+      textTransform: 'uppercase',
+      letterSpacing: 1,
+    },
+    restTimer: {
+      ...typography.display,
+      fontSize: 24,
+      color: colors.accent,
+      flex: 1,
+      fontVariant: ['tabular-nums'],
+      fontWeight: '900',
+    },
+    restSkipBtn: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 4,
+      paddingHorizontal: spacing.md,
+      paddingVertical: spacing.sm,
+      borderRadius: 999,
+      backgroundColor: colors.accent + '22',
+      borderWidth: 1,
+      borderColor: colors.accent + '33',
+    },
+    restSkipText: {
+      ...typography.captionBold,
+      color: colors.accent,
+    },
+    content: {
+      paddingHorizontal: layout.paddingHorizontal,
+      paddingTop: spacing.xs,
+    },
+    emptyWrap: {
+      padding: spacing.xxxl,
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: spacing.sm,
+      backgroundColor: colors.surface,
+      borderRadius: radius.lg,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      marginTop: spacing.md,
+    },
+    emptyIconTray: {
+      width: 64,
+      height: 64,
+      borderRadius: radius.lg,
+      backgroundColor: colors.primary + '16',
+      borderWidth: 1,
+      borderColor: colors.primaryStroke,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: spacing.sm,
+    },
+    emptyTitle: {
+      ...typography.h3,
+      color: colors.textPrimary,
+    },
+    emptyDesc: {
+      ...typography.caption,
+      color: colors.textSecondary,
+      textAlign: 'center',
+      maxWidth: 260,
+    },
+    noteCard: {
+      marginTop: spacing.md,
+      backgroundColor: colors.surface,
+      borderRadius: radius.lg,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      padding: spacing.lg,
+    },
+    noteHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.sm,
+      marginBottom: spacing.md,
+    },
+    noteIconTray: {
+      width: 34,
+      height: 34,
+      borderRadius: radius.sm,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: colors.info + '16',
+    },
+    noteHeaderBody: {
+      flex: 1,
+    },
+    bottomContentInset: {
+      height: 180,
+    },
+    noteTitle: {
+      ...typography.bodyBold,
+      color: colors.textPrimary,
+      marginBottom: 2,
+    },
+    noteSub: {
+      ...typography.small,
+      color: colors.textTertiary,
+    },
+    noteInput: {
+      color: colors.textPrimary,
+      ...typography.body,
+      minHeight: 72,
+      textAlignVertical: 'top',
+      padding: spacing.md,
+      backgroundColor: colors.surfaceElevated,
+      borderRadius: radius.md,
+    },
+    bottomBar: {
+      flexDirection: 'row',
+      gap: spacing.md,
+      paddingHorizontal: layout.paddingHorizontal,
+      paddingTop: spacing.md,
+      paddingBottom: layout.safeBottom + spacing.md,
+      backgroundColor: colors.bg,
+      borderTopWidth: 1,
+      borderTopColor: colors.surfaceBorder,
+    },
+    addBtn: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: spacing.sm,
+      height: 56,
+      borderRadius: radius.lg,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.primary + '66',
+    },
+    addBtnIconTray: {
+      width: 24,
+      height: 24,
+      borderRadius: 12,
+      backgroundColor: colors.primary + '18',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    addBtnText: {
+      ...typography.bodyBold,
+      color: colors.primary,
+      letterSpacing: 0.2,
+    },
+    finishBtn: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: spacing.sm,
+      height: 56,
+      borderRadius: radius.lg,
+      backgroundColor: colors.primary,
+    },
+    finishBtnDisabled: {
+      backgroundColor: colors.surfaceElevated,
+      opacity: 0.5,
+    },
+    finishBtnText: {
+      ...typography.bodyBold,
+      color: colors.textInverse,
+      letterSpacing: 0.3,
+    },
+    modalScreen: {
+      flex: 1,
+      backgroundColor: colors.bg,
+    },
+    modalHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: layout.paddingHorizontal,
+      paddingVertical: spacing.md,
+    },
+    modalCancel: {
+      ...typography.bodyBold,
+      color: colors.textSecondary,
+      width: 50,
+    },
+    modalTitleWrap: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 6,
+    },
+    modalTitle: {
+      ...typography.h3,
+      color: colors.textPrimary,
+    },
+    pickerItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: spacing.sm,
+      borderRadius: radius.md,
+      backgroundColor: colors.surface,
+      marginBottom: spacing.sm,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+    },
+    pickerImgWrap: {
+      width: 56,
+      height: 56,
+      borderRadius: radius.md,
+      backgroundColor: colors.surfaceElevated,
+      borderWidth: 2,
+      overflow: 'hidden',
+    },
+    pickerImg: {
+      width: '100%',
+      height: '100%',
+    },
+    pickerName: {
+      ...typography.bodyBold,
+      color: colors.textPrimary,
+      marginBottom: 4,
+    },
+    pickerMetaRow: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: 4,
+    },
+    pickerAddBtn: {
+      width: 36,
+      height: 36,
+      borderRadius: 18,
+      backgroundColor: colors.primary + '18',
+      borderWidth: 1,
+      borderColor: colors.primary + '44',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginLeft: spacing.sm,
+    },
+    modalHeaderSpacer: { width: 50 },
+    modalSearchWrap: {
+      paddingHorizontal: layout.paddingHorizontal,
+    },
+    modalList: { flex: 1 },
+    modalListContent: {
+      paddingHorizontal: layout.paddingHorizontal,
+      paddingVertical: spacing.md,
+    },
+    pickerItemDisabled: { opacity: 0.5 },
+    pickerItemBody: {
+      flex: 1,
+      marginLeft: spacing.md,
+    },
+    pickerAddBtnActive: {
+      backgroundColor: colors.success,
+      borderColor: colors.success,
+    },
+    modalEmptyWrap: {
+      padding: spacing.xxxl,
+      alignItems: 'center',
+      gap: spacing.sm,
+    },
+    modalEmptyTitle: {
+      ...typography.h3,
+      color: colors.textPrimary,
+    },
+    modalEmptyDesc: {
+      ...typography.caption,
+      color: colors.textSecondary,
+    },
+    modalEmptyIcon: {
+      width: 58,
+      height: 58,
+      borderRadius: radius.lg,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: spacing.sm,
+    },
+  }), [colors]);
+
   return (
     <>
       <Stack.Screen
@@ -448,17 +786,17 @@ export default function WorkoutStartScreen() {
                     </View>
                     <View style={styles.pickerItemBody}>
                       <Text style={styles.pickerName} numberOfLines={1}>
-                        {displayNameZh(ex)}
+                        {effectiveLang === 'zh' ? displayNameZh(ex) : ex.name}
                       </Text>
                       <View style={styles.pickerMetaRow}>
                         <MiniTag
                           icon={iconForBodyPart(ex.body_part)}
-                          label={labelForBodyPart(ex.body_part)}
+                          label={labelForBodyPart(ex.body_part, effectiveLang)}
                           color={muscleColor}
                         />
                         <MiniTag
                           icon={iconForEquipment(ex.equipment)}
-                          label={labelForEquipment(ex.equipment)}
+                          label={labelForEquipment(ex.equipment, effectiveLang)}
                           color={colors.info}
                         />
                       </View>
@@ -513,6 +851,48 @@ function SummaryPill({
   icon: string;
   accent: string;
 }) {
+  const colors = useThemeColors();
+  const pillStyles = useMemo(() => StyleSheet.create({
+    wrap: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: spacing.sm,
+      backgroundColor: colors.surface,
+      borderRadius: radius.md,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+    },
+    iconTray: {
+      width: 30,
+      height: 30,
+      borderRadius: radius.sm,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    body: {
+      marginLeft: 8,
+      flex: 1,
+    },
+    value: {
+      ...typography.mono,
+      fontSize: 14,
+      color: colors.textPrimary,
+      fontWeight: '800',
+    },
+    unit: {
+      fontSize: 10,
+      fontWeight: '700',
+      color: colors.textTertiary,
+    },
+    label: {
+      ...typography.small,
+      color: colors.textTertiary,
+      textTransform: 'uppercase',
+      letterSpacing: 0.6,
+      marginTop: 2,
+    },
+  }), [colors]);
   return (
     <View style={pillStyles.wrap}>
       <View style={[pillStyles.iconTray, { backgroundColor: accent + '18' }]}>
@@ -538,6 +918,24 @@ function MiniTag({
   label: string;
   color: string;
 }) {
+  const mt = useMemo(() => StyleSheet.create({
+    wrap: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 4,
+      paddingHorizontal: 6,
+      paddingVertical: 3,
+      borderRadius: 999,
+      borderWidth: 1,
+      marginRight: 6,
+    },
+    label: {
+      fontSize: 10,
+      fontWeight: '800',
+      letterSpacing: 0.2,
+      maxWidth: 100,
+    },
+  }), []);
   return (
     <View style={[mt.wrap, { backgroundColor: color + '12', borderColor: color + '30' }]}>
       <Icon name={icon} size={10} color={color} />
@@ -547,67 +945,6 @@ function MiniTag({
     </View>
   );
 }
-
-const mt = StyleSheet.create({
-  wrap: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    paddingHorizontal: 6,
-    paddingVertical: 3,
-    borderRadius: 999,
-    borderWidth: 1,
-    marginRight: 6,
-  },
-  label: {
-    fontSize: 10,
-    fontWeight: '800',
-    letterSpacing: 0.2,
-    maxWidth: 100,
-  },
-});
-
-const pillStyles = StyleSheet.create({
-  wrap: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: spacing.sm,
-    backgroundColor: colors.surface,
-    borderRadius: radius.md,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-  },
-  iconTray: {
-    width: 30,
-    height: 30,
-    borderRadius: radius.sm,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  body: {
-    marginLeft: 8,
-    flex: 1,
-  },
-  value: {
-    ...typography.mono,
-    fontSize: 14,
-    color: colors.textPrimary,
-    fontWeight: '800',
-  },
-  unit: {
-    fontSize: 10,
-    fontWeight: '700',
-    color: colors.textTertiary,
-  },
-  label: {
-    ...typography.small,
-    color: colors.textTertiary,
-    textTransform: 'uppercase',
-    letterSpacing: 0.6,
-    marginTop: 2,
-  },
-});
 
 function ExerciseBlock({
   exercise,
@@ -628,6 +965,88 @@ function ExerciseBlock({
   onUpdateSet: (setId: string, patch: Partial<WorkoutSet>) => void;
   onRemove: () => void;
 }) {
+  const colors = useThemeColors();
+  const { i18n } = useTranslation();
+  const effectiveLang: 'zh' | 'en' = i18n.language?.startsWith('en') ? 'en' : 'zh';
+  const exBlockStyles = useMemo(() => StyleSheet.create({
+    card: {
+      backgroundColor: colors.surface,
+      borderRadius: radius.lg,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      padding: spacing.md,
+      marginBottom: spacing.md,
+    },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: spacing.md,
+    },
+    imgWrap: {
+      width: 56,
+      height: 56,
+      borderRadius: radius.md,
+      borderWidth: 2,
+      overflow: 'hidden',
+      backgroundColor: colors.surfaceElevated,
+    },
+    img: { width: '100%', height: '100%' },
+    name: {
+      ...typography.bodyBold,
+      color: colors.textPrimary,
+      marginBottom: 4,
+    },
+    metaRow: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+    },
+    removeBtn: {
+      width: 34,
+      height: 34,
+      borderRadius: radius.sm,
+      backgroundColor: colors.danger + '14',
+      borderWidth: 1,
+      borderColor: colors.danger + '30',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    tableHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingBottom: spacing.sm,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.surfaceBorder,
+      marginBottom: spacing.sm,
+    },
+    th: {
+      ...typography.small,
+      color: colors.textTertiary,
+      textTransform: 'uppercase',
+      letterSpacing: 0.8,
+      marginHorizontal: 4,
+      fontSize: 10,
+      fontWeight: '800',
+    },
+    addSetBtn: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: spacing.sm,
+      marginTop: spacing.sm,
+      paddingVertical: spacing.md,
+      borderWidth: 1,
+      borderStyle: 'dashed',
+      borderRadius: radius.md,
+      borderColor: colors.primary + '44',
+      backgroundColor: colors.primary + '08',
+    },
+    addSetText: {
+      ...typography.captionBold,
+      color: colors.primary,
+      letterSpacing: 0.3,
+    },
+  }), [colors]);
+
   const color = exercise
     ? colors.muscle[exercise.body_part as keyof typeof colors.muscle] || colors.primary
     : colors.primary;
@@ -647,7 +1066,7 @@ function ExerciseBlock({
           </View>
           <View style={{ flex: 1, marginLeft: spacing.md, justifyContent: 'center' }}>
             <Text style={exBlockStyles.name} numberOfLines={1}>
-              {exercise ? displayNameZh(exercise) : workoutExercise.exerciseId}
+              {exercise ? (effectiveLang === 'zh' ? displayNameZh(exercise) : exercise.name) : workoutExercise.exerciseId}
             </Text>
             <View style={exBlockStyles.metaRow}>
               <MiniTag
@@ -738,6 +1157,43 @@ function SetRow({
   onChangeReps: (v: number) => void;
   onRemove: () => void;
 }) {
+  const colors = useThemeColors();
+  const setRowStyles = useMemo(() => StyleSheet.create({
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingVertical: spacing.xs,
+      marginBottom: spacing.xs,
+    },
+    rowDone: {
+      opacity: 0.75,
+    },
+    index: {
+      ...typography.captionBold,
+      color: colors.textSecondary,
+    },
+    inputFlex: {
+      flex: 1,
+    },
+    checkBtn: {
+      height: 36,
+      borderRadius: radius.sm,
+      marginHorizontal: 4,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: colors.surfaceElevated,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+    },
+    checkBtnDone: {
+      backgroundColor: colors.success,
+      borderColor: colors.success,
+    },
+    deleteBtn: {
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  }), [colors]);
   return (
     <View
       style={[
@@ -805,6 +1261,38 @@ function NumInput({
   style?: any;
   highlight?: boolean;
 }) {
+  const colors = useThemeColors();
+  const numInp = useMemo(() => StyleSheet.create({
+    wrap: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: colors.surfaceElevated,
+      borderRadius: radius.sm,
+      overflow: 'hidden',
+      height: 36,
+      marginHorizontal: 4,
+    },
+    btn: {
+      width: 28,
+      height: '100%',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    input: {
+      flex: 1,
+      height: '100%',
+      textAlign: 'center',
+      color: colors.textPrimary,
+      ...typography.mono,
+      fontSize: 14,
+      padding: 0,
+      minWidth: 36,
+    },
+    inputDone: {
+      color: colors.primary,
+      fontWeight: '800',
+    },
+  }), [colors]);
   return (
     <View style={[numInp.wrap, style]}>
       <PressableScale
@@ -845,497 +1333,6 @@ function NumInput({
   );
 }
 
-const numInp = StyleSheet.create({
-  wrap: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.surfaceElevated,
-    borderRadius: radius.sm,
-    overflow: 'hidden',
-    height: 36,
-    marginHorizontal: 4,
-  },
-  btn: {
-    width: 28,
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  input: {
-    flex: 1,
-    height: '100%',
-    textAlign: 'center',
-    color: colors.textPrimary,
-    ...typography.mono,
-    fontSize: 14,
-    padding: 0,
-    minWidth: 36,
-  },
-  inputDone: {
-    color: colors.primary,
-    fontWeight: '800',
-  },
-});
-
-const exBlockStyles = StyleSheet.create({
-  card: {
-    backgroundColor: colors.surface,
-    borderRadius: radius.lg,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    padding: spacing.md,
-    marginBottom: spacing.md,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: spacing.md,
-  },
-  imgWrap: {
-    width: 56,
-    height: 56,
-    borderRadius: radius.md,
-    borderWidth: 2,
-    overflow: 'hidden',
-    backgroundColor: colors.surfaceElevated,
-  },
-  img: { width: '100%', height: '100%' },
-  name: {
-    ...typography.bodyBold,
-    color: colors.textPrimary,
-    marginBottom: 4,
-  },
-  metaRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  removeBtn: {
-    width: 34,
-    height: 34,
-    borderRadius: radius.sm,
-    backgroundColor: colors.danger + '14',
-    borderWidth: 1,
-    borderColor: colors.danger + '30',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  tableHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingBottom: spacing.sm,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.surfaceBorder,
-    marginBottom: spacing.sm,
-  },
-  th: {
-    ...typography.small,
-    color: colors.textTertiary,
-    textTransform: 'uppercase',
-    letterSpacing: 0.8,
-    marginHorizontal: 4,
-    fontSize: 10,
-    fontWeight: '800',
-  },
-  addSetBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing.sm,
-    marginTop: spacing.sm,
-    paddingVertical: spacing.md,
-    borderWidth: 1,
-    borderStyle: 'dashed',
-    borderRadius: radius.md,
-    borderColor: colors.primary + '44',
-    backgroundColor: colors.primary + '08',
-  },
-  addSetText: {
-    ...typography.captionBold,
-    color: colors.primary,
-    letterSpacing: 0.3,
-  },
-});
-
-const setRowStyles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: spacing.xs,
-    marginBottom: spacing.xs,
-  },
-  rowDone: {
-    opacity: 0.75,
-  },
-  index: {
-    ...typography.captionBold,
-    color: colors.textSecondary,
-  },
-  inputFlex: {
-    flex: 1,
-  },
-  checkBtn: {
-    height: 36,
-    borderRadius: radius.sm,
-    marginHorizontal: 4,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.surfaceElevated,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-  },
-  checkBtnDone: {
-    backgroundColor: colors.success,
-    borderColor: colors.success,
-  },
-  deleteBtn: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-const styles = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: colors.bg },
-  headerCancel: {
-    color: colors.textSecondary,
-    fontWeight: '700',
-  },
-
-  summaryBar: {
-    flexDirection: 'row',
-    paddingHorizontal: layout.paddingHorizontal,
-    paddingVertical: spacing.md,
-    gap: spacing.sm,
-    backgroundColor: colors.bg,
-  },
-
-  restAccentDot: {
-    width: 7,
-    height: 7,
-    borderRadius: 4,
-    // Always tinted accent per design spec — moved here so it's not rebuilt
-    // as a new style object on every render (was inline concatenation).
-    backgroundColor: colors.accent,
-  },
-  restBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.sm,
-    marginHorizontal: layout.paddingHorizontal,
-    marginBottom: spacing.md,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.md,
-    backgroundColor: colors.surface,
-    borderRadius: radius.md,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-  },
-  restIconTray: {
-    width: 30,
-    height: 30,
-    borderRadius: radius.sm,
-    alignItems: 'center',
-    justifyContent: 'center',
-    // Moved from inline `colors.info + '18'` so this tint doesn't reconstruct
-    // a fresh object from string concatenation every render tick.
-    backgroundColor: colors.info + '18',
-  },
-  restBarText: {
-    ...typography.bodyBold,
-    color: colors.textSecondary,
-    flex: 1,
-  },
-  restBarActive: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal: layout.paddingHorizontal,
-    marginBottom: spacing.md,
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.md,
-    backgroundColor: colors.accent + '14',
-    borderRadius: radius.md,
-    borderWidth: 1,
-    borderColor: colors.accent + '55',
-    gap: spacing.md,
-  },
-  restLabel: {
-    ...typography.captionBold,
-    color: colors.accent,
-    textTransform: 'uppercase',
-    letterSpacing: 1,
-  },
-  restTimer: {
-    ...typography.display,
-    fontSize: 24,
-    color: colors.accent,
-    flex: 1,
-    fontVariant: ['tabular-nums'],
-    fontWeight: '900',
-  },
-  restSkipBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-    borderRadius: 999,
-    backgroundColor: colors.accent + '22',
-    borderWidth: 1,
-    borderColor: colors.accent + '33',
-  },
-  restSkipText: {
-    ...typography.captionBold,
-    color: colors.accent,
-  },
-
-  content: {
-    paddingHorizontal: layout.paddingHorizontal,
-    paddingTop: spacing.xs,
-  },
-
-  emptyWrap: {
-    padding: spacing.xxxl,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing.sm,
-    backgroundColor: colors.surface,
-    borderRadius: radius.lg,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    marginTop: spacing.md,
-  },
-  emptyIconTray: {
-    width: 64,
-    height: 64,
-    borderRadius: radius.lg,
-    backgroundColor: colors.primary + '16',
-    borderWidth: 1,
-    borderColor: colors.primaryStroke,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: spacing.sm,
-  },
-  emptyTitle: {
-    ...typography.h3,
-    color: colors.textPrimary,
-  },
-  emptyDesc: {
-    ...typography.caption,
-    color: colors.textSecondary,
-    textAlign: 'center',
-    maxWidth: 260,
-  },
-
-  noteCard: {
-    marginTop: spacing.md,
-    backgroundColor: colors.surface,
-    borderRadius: radius.lg,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    padding: spacing.lg,
-  },
-  noteHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.sm,
-    marginBottom: spacing.md,
-  },
-  noteIconTray: {
-    width: 34,
-    height: 34,
-    borderRadius: radius.sm,
-    alignItems: 'center',
-    justifyContent: 'center',
-    // Extracted from inline `colors.info + '16'`
-    backgroundColor: colors.info + '16',
-  },
-  noteHeaderBody: {
-    flex: 1,
-  },
-  bottomContentInset: {
-    height: 180,
-  },
-  noteTitle: {
-    ...typography.bodyBold,
-    color: colors.textPrimary,
-    marginBottom: 2,
-  },
-  noteSub: {
-    ...typography.small,
-    color: colors.textTertiary,
-  },
-  noteInput: {
-    color: colors.textPrimary,
-    ...typography.body,
-    minHeight: 72,
-    textAlignVertical: 'top',
-    padding: spacing.md,
-    backgroundColor: colors.surfaceElevated,
-    borderRadius: radius.md,
-  },
-
-  bottomBar: {
-    flexDirection: 'row',
-    gap: spacing.md,
-    paddingHorizontal: layout.paddingHorizontal,
-    paddingTop: spacing.md,
-    paddingBottom: layout.safeBottom + spacing.md,
-    backgroundColor: colors.bg,
-    borderTopWidth: 1,
-    borderTopColor: colors.surfaceBorder,
-  },
-  addBtn: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing.sm,
-    height: 56,
-    borderRadius: radius.lg,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.primary + '66',
-  },
-  addBtnIconTray: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: colors.primary + '18',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  addBtnText: {
-    ...typography.bodyBold,
-    color: colors.primary,
-    letterSpacing: 0.2,
-  },
-  finishBtn: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing.sm,
-    height: 56,
-    borderRadius: radius.lg,
-    backgroundColor: colors.primary,
-  },
-  finishBtnDisabled: {
-    backgroundColor: colors.surfaceElevated,
-    opacity: 0.5,
-  },
-  finishBtnText: {
-    ...typography.bodyBold,
-    color: colors.textInverse,
-    letterSpacing: 0.3,
-  },
-
-  modalScreen: {
-    flex: 1,
-    backgroundColor: colors.bg,
-  },
-  modalHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: layout.paddingHorizontal,
-    paddingVertical: spacing.md,
-  },
-  modalCancel: {
-    ...typography.bodyBold,
-    color: colors.textSecondary,
-    width: 50,
-  },
-  modalTitleWrap: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  modalTitle: {
-    ...typography.h3,
-    color: colors.textPrimary,
-  },
-  pickerItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: spacing.sm,
-    borderRadius: radius.md,
-    backgroundColor: colors.surface,
-    marginBottom: spacing.sm,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-  },
-  pickerImgWrap: {
-    width: 56,
-    height: 56,
-    borderRadius: radius.md,
-    backgroundColor: colors.surfaceElevated,
-    borderWidth: 2,
-    overflow: 'hidden',
-  },
-  pickerImg: {
-    width: '100%',
-    height: '100%',
-  },
-  pickerName: {
-    ...typography.bodyBold,
-    color: colors.textPrimary,
-    marginBottom: 4,
-  },
-  pickerMetaRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 4,
-  },
-  pickerAddBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: colors.primary + '18',
-    borderWidth: 1,
-    borderColor: colors.primary + '44',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginLeft: spacing.sm,
-  },
-  modalHeaderSpacer: { width: 50 },
-  modalSearchWrap: {
-    paddingHorizontal: layout.paddingHorizontal,
-  },
-  modalList: { flex: 1 },
-  modalListContent: {
-    paddingHorizontal: layout.paddingHorizontal,
-    paddingVertical: spacing.md,
-  },
-  pickerItemDisabled: { opacity: 0.5 },
-  pickerItemBody: {
-    flex: 1,
-    marginLeft: spacing.md,
-  },
-  pickerAddBtnActive: {
-    backgroundColor: colors.success,
-    borderColor: colors.success,
-  },
-  modalEmptyWrap: {
-    padding: spacing.xxxl,
-    alignItems: 'center',
-    gap: spacing.sm,
-  },
-  modalEmptyTitle: {
-    ...typography.h3,
-    color: colors.textPrimary,
-  },
-  modalEmptyDesc: {
-    ...typography.caption,
-    color: colors.textSecondary,
-  },
-  modalEmptyIcon: {
-    width: 58,
-    height: 58,
-    borderRadius: radius.lg,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: spacing.sm,
-  },
-});
+// ============================================================
+// End of file (all styles moved into components via useMemo + useThemeColors)
+// ============================================================

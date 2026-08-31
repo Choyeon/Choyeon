@@ -202,10 +202,67 @@ export const EQUIPMENT_LABELS: Record<string, CategoryMeta> = {
   'ez barbell': {
     zh: 'EZ 曲杆',
     en: 'EZ Barbell',
-    icon: 'curve',
+    icon: 'trending-up',
     count: 23,
     note: '带弧度的短曲杆，用于降低腕关节压力的二头弯举与臂屈伸。',
   },
+
+  // --- Dataset-specific slugs present in exercises.json but absent from README top-12 ---
+  assisted: {
+    zh: '辅助器械',
+    en: 'Assisted',
+    icon: 'hand-heart',
+    note: '引体/双杠臂屈伸等自身体重动作的反助力辅助器械。',
+  },
+  'sled machine': {
+    zh: '雪橇机',
+    en: 'Sled Machine',
+    icon: 'truck-outline',
+    note: '带轮子的负重雪橇，常用于高强度推/拉训练与爆发力训练。',
+  },
+  roller: {
+    zh: '健腹轮',
+    en: 'Ab Roller',
+    icon: 'circle',
+    note: '单轮/双轮健腹轮，训练核心抗伸展能力。',
+  },
+  'wheel roller': {
+    zh: '大滚轮',
+    en: 'Wheel Roller',
+    icon: 'circle-outline',
+    note: '大尺寸滚轮，用于核心与肩带训练。',
+  },
+  'bosu ball': {
+    zh: '波速球',
+    en: 'Bosu Ball',
+    icon: 'circle-double',
+    note: '半球形不稳定平台，强化核心与平衡能力。',
+  },
+  'skierg machine': {
+    zh: '划船测功仪',
+    en: 'SkiErg',
+    icon: 'ski',
+    note: 'Concept2 SkiErg 模拟滑雪动作的上半身有氧器械。',
+  },
+  'upper body ergometer': {
+    zh: '上肢功率车',
+    en: 'Upper Body Ergometer',
+    icon: 'bike',
+    note: '坐姿手摇功率车，提供上半身有氧训练。',
+  },
+  'trap bar': {
+    zh: '六角杆',
+    en: 'Trap Bar',
+    icon: 'hexagon',
+    note: '六边形杠铃杆，常用于 Trap Bar Deadlift。',
+  },
+  'stepmill machine': {
+    zh: '台阶机',
+    en: 'StepMill',
+    icon: 'stairs',
+    note: '旋转台阶式有氧器械，模拟爬楼梯。',
+  },
+
   other: {
     zh: '其他器械',
     en: 'Other',
@@ -224,8 +281,8 @@ export const EQUIPMENT_LABELS: Record<string, CategoryMeta> = {
   },
 
   // --- Cardio / auxiliary types that appear inside exercises.json ------------
-  machine: { zh: '综合器械', en: 'Machine', icon: 'treadmill' },
-  'elliptical machine': { zh: '椭圆机', en: 'Elliptical', icon: 'treadmill' },
+  machine: { zh: '综合器械', en: 'Machine', icon: 'cog' },
+  'elliptical machine': { zh: '椭圆机', en: 'Elliptical', icon: 'bike' },
   'stationary bike': { zh: '动感单车', en: 'Stationary Bike', icon: 'bike' },
   treadmill: { zh: '跑步机', en: 'Treadmill', icon: 'run-fast' },
   stairmaster: { zh: '登山机', en: 'Stairmaster', icon: 'stairs' },
@@ -349,4 +406,52 @@ export function displayNameZh(ex: { name: string; name_zh?: string | null } | nu
     return zh.trim();
   }
   return ex.name || '';
+}
+
+// ============================================================================
+// BODY REGIONS — hierarchical grouping of the 10 canonical body parts.
+// Used by the Library filter to let users narrow from broad region down to
+// specific body part, reducing decision fatigue compared to showing all
+// 10 chips at once.  Inspired by Strong / Hevy / Fitbod filter UX.
+// ============================================================================
+
+export type BodyRegion = 'all' | 'upper' | 'lower' | 'core' | 'cardio' | 'neck';
+
+export const BODY_REGIONS: { key: BodyRegion; zh: string; en: string; icon: string; parts: BodyPart[] }[] = [
+  { key: 'all', zh: '全部', en: 'All', icon: 'view-grid-outline', parts: [] },
+  { key: 'upper', zh: '上肢', en: 'Upper Body', icon: 'arm-flex', parts: ['back', 'chest', 'shoulders', 'upper arms', 'lower arms'] },
+  { key: 'lower', zh: '下肢', en: 'Lower Body', icon: 'human-male-board-poll', parts: ['upper legs', 'lower legs'] },
+  { key: 'core', zh: '核心', en: 'Core', icon: 'weight-lifter', parts: ['waist'] },
+  { key: 'cardio', zh: '有氧', en: 'Cardio', icon: 'run-fast', parts: ['cardio'] },
+  { key: 'neck', zh: '颈部', en: 'Neck', icon: 'account-cowboy-hat-outline', parts: ['neck'] },
+];
+
+export function bodyPartBelongsToRegion(bp: BodyPart, region: BodyRegion): boolean {
+  if (region === 'all') return true;
+  const r = BODY_REGIONS.find((x) => x.key === region);
+  return r ? r.parts.includes(bp) : false;
+}
+
+// ============================================================================
+// EQUIPMENT GROUPS — grouping 28 equipment types into 6 intuitive categories.
+// Reduces the 28-chip horizontal scroll to 7 group tabs, then shows only
+// the relevant equipment chips for that group.
+// ============================================================================
+
+export type EquipmentGroup = 'all' | 'free' | 'machine' | 'cable' | 'band' | 'bodyweight' | 'cardio';
+
+export const EQUIPMENT_GROUPS: { key: EquipmentGroup; zh: string; en: string; icon: string; items: string[] }[] = [
+  { key: 'all', zh: '全部', en: 'All', icon: 'view-grid-outline', items: [] },
+  { key: 'free', zh: '自由重量', en: 'Free Weights', icon: 'dumbbell', items: ['dumbbell', 'barbell', 'ez barbell', 'kettlebell', 'olympic barbell', 'trap bar', 'hammer'] },
+  { key: 'machine', zh: '固定器械', en: 'Machines', icon: 'cog', items: ['leverage machine', 'smith machine', 'sled machine', 'machine', 'stepmill machine', 'stairmaster'] },
+  { key: 'cable', zh: '绳索', en: 'Cable', icon: 'link-variant', items: ['cable'] },
+  { key: 'band', zh: '弹力带', en: 'Bands', icon: 'tape-measure', items: ['band', 'resistance band'] },
+  { key: 'bodyweight', zh: '自重/辅助', en: 'Body Weight', icon: 'human-greeting-proximity', items: ['body weight', 'weighted', 'assisted', 'roller', 'wheel roller', 'bosu ball', 'foam', 'medicine ball', 'exercise ball'] },
+  { key: 'cardio', zh: '有氧器械', en: 'Cardio', icon: 'run-fast', items: ['treadmill', 'elliptical machine', 'stationary bike', 'upper body ergometer', 'skierg machine', 'rope', 'tire'] },
+];
+
+export function equipmentBelongsToGroup(eq: string, group: EquipmentGroup): boolean {
+  if (group === 'all') return true;
+  const g = EQUIPMENT_GROUPS.find((x) => x.key === group);
+  return g ? g.items.includes(eq) : false;
 }

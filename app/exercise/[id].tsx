@@ -1,11 +1,10 @@
 import React, { useCallback, useMemo } from 'react';
-import { View, Text, ScrollView, StyleSheet, Alert, Image as RNImage } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Alert } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Image } from 'expo-image';
 import { useTranslation } from 'react-i18next';
 import type { Exercise } from '@/types';
-import { colors, spacing, radius, layout } from '@/theme';
+import { useThemeColors, spacing, radius, layout } from '@/theme';
 import {
   getImageUrl,
   getAnimationUrl,
@@ -26,8 +25,8 @@ import {
   Icon,
   Badge,
   SlabDivider,
-  CategoryInfoNote,
 } from '@/components/UIKit';
+import { GifPlayer } from '@/components/GifPlayer';
 
 const instructionsFor = (ex: Exercise, lang: 'zh' | 'en'): string[] => {
   // 1) Prefer structured instruction_steps (1,324 / 1,324 actions ship this as string[]).
@@ -58,6 +57,260 @@ const instructionsFor = (ex: Exercise, lang: 'zh' | 'en'): string[] => {
 export default function ExerciseDetailScreen() {
   const { t, i18n } = useTranslation();
   const router = useRouter();
+  const colors = useThemeColors();
+
+  // ====== Theme-aware styles ======
+  const styles = useMemo(() => StyleSheet.create({
+    screen: { flex: 1, backgroundColor: colors.bg },
+    content: { paddingHorizontal: layout.paddingHorizontal, paddingTop: spacing.sm },
+    emptyWrap: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingHorizontal: layout.paddingHorizontal,
+      gap: spacing.md,
+    },
+    emptyTitle: {
+      fontSize: 20,
+      fontWeight: '900',
+      letterSpacing: -0.2,
+      color: colors.textPrimary,
+    },
+    emptyDesc: {
+      fontSize: 13,
+      color: colors.textSecondary,
+      textAlign: 'center',
+      lineHeight: 20,
+      marginBottom: spacing.sm,
+    },
+    backBtn: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.xs,
+      backgroundColor: colors.primary,
+      paddingHorizontal: spacing.lg,
+      paddingVertical: spacing.sm,
+      borderRadius: 999,
+    },
+    backBtnText: {
+      fontSize: 12,
+      fontWeight: '800',
+      color: colors.textInverse,
+    },
+    navBar: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: layout.paddingHorizontal,
+      paddingVertical: spacing.sm,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.surfaceDivider,
+      backgroundColor: colors.bg,
+    },
+    navBtn: {
+      width: 38,
+      height: 38,
+      borderRadius: radius.md,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    navTitle: {
+      fontSize: 15,
+      fontWeight: '800',
+      color: colors.textPrimary,
+      textAlign: 'center',
+      letterSpacing: -0.1,
+    },
+    heroWrap: {
+      marginBottom: spacing.lg,
+      marginTop: spacing.md,
+    },
+    heroImage: {
+      width: '100%',
+      aspectRatio: 4 / 3,
+      borderRadius: radius.lg,
+      overflow: 'hidden',
+      borderWidth: 1,
+      backgroundColor: colors.surfaceElevated,
+      position: 'relative',
+    },
+    heroBottomBand: {
+      position: 'absolute',
+      left: spacing.sm,
+      bottom: spacing.sm,
+      right: spacing.sm,
+      flexDirection: 'row',
+      gap: spacing.sm,
+      padding: spacing.sm,
+      borderRadius: radius.md,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      flexWrap: 'wrap',
+    },
+    heroAccent: {
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      bottom: 0,
+      width: 3,
+    },
+    heroPlaceholder: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: spacing.lg,
+      gap: spacing.md,
+    },
+    heroPlaceholderIcon: {
+      width: 72,
+      height: 72,
+      borderRadius: 36,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    heroPlaceholderText: {
+      fontSize: 15,
+      fontWeight: '900',
+      letterSpacing: -0.2,
+      textAlign: 'center',
+      lineHeight: 20,
+    },
+    animationRow: {
+      marginTop: spacing.sm,
+      padding: spacing.md,
+      borderRadius: radius.lg,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: spacing.sm,
+    },
+    animLeft: {
+      flex: 1,
+      minWidth: 0,
+    },
+    animLabelRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 6,
+      marginBottom: 2,
+    },
+    animLabel: {
+      fontSize: 13,
+      fontWeight: '800',
+      color: colors.textPrimary,
+    },
+    animSub: {
+      fontSize: 12,
+      fontWeight: '500',
+      color: colors.textSecondary,
+    },
+    animPlayBtn: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.xs,
+      backgroundColor: colors.muscle.shoulders + '18',
+      paddingHorizontal: spacing.sm + 4,
+      paddingVertical: spacing.sm,
+      borderRadius: 999,
+      borderWidth: 1,
+      borderColor: colors.muscle.shoulders + '40',
+    },
+    animPlayInner: {
+      width: 24,
+      height: 24,
+      borderRadius: 12,
+      backgroundColor: colors.muscle.shoulders,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    animPlayText: {
+      fontSize: 12,
+      fontWeight: '800',
+      color: colors.muscle.shoulders,
+    },
+    titleBlock: {
+      marginBottom: spacing.lg,
+    },
+    zhRow: {
+      marginBottom: 4,
+    },
+    zhName: {
+      fontSize: 22,
+      fontWeight: '900',
+      letterSpacing: -0.4,
+      lineHeight: 28,
+      color: colors.textPrimary,
+    },
+    enRow: {
+      marginBottom: spacing.sm,
+    },
+    enName: {
+      fontSize: 13,
+      fontWeight: '600',
+      letterSpacing: 0.2,
+      lineHeight: 18,
+      color: colors.textSecondary,
+    },
+    targetRow: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: spacing.sm,
+    },
+    metaGrid: {
+      flexDirection: 'row',
+      gap: spacing.sm,
+      marginBottom: spacing.md,
+    },
+    ctaBox: {
+      gap: spacing.sm,
+    },
+    ctaPrimary: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.sm,
+      backgroundColor: colors.primary,
+      paddingVertical: spacing.md,
+      paddingHorizontal: spacing.lg,
+      borderRadius: radius.lg,
+    },
+    ctaPrimaryIcon: {
+      width: 28,
+      height: 28,
+      borderRadius: 14,
+      backgroundColor: colors.textInverse + '22',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    ctaPrimaryText: {
+      flex: 1,
+      fontSize: 14,
+      fontWeight: '900',
+      letterSpacing: -0.1,
+      color: colors.textInverse,
+    },
+    ctaSecondary: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: spacing.xs,
+      paddingVertical: spacing.sm + 2,
+      paddingHorizontal: spacing.lg,
+      borderRadius: radius.lg,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+    },
+    ctaSecondaryText: {
+      fontSize: 13,
+      fontWeight: '800',
+      color: colors.textPrimary,
+    },
+  }), [colors]);
   const params = useLocalSearchParams<{ id: string }>();
   // useLocalSearchParams can return `string | string[]` depending on whether
   // the dynamic route segment was visited via deep link with duplicate params.
@@ -72,24 +325,6 @@ export default function ExerciseDetailScreen() {
     return all.find((e) => e.id === id) || null;
   }, [id]);
   const [showAnim, setShowAnim] = React.useState(false);
-  // Animation on-error safety: if the CDN GIF fails to load (404, offline,
-  // CORS, or an OEM network stack quirk) we silently fall back to the static
-  // thumbnail so the user never sees a blank hero slab with a "play" toggle
-  // that does nothing.  Without this, some Android 16 devices leave a fully
-  // transparent <RNImage> after RN core's Fresco pipeline fails to decode.
-  const [animErrored, setAnimErrored] = React.useState(false);
-  // Static-image on-error safety: when even the poster JPG cannot be loaded we
-  // show a solid muscle-color placeholder with icon + name so the hero is
-  // never blank.  Offline users and ad-blocking DNS resolvers are the main
-  // consumers of this branch.
-  const [imgErrored, setImgErrored] = React.useState(false);
-  React.useEffect(() => {
-    // Reset error state whenever the user toggles animation mode OR navigates
-    // to a different exercise.  Otherwise a transient network failure would
-    // permanently disable GIF playback for this exercise in this session.
-    setAnimErrored(false);
-    setImgErrored(false);
-  }, [id, showAnim]);
 
   const settings = useAppStore((s) => s.settings);
   const isFavorite = useAppStore((s) => s.isFavorite(id));
@@ -97,6 +332,7 @@ export default function ExerciseDetailScreen() {
   const addExerciseToActive = useAppStore((s) => s.addExerciseToActive);
   const startWorkout = useAppStore((s) => s.startWorkout);
   const activeWorkout = useAppStore((s) => s.activeWorkout);
+
 
   if (!exercise) {
     return (
@@ -134,9 +370,10 @@ export default function ExerciseDetailScreen() {
     if (!activeWorkout) startWorkout();
     addExerciseToActive(exercise.id);
     safeHaptic('success');
+    const dispName = effectiveLang === 'zh' ? displayNameZh(exercise) : exercise.name;
     Alert.alert(
       t('exercise.addedTitle'),
-      `「${displayNameZh(exercise)}」${t('exercise.addedToWorkout')}`,
+      `「${dispName}」${t('exercise.addedToWorkout')}`,
       [
         { text: t('common.close'), style: 'cancel' },
         {
@@ -175,7 +412,7 @@ export default function ExerciseDetailScreen() {
         </PressableScale>
         <View style={{ flex: 1, minWidth: 0, marginHorizontal: spacing.sm }}>
           <Text style={styles.navTitle} numberOfLines={1}>
-            {displayNameZh(exercise)}
+            {effectiveLang === 'zh' ? displayNameZh(exercise) : exercise.name}
           </Text>
         </View>
         <PressableScale
@@ -202,39 +439,12 @@ export default function ExerciseDetailScreen() {
         {/* IMAGE + ANIMATION HERO */}
         <View style={styles.heroWrap}>
           <View style={[styles.heroImage, { borderColor: muscleColor + '33' }]}>
-            {showAnim && !animErrored ? (
-              // Animated GIF layer — rendered via React Native core Image so
-              // Fresco (Android) decodes animation frames properly. expo-image
-              // does not guarantee animated GIF playback on every RN build.
-              <RNImage
-                key={exercise.gif_url + String(showAnim)}
-                source={{ uri: getImageUrl(exercise.gif_url) }}
-                style={{ width: '100%', height: '100%' }}
-                resizeMode="cover"
-                onError={() => setAnimErrored(true)}
-              />
-            ) : imgErrored ? (
-              // Static-image failed to load — fall back to a solid muscle-tint
-              // placeholder with a prominent action icon so the hero slab
-              // never appears empty to offline / DNS-blocked users.
-              <View style={[styles.heroPlaceholder, { backgroundColor: muscleColor + '18' }]}>
-                <View style={[styles.heroPlaceholderIcon, { backgroundColor: muscleColor + '28' }]}>
-                  <Icon name="dumbbell" size={42} color={muscleColor} />
-                </View>
-                <Text style={[styles.heroPlaceholderText, { color: muscleColor }]} numberOfLines={2}>
-                  {displayNameZh(exercise)}
-                </Text>
-              </View>
-            ) : (
-              <Image
-                source={getImageUrl(exercise.image)}
-                style={{ width: '100%', height: '100%' }}
-                contentFit="cover"
-                transition={250}
-                onError={() => setImgErrored(true)}
-                placeholder={require('@/../assets/icon.png')}
-              />
-            )}
+            <GifPlayer
+              gifUri={getAnimationUrl(exercise.gif_url)}
+              posterUri={getImageUrl(exercise.image)}
+              active={showAnim}
+              tint={muscleColor}
+            />
             <View style={[styles.heroBottomBand, { backgroundColor: muscleColor + '14' }]}>
               <Badge
                 icon={iconForBodyPart(exercise.body_part)}
@@ -263,9 +473,7 @@ export default function ExerciseDetailScreen() {
                 </Text>
               </View>
               <Text style={styles.animSub}>
-                {animErrored
-                  ? t('exercise.animFallbackNote')
-                  : showAnim
+                {showAnim
                   ? t('exercise.hideAnimation')
                   : t('app.poweredBy')}
               </Text>
@@ -282,18 +490,27 @@ export default function ExerciseDetailScreen() {
           </View>
         </View>
 
-        {/* NAME + SUBTITLE */}
+        {/* NAME — single language, no bilingual clutter */}
         <View style={styles.titleBlock}>
           <View style={styles.zhRow}>
             <Text style={styles.zhName} numberOfLines={2}>
-              {displayNameZh(exercise)}
+              {effectiveLang === 'zh' ? displayNameZh(exercise) : exercise.name}
             </Text>
           </View>
-          <View style={styles.enRow}>
-            <Text style={styles.enName} numberOfLines={2}>
-              {exercise.name}
-            </Text>
-          </View>
+          {effectiveLang !== 'zh' && exercise.name_zh && /[\u4e00-\u9fff]/.test(exercise.name_zh) ? (
+            <View style={styles.enRow}>
+              <Text style={styles.enName} numberOfLines={1}>
+                {exercise.name_zh}
+              </Text>
+            </View>
+          ) : null}
+          {effectiveLang === 'zh' && exercise.name_zh && !/[\u4e00-\u9fff]/.test(exercise.name_zh) ? null : effectiveLang === 'zh' ? (
+            <View style={styles.enRow}>
+              <Text style={styles.enName} numberOfLines={1}>
+                {exercise.name}
+              </Text>
+            </View>
+          ) : null}
           <View style={styles.targetRow}>
             <Badge
               icon="crosshairs-gps"
@@ -330,41 +547,31 @@ export default function ExerciseDetailScreen() {
           />
         </View>
 
-        {/* CLASSIFICATION NOTE */}
-        <CategoryInfoNote
-          icon="book-open-page-variant"
-          text={t('app.poweredBy')}
-          accent={colors.info}
-        />
-
-        {/* CHINESE INSTRUCTIONS */}
+        {/* INSTRUCTIONS — single language */}
         <SlabDivider accent={muscleColor} />
-        <SectionTitle icon="text-box-check-outline" title={t('exercise.instructions') + ' · ZH'} color={muscleColor} />
-        {zhIns.length === 0 ? (
-          <EmptyNote
-            icon="text-remove-outline"
-            title={t('exercise.instructionsEmpty')}
-            desc={t('home.emptyDesc')}
-          />
-        ) : (
-          <StepList items={zhIns} accent={muscleColor} />
-        )}
-
-        {/* ENGLISH INSTRUCTIONS */}
-        <SlabDivider accent={colors.info} />
         <SectionTitle
-          icon="text-box-outline"
-          title={t('exercise.instructions') + ' · EN'}
-          color={colors.info}
+          icon="text-box-check-outline"
+          title={t('exercise.instructions')}
+          color={muscleColor}
         />
-        {enIns.length === 0 ? (
+        {effectiveLang === 'zh' ? (
+          zhIns.length === 0 ? (
+            <EmptyNote
+              icon="text-remove-outline"
+              title={t('exercise.instructionsEmpty')}
+              desc={t('home.emptyDesc')}
+            />
+          ) : (
+            <StepList items={zhIns} accent={muscleColor} />
+          )
+        ) : enIns.length === 0 ? (
           <EmptyNote
             icon="text-remove-outline"
             title={t('exercise.instructionsEmpty')}
             desc={t('home.emptyDesc')}
           />
         ) : (
-          <StepList items={enIns} accent={colors.info} />
+          <StepList items={enIns} accent={muscleColor} />
         )}
 
         <View style={{ height: spacing.xl }} />
@@ -422,6 +629,28 @@ function SectionTitle({
   title: string;
   color: string;
 }) {
+  const colors = useThemeColors();
+  const sec = useMemo(() => StyleSheet.create({
+    wrap: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.sm,
+      marginBottom: spacing.md,
+      marginTop: spacing.md,
+    },
+    icon: {
+      width: 30,
+      height: 30,
+      borderRadius: radius.sm,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    title: {
+      fontSize: 15,
+      fontWeight: '800',
+      letterSpacing: -0.1,
+    },
+  }), [colors]);
   return (
     <View style={sec.wrap}>
       <View style={[sec.icon, { backgroundColor: color + '16' }]}>
@@ -439,6 +668,43 @@ function StepList({
   items: string[];
   accent: string;
 }) {
+  const colors = useThemeColors();
+  const st = useMemo(() => StyleSheet.create({
+    wrap: {
+      gap: spacing.sm,
+    },
+    row: {
+      flexDirection: 'row',
+      gap: spacing.sm,
+      padding: spacing.md,
+      backgroundColor: colors.surface,
+      borderRadius: radius.md,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      alignItems: 'flex-start',
+    },
+    idx: {
+      width: 24,
+      height: 24,
+      borderRadius: 12,
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexShrink: 0,
+    },
+    idxText: {
+      fontSize: 12,
+      fontWeight: '900',
+      color: colors.textInverse,
+      lineHeight: 14,
+    },
+    step: {
+      flex: 1,
+      fontSize: 13,
+      fontWeight: '500',
+      color: colors.textPrimary,
+      lineHeight: 20,
+    },
+  }), [colors]);
   return (
     <View style={st.wrap}>
       {items.map((step, i) => (
@@ -466,6 +732,60 @@ function MetaCell({
   accent: string;
   note?: string;
 }) {
+  const colors = useThemeColors();
+  const m = useMemo(() => StyleSheet.create({
+    wrap: {
+      flex: 1,
+      minWidth: 0,
+      backgroundColor: colors.surface,
+      borderRadius: radius.lg,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      overflow: 'hidden',
+    },
+    top: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.sm,
+      padding: spacing.md,
+      borderBottomWidth: 1,
+      borderColor: colors.surfaceDivider,
+    },
+    icon: {
+      width: 34,
+      height: 34,
+      borderRadius: radius.md,
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexShrink: 0,
+    },
+    label: {
+      fontSize: 10,
+      fontWeight: '800',
+      color: colors.textTertiary,
+      textTransform: 'uppercase',
+      letterSpacing: 0.8,
+      marginBottom: 2,
+    },
+    value: {
+      fontSize: 14,
+      fontWeight: '900',
+      letterSpacing: -0.1,
+    },
+    note: {
+      flexDirection: 'row',
+      paddingHorizontal: spacing.md,
+      paddingVertical: spacing.sm,
+      backgroundColor: colors.surfaceElevated,
+    },
+    noteText: {
+      flex: 1,
+      fontSize: 11,
+      fontWeight: '500',
+      color: colors.textSecondary,
+      lineHeight: 16,
+    },
+  }), [colors]);
   return (
     <View style={m.wrap}>
       <View style={[m.top, { borderColor: accent + '33' }]}>
@@ -501,6 +821,41 @@ function EmptyNote({
   title: string;
   desc: string;
 }) {
+  const colors = useThemeColors();
+  const en = useMemo(() => StyleSheet.create({
+    wrap: {
+      flexDirection: 'row',
+      gap: spacing.sm,
+      padding: spacing.md,
+      borderRadius: radius.md,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      borderStyle: 'dashed',
+      backgroundColor: colors.surface,
+      alignItems: 'center',
+    },
+    icon: {
+      width: 38,
+      height: 38,
+      borderRadius: radius.md,
+      backgroundColor: colors.surfaceElevated,
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexShrink: 0,
+    },
+    title: {
+      fontSize: 13,
+      fontWeight: '800',
+      color: colors.textPrimary,
+      marginBottom: 2,
+    },
+    desc: {
+      fontSize: 12,
+      fontWeight: '500',
+      color: colors.textSecondary,
+      lineHeight: 18,
+    },
+  }), [colors]);
   return (
     <View style={en.wrap}>
       <View style={en.icon}>
@@ -515,405 +870,5 @@ function EmptyNote({
 }
 
 // ============================================================
-// Styles
+// End of file (all styles moved into components via useMemo + useThemeColors)
 // ============================================================
-
-const styles = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: colors.bg },
-  content: { paddingHorizontal: layout.paddingHorizontal, paddingTop: spacing.sm },
-  emptyWrap: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: layout.paddingHorizontal,
-    gap: spacing.md,
-  },
-  emptyTitle: {
-    fontSize: 20,
-    fontWeight: '900',
-    letterSpacing: -0.2,
-    color: colors.textPrimary,
-  },
-  emptyDesc: {
-    fontSize: 13,
-    color: colors.textSecondary,
-    textAlign: 'center',
-    lineHeight: 20,
-    marginBottom: spacing.sm,
-  },
-  backBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.xs,
-    backgroundColor: colors.primary,
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.sm,
-    borderRadius: 999,
-  },
-  backBtnText: {
-    fontSize: 12,
-    fontWeight: '800',
-    color: colors.textInverse,
-  },
-  navBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: layout.paddingHorizontal,
-    paddingVertical: spacing.sm,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.surfaceDivider,
-    backgroundColor: colors.bg,
-  },
-  navBtn: {
-    width: 38,
-    height: 38,
-    borderRadius: radius.md,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  navTitle: {
-    fontSize: 15,
-    fontWeight: '800',
-    color: colors.textPrimary,
-    textAlign: 'center',
-    letterSpacing: -0.1,
-  },
-  heroWrap: {
-    marginBottom: spacing.lg,
-    marginTop: spacing.md,
-  },
-  heroImage: {
-    width: '100%',
-    aspectRatio: 4 / 3,
-    borderRadius: radius.lg,
-    overflow: 'hidden',
-    borderWidth: 1,
-    backgroundColor: colors.surfaceElevated,
-    position: 'relative',
-  },
-  heroBottomBand: {
-    position: 'absolute',
-    left: spacing.sm,
-    bottom: spacing.sm,
-    right: spacing.sm,
-    flexDirection: 'row',
-    gap: spacing.sm,
-    padding: spacing.sm,
-    borderRadius: radius.md,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    flexWrap: 'wrap',
-  },
-  heroAccent: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    bottom: 0,
-    width: 3,
-  },
-  heroPlaceholder: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: spacing.lg,
-    gap: spacing.md,
-  },
-  heroPlaceholderIcon: {
-    width: 72,
-    height: 72,
-    borderRadius: 36,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  heroPlaceholderText: {
-    fontSize: 15,
-    fontWeight: '900',
-    letterSpacing: -0.2,
-    textAlign: 'center',
-    lineHeight: 20,
-  },
-  animationRow: {
-    marginTop: spacing.sm,
-    padding: spacing.md,
-    borderRadius: radius.lg,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: spacing.sm,
-  },
-  animLeft: {
-    flex: 1,
-    minWidth: 0,
-  },
-  animLabelRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    marginBottom: 2,
-  },
-  animLabel: {
-    fontSize: 13,
-    fontWeight: '800',
-    color: colors.textPrimary,
-  },
-  animSub: {
-    fontSize: 12,
-    fontWeight: '500',
-    color: colors.textSecondary,
-  },
-  animPlayBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.xs,
-    backgroundColor: colors.muscle.shoulders + '18',
-    paddingHorizontal: spacing.sm + 4,
-    paddingVertical: spacing.sm,
-    borderRadius: 999,
-    borderWidth: 1,
-    borderColor: colors.muscle.shoulders + '40',
-  },
-  animPlayInner: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: colors.muscle.shoulders,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  animPlayText: {
-    fontSize: 12,
-    fontWeight: '800',
-    color: colors.muscle.shoulders,
-  },
-  titleBlock: {
-    marginBottom: spacing.lg,
-  },
-  zhRow: {
-    marginBottom: 4,
-  },
-  zhName: {
-    fontSize: 22,
-    fontWeight: '900',
-    letterSpacing: -0.4,
-    lineHeight: 28,
-    color: colors.textPrimary,
-  },
-  enRow: {
-    marginBottom: spacing.sm,
-  },
-  enName: {
-    fontSize: 13,
-    fontWeight: '600',
-    letterSpacing: 0.2,
-    lineHeight: 18,
-    color: colors.textSecondary,
-  },
-  targetRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: spacing.sm,
-  },
-  metaGrid: {
-    flexDirection: 'row',
-    gap: spacing.sm,
-    marginBottom: spacing.md,
-  },
-  ctaBox: {
-    gap: spacing.sm,
-  },
-  ctaPrimary: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.sm,
-    backgroundColor: colors.primary,
-    paddingVertical: spacing.md,
-    paddingHorizontal: spacing.lg,
-    borderRadius: radius.lg,
-  },
-  ctaPrimaryIcon: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: colors.textInverse + '22',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ctaPrimaryText: {
-    flex: 1,
-    fontSize: 14,
-    fontWeight: '900',
-    letterSpacing: -0.1,
-    color: colors.textInverse,
-  },
-  ctaSecondary: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing.xs,
-    paddingVertical: spacing.sm + 2,
-    paddingHorizontal: spacing.lg,
-    borderRadius: radius.lg,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-  },
-  ctaSecondaryText: {
-    fontSize: 13,
-    fontWeight: '800',
-    color: colors.textPrimary,
-  },
-});
-
-const sec = StyleSheet.create({
-  wrap: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.sm,
-    marginBottom: spacing.md,
-    marginTop: spacing.md,
-  },
-  icon: {
-    width: 30,
-    height: 30,
-    borderRadius: radius.sm,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 15,
-    fontWeight: '800',
-    letterSpacing: -0.1,
-  },
-});
-
-const st = StyleSheet.create({
-  wrap: {
-    gap: spacing.sm,
-  },
-  row: {
-    flexDirection: 'row',
-    gap: spacing.sm,
-    padding: spacing.md,
-    backgroundColor: colors.surface,
-    borderRadius: radius.md,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    alignItems: 'flex-start',
-  },
-  idx: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexShrink: 0,
-  },
-  idxText: {
-    fontSize: 12,
-    fontWeight: '900',
-    color: colors.textInverse,
-    lineHeight: 14,
-  },
-  step: {
-    flex: 1,
-    fontSize: 13,
-    fontWeight: '500',
-    color: colors.textPrimary,
-    lineHeight: 20,
-  },
-});
-
-const m = StyleSheet.create({
-  wrap: {
-    flex: 1,
-    minWidth: 0,
-    backgroundColor: colors.surface,
-    borderRadius: radius.lg,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    overflow: 'hidden',
-  },
-  top: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.sm,
-    padding: spacing.md,
-    borderBottomWidth: 1,
-    borderColor: colors.surfaceDivider,
-  },
-  icon: {
-    width: 34,
-    height: 34,
-    borderRadius: radius.md,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexShrink: 0,
-  },
-  label: {
-    fontSize: 10,
-    fontWeight: '800',
-    color: colors.textTertiary,
-    textTransform: 'uppercase',
-    letterSpacing: 0.8,
-    marginBottom: 2,
-  },
-  value: {
-    fontSize: 14,
-    fontWeight: '900',
-    letterSpacing: -0.1,
-  },
-  note: {
-    flexDirection: 'row',
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-    backgroundColor: colors.surfaceElevated,
-  },
-  noteText: {
-    flex: 1,
-    fontSize: 11,
-    fontWeight: '500',
-    color: colors.textSecondary,
-    lineHeight: 16,
-  },
-});
-
-const en = StyleSheet.create({
-  wrap: {
-    flexDirection: 'row',
-    gap: spacing.sm,
-    padding: spacing.md,
-    borderRadius: radius.md,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    borderStyle: 'dashed',
-    backgroundColor: colors.surface,
-    alignItems: 'center',
-  },
-  icon: {
-    width: 38,
-    height: 38,
-    borderRadius: radius.md,
-    backgroundColor: colors.surfaceElevated,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexShrink: 0,
-  },
-  title: {
-    fontSize: 13,
-    fontWeight: '800',
-    color: colors.textPrimary,
-    marginBottom: 2,
-  },
-  desc: {
-    fontSize: 12,
-    fontWeight: '500',
-    color: colors.textSecondary,
-    lineHeight: 18,
-  },
-});

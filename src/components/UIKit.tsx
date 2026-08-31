@@ -1,4 +1,4 @@
-import React, { memo, forwardRef, useState, useCallback } from 'react';
+import React, { memo, forwardRef, useState, useCallback, useMemo } from 'react';
 import {
   View,
   Text,
@@ -18,7 +18,7 @@ import Animated, {
   WithSpringConfig,
 } from 'react-native-reanimated';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { colors, typography, spacing, radius, layout } from '@/theme';
+import { useThemeColors, typography, spacing, radius, layout } from '@/theme';
 
 // ==========================================================================
 // Icon — single gateway for MaterialCommunityIcons.  Everything goes through
@@ -35,7 +35,7 @@ export interface IconProps {
 export const Icon = memo(function Icon({
   name,
   size = 18,
-  color = colors.textPrimary,
+  color,
   style,
 }: IconProps) {
   return (
@@ -118,9 +118,49 @@ export function SectionHeader({
   title,
   icon,
   inline = false,
-  accent = colors.primary,
+  accent,
   note,
 }: SectionHeaderProps) {
+  const colors = useThemeColors();
+  const resolvedAccent = accent ?? colors.primary;
+  const styles = useMemo(() => StyleSheet.create({
+    sectionHeader: {
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      gap: spacing.sm,
+      marginBottom: spacing.md,
+      paddingTop: 2,
+    },
+    sectionHeaderInline: {
+      marginBottom: 0,
+      flex: 1,
+    },
+    rule: {
+      width: 3,
+      height: 16,
+      borderRadius: 2,
+      marginTop: 2,
+    },
+    iconTray: {
+      width: 24,
+      height: 24,
+      borderRadius: 12,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    sectionTitle: {
+      ...typography.h3,
+      color: colors.textPrimary,
+      flexShrink: 1,
+    },
+    sectionNote: {
+      ...typography.caption,
+      color: colors.textTertiary,
+      marginTop: 2,
+      lineHeight: 16,
+    },
+  }), [colors]);
+
   return (
     <View
       style={[
@@ -128,10 +168,10 @@ export function SectionHeader({
         inline && styles.sectionHeaderInline,
       ]}
     >
-      <View style={[styles.rule, { backgroundColor: accent }]} />
+      <View style={[styles.rule, { backgroundColor: resolvedAccent }]} />
       {icon ? (
-        <View style={[styles.iconTray, { backgroundColor: accent + '18' }]}>
-          <Icon name={icon} size={14} color={accent} />
+        <View style={[styles.iconTray, { backgroundColor: resolvedAccent + '18' }]}>
+          <Icon name={icon} size={14} color={resolvedAccent} />
         </View>
       ) : null}
       <View style={{ flex: 1, minWidth: 0 }}>
@@ -153,25 +193,27 @@ export function SectionHeader({
 // between major sections so the hierarchy reads like folded metal plates.
 // ==========================================================================
 
-export function SlabDivider({ accent = colors.primary }: { accent?: string }) {
+export function SlabDivider({ accent }: { accent?: string }) {
+  const colors = useThemeColors();
+  const resolvedAccent = accent ?? colors.primary;
+  const slabStyles = useMemo(() => StyleSheet.create({
+    wrap: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      height: 1,
+      marginVertical: spacing.md,
+    },
+    notch: { width: 32, height: 1 },
+    line: { flex: 1, height: 1, backgroundColor: colors.surfaceDivider },
+  }), [colors]);
+
   return (
     <View style={slabStyles.wrap}>
-      <View style={[slabStyles.notch, { backgroundColor: accent }]} />
+      <View style={[slabStyles.notch, { backgroundColor: resolvedAccent }]} />
       <View style={slabStyles.line} />
     </View>
   );
 }
-
-const slabStyles = StyleSheet.create({
-  wrap: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 1,
-    marginVertical: spacing.md,
-  },
-  notch: { width: 32, height: 1 },
-  line: { flex: 1, height: 1, backgroundColor: colors.surfaceDivider },
-});
 
 // ==========================================================================
 // SearchBar — pill, icons for search + clear, no emoji fallbacks.
@@ -190,6 +232,38 @@ function SearchBarImpl({
   placeholder = '搜索动作、肌肉、器械…',
   onClear,
 }: SearchBarProps) {
+  const colors = useThemeColors();
+  const searchStyles = useMemo(() => StyleSheet.create({
+    wrap: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: colors.surface,
+      borderRadius: radius.pill,
+      paddingHorizontal: spacing.lg,
+      height: 48,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      gap: spacing.sm,
+    },
+    input: {
+      flex: 1,
+      color: colors.textPrimary,
+      fontSize: 15,
+      fontWeight: '500',
+      letterSpacing: -0.1,
+      height: '100%',
+      paddingVertical: 0,
+    },
+    clearBtn: {
+      width: 22,
+      height: 22,
+      borderRadius: 11,
+      backgroundColor: colors.surfaceElevated,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  }), [colors]);
+
   return (
     <View style={searchStyles.wrap}>
       <Icon
@@ -257,11 +331,78 @@ export function StatsHero({
   suffixWorkouts,
   suffixVolume,
 }: StatsHeroProps) {
+  const colors = useThemeColors();
+  const heroStyles = useMemo(() => StyleSheet.create({
+    wrap: {
+      marginBottom: spacing.lg,
+      borderRadius: radius.xl,
+      padding: spacing.lg,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      overflow: 'hidden',
+      position: 'relative',
+    },
+    accentRule: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: 56,
+      height: 3,
+      backgroundColor: colors.primary,
+    },
+    row: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginTop: spacing.sm,
+    },
+    vSep: {
+      width: 1,
+      height: 36,
+      backgroundColor: colors.surfaceDivider,
+    },
+    statBlock: {
+      alignItems: 'center',
+      flex: 1,
+      gap: 4,
+    },
+    iconTray: {
+      width: 28,
+      height: 28,
+      borderRadius: 14,
+      backgroundColor: colors.surfaceElevated,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 2,
+    },
+    statValue: {
+      ...typography.display,
+      fontSize: 24,
+      color: colors.textPrimary,
+      letterSpacing: -0.6,
+    },
+    statSuffix: {
+      fontSize: 12,
+      fontWeight: '800',
+      color: colors.textTertiary,
+      letterSpacing: 0,
+    },
+    statLabel: {
+      ...typography.small,
+      color: colors.textSecondary,
+      textTransform: 'uppercase',
+      marginTop: 2,
+    },
+  }), [colors]);
+
   return (
     <View style={heroStyles.wrap}>
       <View style={heroStyles.accentRule} />
       <View style={heroStyles.row}>
         <StatBlock
+          colors={colors}
+          heroStyles={heroStyles}
           label={labelStreak}
           value={streak}
           suffix={suffixStreak}
@@ -270,6 +411,8 @@ export function StatsHero({
         />
         <View style={heroStyles.vSep} />
         <StatBlock
+          colors={colors}
+          heroStyles={heroStyles}
           label={labelWorkouts}
           value={workouts}
           suffix={suffixWorkouts}
@@ -277,6 +420,8 @@ export function StatsHero({
         />
         <View style={heroStyles.vSep} />
         <StatBlock
+          colors={colors}
+          heroStyles={heroStyles}
           label={labelVolume}
           value={formatVolume(volume)}
           suffix={suffixVolume ?? units}
@@ -298,9 +443,11 @@ interface StatBlockProps {
   suffix: string;
   icon: string;
   highlight?: boolean;
+  colors: ReturnType<typeof useThemeColors>;
+  heroStyles: any;
 }
 
-function StatBlock({ label, value, suffix, icon, highlight }: StatBlockProps) {
+function StatBlock({ label, value, suffix, icon, highlight, colors, heroStyles }: StatBlockProps) {
   return (
     <View style={heroStyles.statBlock}>
       <View
@@ -342,6 +489,59 @@ export interface EmptyStateProps {
 }
 
 export function EmptyState({ icon, title, desc, actionLabel, onAction }: EmptyStateProps) {
+  const colors = useThemeColors();
+  const emptyStyles = useMemo(() => StyleSheet.create({
+    wrap: {
+      paddingVertical: spacing.xxxl,
+      paddingHorizontal: spacing.xl,
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: spacing.sm,
+      backgroundColor: colors.surface,
+      borderRadius: radius.lg,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+    },
+    iconBox: {
+      width: 56,
+      height: 56,
+      borderRadius: 16,
+      backgroundColor: colors.surfaceElevated,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: spacing.sm,
+    },
+    title: {
+      ...typography.h3,
+      color: colors.textPrimary,
+    },
+    desc: {
+      ...typography.caption,
+      color: colors.textSecondary,
+      textAlign: 'center',
+      maxWidth: 260,
+    },
+    actionBtn: {
+      marginTop: spacing.sm,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.xs,
+      paddingHorizontal: spacing.md,
+      paddingVertical: spacing.sm,
+      borderRadius: radius.md,
+      borderWidth: 1,
+      borderColor: colors.primary,
+      backgroundColor: colors.primaryDim,
+    },
+    actionText: {
+      ...typography.captionBold,
+      color: colors.primary,
+      letterSpacing: 0.2,
+    },
+  }), [colors]);
+
   return (
     <View style={emptyStyles.wrap}>
       <View style={emptyStyles.iconBox}>
@@ -376,12 +576,42 @@ export function MiniStat({
   value,
   unit,
   icon,
-  iconColor = colors.textSecondary,
+  iconColor,
 }: MiniStatProps) {
+  const colors = useThemeColors();
+  const resolvedIconColor = iconColor ?? colors.textSecondary;
+  const miniStyles = useMemo(() => StyleSheet.create({
+    col: { alignItems: 'center', flex: 1, gap: 2 },
+    iconTray: {
+      width: 26,
+      height: 26,
+      borderRadius: 13,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 2,
+    },
+    value: {
+      ...typography.display,
+      fontSize: 20,
+      color: colors.textPrimary,
+      letterSpacing: -0.3,
+    },
+    unit: {
+      fontSize: 11,
+      fontWeight: '700',
+      color: colors.textTertiary,
+    },
+    label: {
+      ...typography.small,
+      color: colors.textSecondary,
+      marginTop: 2,
+    },
+  }), [colors]);
+
   return (
     <View style={miniStyles.col}>
-      <View style={[miniStyles.iconTray, { backgroundColor: iconColor + '15' }]}>
-        <Icon name={icon} size={14} color={iconColor} />
+      <View style={[miniStyles.iconTray, { backgroundColor: resolvedIconColor + '15' }]}>
+        <Icon name={icon} size={14} color={resolvedIconColor} />
       </View>
       <Text style={miniStyles.value}>
         {value}
@@ -406,288 +636,52 @@ export interface BadgeProps {
 export function Badge({
   icon,
   label,
-  color = colors.primary,
+  color,
   size = 'md',
 }: BadgeProps) {
+  const colors = useThemeColors();
+  const resolvedColor = color ?? colors.primary;
   const small = size === 'sm';
+  const badgeStyles = useMemo(() => StyleSheet.create({
+    wrap: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 4,
+      paddingHorizontal: spacing.sm,
+      paddingVertical: 5,
+      borderRadius: radius.sm,
+      borderWidth: 1,
+    },
+    wrapSm: {
+      paddingHorizontal: spacing.sm - 2,
+      paddingVertical: 3,
+      borderRadius: radius.sm,
+    },
+    text: {
+      ...typography.small,
+      fontWeight: '800',
+      letterSpacing: 0.1,
+    },
+    textSm: {
+      fontSize: 10,
+    },
+  }), []);
+
   return (
     <View
       style={[
         badgeStyles.wrap,
         small && badgeStyles.wrapSm,
-        { backgroundColor: color + '16', borderColor: color + '38' },
+        { backgroundColor: resolvedColor + '16', borderColor: resolvedColor + '38' },
       ]}
     >
-      <Icon name={icon} size={small ? 11 : 12} color={color} />
-      <Text style={[badgeStyles.text, small && badgeStyles.textSm, { color }]} numberOfLines={1}>
+      <Icon name={icon} size={small ? 11 : 12} color={resolvedColor} />
+      <Text style={[badgeStyles.text, small && badgeStyles.textSm, { color: resolvedColor }]} numberOfLines={1}>
         {label}
       </Text>
     </View>
   );
 }
-
-// ==========================================================================
-// CategoryInfoNote — explanation block shown below section headers,
-// describing what kind of actions fall into the category.
-// Mirrors the "classification by mechanics" explanation of the dataset.
-// ==========================================================================
-
-export function CategoryInfoNote({ icon, text, accent = colors.primary }: {
-  icon: string;
-  text: string;
-  accent?: string;
-}) {
-  return (
-    <View style={catNoteStyles.wrap}>
-      <View style={[catNoteStyles.lead, { backgroundColor: accent + '18' }]}>
-        <Icon name={icon} size={14} color={accent} />
-      </View>
-      <Text style={catNoteStyles.text}>{text}</Text>
-    </View>
-  );
-}
-
-// ==========================================================================
-// Styles
-// ==========================================================================
-
-const styles = StyleSheet.create({
-  sectionHeader: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: spacing.sm,
-    marginBottom: spacing.md,
-    paddingTop: 2,
-  },
-  sectionHeaderInline: {
-    marginBottom: 0,
-    flex: 1,
-  },
-  rule: {
-    width: 3,
-    height: 16,
-    borderRadius: 2,
-    marginTop: 2,
-  },
-  iconTray: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  sectionTitle: {
-    ...typography.h3,
-    color: colors.textPrimary,
-    flexShrink: 1,
-  },
-  sectionNote: {
-    ...typography.caption,
-    color: colors.textTertiary,
-    marginTop: 2,
-    lineHeight: 16,
-  },
-});
-
-const searchStyles = StyleSheet.create({
-  wrap: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.surface,
-    borderRadius: radius.pill,
-    paddingHorizontal: spacing.lg,
-    height: 48,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    gap: spacing.sm,
-  },
-  input: {
-    flex: 1,
-    color: colors.textPrimary,
-    fontSize: 15,
-    fontWeight: '500',
-    letterSpacing: -0.1,
-    height: '100%',
-    paddingVertical: 0,
-  },
-  clearBtn: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
-    backgroundColor: colors.surfaceElevated,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-const heroStyles = StyleSheet.create({
-  wrap: {
-    marginBottom: spacing.lg,
-    borderRadius: radius.xl,
-    padding: spacing.lg,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    overflow: 'hidden',
-    position: 'relative',
-  },
-  accentRule: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: 56,
-    height: 3,
-    backgroundColor: colors.primary,
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: spacing.sm,
-  },
-  vSep: {
-    width: 1,
-    height: 36,
-    backgroundColor: colors.surfaceDivider,
-  },
-  statBlock: {
-    alignItems: 'center',
-    flex: 1,
-    gap: 4,
-  },
-  iconTray: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: colors.surfaceElevated,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 2,
-  },
-  statValue: {
-    ...typography.display,
-    fontSize: 24,
-    color: colors.textPrimary,
-    letterSpacing: -0.6,
-  },
-  statSuffix: {
-    fontSize: 12,
-    fontWeight: '800',
-    color: colors.textTertiary,
-    letterSpacing: 0,
-  },
-  statLabel: {
-    ...typography.small,
-    color: colors.textSecondary,
-    textTransform: 'uppercase',
-    marginTop: 2,
-  },
-});
-
-const emptyStyles = StyleSheet.create({
-  wrap: {
-    paddingVertical: spacing.xxxl,
-    paddingHorizontal: spacing.xl,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing.sm,
-    backgroundColor: colors.surface,
-    borderRadius: radius.lg,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-  },
-  iconBox: {
-    width: 56,
-    height: 56,
-    borderRadius: 16,
-    backgroundColor: colors.surfaceElevated,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: spacing.sm,
-  },
-  title: {
-    ...typography.h3,
-    color: colors.textPrimary,
-  },
-  desc: {
-    ...typography.caption,
-    color: colors.textSecondary,
-    textAlign: 'center',
-    maxWidth: 260,
-  },
-  actionBtn: {
-    marginTop: spacing.sm,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.xs,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-    borderRadius: radius.md,
-    borderWidth: 1,
-    borderColor: colors.primary,
-    backgroundColor: colors.primaryDim,
-  },
-  actionText: {
-    ...typography.captionBold,
-    color: colors.primary,
-    letterSpacing: 0.2,
-  },
-});
-
-const miniStyles = StyleSheet.create({
-  col: { alignItems: 'center', flex: 1, gap: 2 },
-  iconTray: {
-    width: 26,
-    height: 26,
-    borderRadius: 13,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 2,
-  },
-  value: {
-    ...typography.display,
-    fontSize: 20,
-    color: colors.textPrimary,
-    letterSpacing: -0.3,
-  },
-  unit: {
-    fontSize: 11,
-    fontWeight: '700',
-    color: colors.textTertiary,
-  },
-  label: {
-    ...typography.small,
-    color: colors.textSecondary,
-    marginTop: 2,
-  },
-});
-
-const badgeStyles = StyleSheet.create({
-  wrap: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: 5,
-    borderRadius: radius.sm,
-    borderWidth: 1,
-  },
-  wrapSm: {
-    paddingHorizontal: spacing.sm - 2,
-    paddingVertical: 3,
-    borderRadius: radius.sm,
-  },
-  text: {
-    ...typography.small,
-    fontWeight: '800',
-    letterSpacing: 0.1,
-  },
-  textSm: {
-    fontSize: 10,
-  },
-});
 
 // ==========================================================================
 // OptionPicker — modal bottom-sheet style radio-list picker. Replaces the
@@ -729,10 +723,101 @@ function OptionPickerImpl<T extends string | number>(
     onSelect,
     onClose,
     cancelLabel = 'Cancel',
-    accent = colors.primary,
+    accent,
   }: OptionPickerProps<T>,
   _ref: React.Ref<View>
 ) {
+  const colors = useThemeColors();
+  const resolvedAccent = accent ?? colors.primary;
+  const op = useMemo(() => StyleSheet.create({
+    backdrop: {
+      flex: 1,
+      backgroundColor: 'rgba(0,0,0,0.45)',
+      justifyContent: 'flex-end',
+    },
+    sheet: {
+      backgroundColor: colors.bg,
+      borderTopLeftRadius: radius.xl,
+      borderTopRightRadius: radius.xl,
+      maxHeight: '80%',
+      borderTopWidth: 1,
+      borderTopColor: colors.surfaceBorder,
+    },
+    sheetHandle: {
+      alignSelf: 'center',
+      width: 40,
+      height: 4,
+      borderRadius: 2,
+      backgroundColor: colors.surfaceDivider,
+      marginTop: spacing.sm,
+      marginBottom: spacing.sm,
+    },
+    headerRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: layout.paddingHorizontal,
+      paddingVertical: spacing.sm,
+      justifyContent: 'space-between',
+    },
+    sheetTitle: {
+      ...typography.h3,
+      color: colors.textPrimary,
+      textAlign: 'center',
+      flex: 1,
+    },
+    closeBtn: {
+      width: 56,
+      alignItems: 'flex-end',
+      paddingVertical: spacing.xs,
+    },
+    closeText: {
+      ...typography.captionBold,
+      color: colors.textSecondary,
+    },
+    scroll: {
+      maxHeight: '100%',
+    },
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.sm,
+      padding: spacing.md,
+      backgroundColor: colors.surface,
+      borderRadius: radius.lg,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      marginBottom: spacing.sm,
+    },
+    rowIcon: {
+      width: 36,
+      height: 36,
+      borderRadius: radius.md,
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexShrink: 0,
+    },
+    rowLabel: {
+      ...typography.bodyBold,
+      color: colors.textPrimary,
+      marginBottom: 2,
+    },
+    rowSublabel: {
+      ...typography.caption,
+      color: colors.textTertiary,
+      lineHeight: 16,
+    },
+    radio: {
+      width: 24,
+      height: 24,
+      borderRadius: 12,
+      borderWidth: 2,
+      borderColor: colors.surfaceBorder,
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexShrink: 0,
+    },
+  }), [colors]);
+
   const handleSelect = useCallback(
     (v: T) => {
       onSelect(v);
@@ -789,8 +874,8 @@ function OptionPickerImpl<T extends string | number>(
                   style={[
                     op.row,
                     selected && {
-                      borderColor: accent + '66',
-                      backgroundColor: accent + '10',
+                      borderColor: resolvedAccent + '66',
+                      backgroundColor: resolvedAccent + '10',
                     },
                   ]}
                   scaleTo={0.985}
@@ -803,14 +888,14 @@ function OptionPickerImpl<T extends string | number>(
                         op.rowIcon,
                         {
                           backgroundColor:
-                            (opt.iconColor || accent) + '16',
+                            (opt.iconColor || resolvedAccent) + '16',
                         },
                       ]}
                     >
                       <Icon
                         name={opt.icon}
                         size={16}
-                        color={selected ? accent : (opt.iconColor || colors.textSecondary)}
+                        color={selected ? resolvedAccent : (opt.iconColor || colors.textSecondary)}
                       />
                     </View>
                   ) : null}
@@ -818,7 +903,7 @@ function OptionPickerImpl<T extends string | number>(
                     <Text
                       style={[
                         op.rowLabel,
-                        selected && { color: accent },
+                        selected && { color: resolvedAccent },
                       ]}
                       numberOfLines={1}
                     >
@@ -834,8 +919,8 @@ function OptionPickerImpl<T extends string | number>(
                     style={[
                       op.radio,
                       selected && {
-                        borderColor: accent,
-                        backgroundColor: accent,
+                        borderColor: resolvedAccent,
+                        backgroundColor: resolvedAccent,
                       },
                     ]}
                   >
@@ -881,155 +966,38 @@ export interface OptionPickerToggleProps {
 export function OptionPickerToggle({
   label,
   onPress,
-  accent = colors.primary,
+  accent,
   iconName = 'chevron-right',
 }: OptionPickerToggleProps) {
+  const colors = useThemeColors();
+  const resolvedAccent = accent ?? colors.primary;
+  const opToggle = useMemo(() => StyleSheet.create({
+    pill: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 4,
+      paddingHorizontal: spacing.sm,
+      paddingVertical: spacing.xs + 1,
+      borderRadius: 999,
+      backgroundColor: colors.surfaceElevated,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      minHeight: 30,
+      paddingRight: 6,
+    },
+    label: {
+      fontSize: 12,
+      fontWeight: '800',
+      maxWidth: 140,
+    },
+  }), [colors]);
+
   return (
     <PressableScale onPress={onPress} style={opToggle.pill}>
-      <Text style={[opToggle.label, { color: accent }]} numberOfLines={1}>
+      <Text style={[opToggle.label, { color: resolvedAccent }]} numberOfLines={1}>
         {label}
       </Text>
-      <Icon name={iconName} size={11} color={accent} />
+      <Icon name={iconName} size={11} color={resolvedAccent} />
     </PressableScale>
   );
 }
-
-const catNoteStyles = StyleSheet.create({
-  wrap: {
-    flexDirection: 'row',
-    gap: spacing.sm,
-    padding: spacing.md,
-    marginBottom: spacing.md,
-    backgroundColor: colors.surface,
-    borderRadius: radius.md,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-  },
-  lead: {
-    width: 26,
-    height: 26,
-    borderRadius: 13,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexShrink: 0,
-  },
-  text: {
-    ...typography.caption,
-    color: colors.textSecondary,
-    lineHeight: 19,
-    flex: 1,
-  },
-});
-
-// ==========================================================================
-// OptionPicker styles
-// ==========================================================================
-const op = StyleSheet.create({
-  backdrop: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.45)',
-    justifyContent: 'flex-end',
-  },
-  sheet: {
-    backgroundColor: colors.bg,
-    borderTopLeftRadius: radius.xl,
-    borderTopRightRadius: radius.xl,
-    maxHeight: '80%',
-    borderTopWidth: 1,
-    borderTopColor: colors.surfaceBorder,
-  },
-  sheetHandle: {
-    alignSelf: 'center',
-    width: 40,
-    height: 4,
-    borderRadius: 2,
-    backgroundColor: colors.surfaceDivider,
-    marginTop: spacing.sm,
-    marginBottom: spacing.sm,
-  },
-  headerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: layout.paddingHorizontal,
-    paddingVertical: spacing.sm,
-    justifyContent: 'space-between',
-  },
-  sheetTitle: {
-    ...typography.h3,
-    color: colors.textPrimary,
-    textAlign: 'center',
-    flex: 1,
-  },
-  closeBtn: {
-    width: 56,
-    alignItems: 'flex-end',
-    paddingVertical: spacing.xs,
-  },
-  closeText: {
-    ...typography.captionBold,
-    color: colors.textSecondary,
-  },
-  scroll: {
-    maxHeight: '100%',
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.sm,
-    padding: spacing.md,
-    backgroundColor: colors.surface,
-    borderRadius: radius.lg,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    marginBottom: spacing.sm,
-  },
-  rowIcon: {
-    width: 36,
-    height: 36,
-    borderRadius: radius.md,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexShrink: 0,
-  },
-  rowLabel: {
-    ...typography.bodyBold,
-    color: colors.textPrimary,
-    marginBottom: 2,
-  },
-  rowSublabel: {
-    ...typography.caption,
-    color: colors.textTertiary,
-    lineHeight: 16,
-  },
-  radio: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    borderWidth: 2,
-    borderColor: colors.surfaceBorder,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexShrink: 0,
-  },
-});
-
-const opToggle = StyleSheet.create({
-  pill: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.xs + 1,
-    borderRadius: 999,
-    backgroundColor: colors.surfaceElevated,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    minHeight: 30,
-    paddingRight: 6,
-  },
-  label: {
-    fontSize: 12,
-    fontWeight: '800',
-    maxWidth: 140,
-  },
-});

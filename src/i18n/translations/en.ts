@@ -94,6 +94,7 @@ export const en = {
     unitVolumeLb: 'lb·reps',
     unitDays: 'days',
     unitTimes: 'sessions',
+    restNext: 'Next set',
   },
   workoutSession: {
     newSession: 'Start session',
@@ -201,12 +202,15 @@ export const en = {
     saveHistoryDesc: 'Persist finished sessions to the history vault on-device.',
     hapticDesc: 'Vibration feedback on taps, toggles, and gesture actions.',
     defaultRestDesc: 'Starting countdown in seconds, overridable per session.',
+    // Section heading for the stats grid (previously missing → rendered raw key)
+    statsTitle: 'Overview',
     // MiniStat compact labels
     statSessions: 'Sessions',
     statExercises: 'Moves',
     statSets: 'Sets',
     statFavorites: 'Favs',
     statStreak: 'Streak',
+    statVolume: 'Volume',
     statUnits: 'items',
     statUnitReps: 'sets',
     statUnitFav: 'pins',

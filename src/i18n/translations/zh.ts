@@ -92,6 +92,7 @@ export const zh = {
     unitVolumeLb: 'lb·次',
     unitDays: '天',
     unitTimes: '次',
+    restNext: '下一组',
   },
   workoutSession: {
     newSession: '开始训练',
@@ -202,12 +203,15 @@ export const zh = {
     saveHistoryDesc: '完成训练后自动写入历史记录存储',
     hapticDesc: '点击、滑动操作时触发震动反馈',
     defaultRestDesc: '计时器默认秒数，训练页可单独覆盖',
+    // Section heading for the stats grid (previously missing → rendered raw key)
+    statsTitle: '训练概览',
     // MiniStat compact labels (2-4 glyphs, semantic, not arbitrary slices)
     statSessions: '训练',
     statExercises: '动作',
     statSets: '组数',
     statFavorites: '收藏',
     statStreak: '连续',
+    statVolume: '总容量',
     statUnits: '项',
     statUnitReps: '组',
     statUnitFav: '个',

@@ -3,7 +3,7 @@ import { View, Text, ScrollView, StyleSheet, Switch, Alert } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import Constants from 'expo-constants';
-import { colors, spacing, radius, layout } from '@/theme';
+import { useThemeColors, spacing, radius, layout } from '@/theme';
 import { useAppStore } from '@/store/useAppStore';
 import { normalizeLanguage } from '@/i18n';
 import type { LanguageCode, WeightUnit } from '@/types';
@@ -12,7 +12,6 @@ import {
   Icon,
   SlabDivider,
   MiniStat,
-  CategoryInfoNote,
   OptionPicker,
 } from '@/components/UIKit';
 import type { OptionPickerOption } from '@/components/UIKit';
@@ -28,6 +27,7 @@ const APP_VERSION =
   '1.0.7';
 
 export default function ProfileScreen() {
+  const colors = useThemeColors();
   const { t, i18n } = useTranslation();
   const settings = useAppStore((s) => s.settings);
   const setSettings = useAppStore((s) => s.setSettings);
@@ -225,6 +225,199 @@ export default function ProfileScreen() {
     [settings.theme, t]
   );
 
+  const styles = useMemo(() => StyleSheet.create({
+    screen: { flex: 1, backgroundColor: colors.bg },
+    content: { paddingHorizontal: layout.paddingHorizontal, paddingTop: spacing.sm },
+    header: { marginBottom: spacing.md },
+    brandLine: {
+      color: colors.primary,
+      letterSpacing: 1.4,
+      textTransform: 'uppercase',
+      fontSize: 11,
+      fontWeight: '800',
+      marginBottom: 2,
+    },
+    title: {
+      fontSize: 28,
+      fontWeight: '900',
+      letterSpacing: -0.6,
+      lineHeight: 34,
+      color: colors.textPrimary,
+    },
+    heroCard: {
+      backgroundColor: colors.surface,
+      borderRadius: radius.lg,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      padding: spacing.lg,
+      marginBottom: spacing.xl,
+    },
+    heroTop: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.md,
+    },
+    avatarTray: {
+      width: 54,
+      height: 54,
+      borderRadius: radius.lg,
+      backgroundColor: colors.primary + '18',
+      borderWidth: 1,
+      borderColor: colors.primaryStroke,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    heroLeftCol: {
+      flex: 1,
+      minWidth: 0,
+    },
+    heroName: {
+      fontSize: 20,
+      fontWeight: '900',
+      letterSpacing: -0.3,
+      color: colors.textPrimary,
+      lineHeight: 26,
+      marginBottom: 2,
+    },
+    heroSubtitle: {
+      fontSize: 12,
+      fontWeight: '500',
+      color: colors.textSecondary,
+    },
+    heroRank: {
+      alignItems: 'center',
+      paddingHorizontal: spacing.md,
+      paddingVertical: spacing.sm,
+      borderRadius: radius.md,
+      backgroundColor: colors.surfaceElevated,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+    },
+    heroRankVal: {
+      fontSize: 20,
+      fontWeight: '900',
+      letterSpacing: -0.3,
+      color: colors.accent,
+      lineHeight: 22,
+    },
+    heroRankLabel: {
+      fontSize: 10,
+      fontWeight: '800',
+      color: colors.textTertiary,
+      letterSpacing: 0.6,
+      textTransform: 'uppercase',
+    },
+    heroStats: {
+      flexDirection: 'row',
+      paddingVertical: spacing.md,
+      borderTopWidth: 1,
+      borderBottomWidth: 1,
+      borderColor: colors.surfaceDivider,
+    },
+    sectionHeaderRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: spacing.md,
+      marginTop: spacing.sm,
+      gap: spacing.md,
+    },
+    sectionTitle: {
+      fontSize: 14,
+      fontWeight: '800',
+      color: colors.textPrimary,
+      letterSpacing: -0.1,
+    },
+    sectionCount: {
+      fontSize: 10,
+      fontWeight: '800',
+      color: colors.textTertiary,
+      letterSpacing: 0.4,
+      textTransform: 'uppercase',
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    statsRow: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: spacing.sm,
+      marginBottom: spacing.md,
+    },
+    pillBtn: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 4,
+      paddingHorizontal: spacing.sm,
+      paddingVertical: spacing.xs + 1,
+      borderRadius: 999,
+      backgroundColor: colors.surfaceElevated,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      minHeight: 30,
+      paddingRight: 6,
+    },
+    pillBtnLabel: {
+      fontSize: 12,
+      fontWeight: '800',
+      color: colors.textSecondary,
+      maxWidth: 140,
+    },
+    pillInfoAccent:    { color: colors.info },
+    pillPrimaryAccent: { color: colors.primary },
+    pillWarningAccent: { color: colors.warning },
+    dangerBtn: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.sm,
+      padding: spacing.lg,
+      borderRadius: radius.lg,
+      backgroundColor: colors.danger + '0E',
+      borderWidth: 1,
+      borderColor: colors.danger + '28',
+      marginBottom: spacing.xl,
+    },
+    dangerIconTray: {
+      width: 36,
+      height: 36,
+      borderRadius: radius.md,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: colors.danger + '18',
+    },
+    dangerBody: {
+      flex: 1,
+    },
+    dangerTitle: {
+      fontSize: 14,
+      fontWeight: '800',
+      color: colors.danger,
+      letterSpacing: -0.1,
+      marginBottom: 2,
+    },
+    dangerSub: {
+      fontSize: 12,
+      fontWeight: '500',
+      color: colors.textSecondary,
+      lineHeight: 18,
+    },
+    versionRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 4,
+      marginBottom: spacing.md,
+    },
+    versionText: {
+      fontSize: 10,
+      fontWeight: '700',
+      color: colors.textTertiary,
+      letterSpacing: 0.6,
+      textTransform: 'uppercase',
+    },
+    gapMd: { height: spacing.md },
+    bottomInset: { height: layout.tabBarHeight + spacing.xxl },
+  }), [colors]);
+
   return (
     <SafeAreaView style={styles.screen} edges={['top']}>
       <ScrollView
@@ -238,59 +431,42 @@ export default function ProfileScreen() {
           <Text style={styles.title}>{t('profile.title')}</Text>
         </View>
 
-        {/* PROFILE HERO */}
-        <View style={styles.heroCard}>
-          <View style={styles.heroTop}>
-            <View style={styles.avatarTray}>
-              <Icon name="dumbbell" size={28} color={colors.primary} />
-            </View>
-            <View style={styles.heroLeftCol}>
-              <Text style={styles.heroName}>{t('app.title')}</Text>
-              <Text style={styles.heroSubtitle}>
-                {t('profile.athleteTagline')}
-              </Text>
-            </View>
-            <View style={styles.heroRank}>
-              <Text style={styles.heroRankVal}>{streak}</Text>
-              <Text style={styles.heroRankLabel}>{t('profile.statStreak')}</Text>
-            </View>
-          </View>
-          <View style={styles.gapMd} />
-          <View style={styles.heroStats}>
-            <MiniStat
-              label={t('profile.statSessions')}
-              value={`${totalWorkouts}`}
-              unit={t('profile.statUnits')}
-              icon="dumbbell"
-              iconColor={colors.primary}
-            />
-            <MiniStat
-              label={t('profile.statExercises')}
-              value={`${totalExercises}`}
-              unit={t('profile.statUnits')}
-              icon="arm-flex-outline"
-              iconColor={colors.muscle.chest}
-            />
-            <MiniStat
-              label={t('profile.statSets')}
-              value={`${totalSets}`}
-              unit={t('profile.statUnitReps')}
-              icon="checkbox-marked-circle-outline"
-              iconColor={colors.success}
-            />
-            <MiniStat
-              label={t('profile.statFavorites')}
-              value={`${favoriteIds.length}`}
-              unit={t('profile.statUnitFav')}
-              icon="heart-outline"
-              iconColor={colors.accent}
-            />
-          </View>
-          <View style={styles.gapMd} />
-          <CategoryInfoNote
+        {/* =================== STATS =================== */}
+        <SlabDivider accent={colors.primary} />
+        <View style={styles.sectionHeaderRow}>
+          <Text style={styles.sectionTitle}>{t('profile.statsTitle')}</Text>
+          <Text style={styles.sectionCount}>
+            <Icon name="chart-box" size={10} color={colors.textTertiary} />
+          </Text>
+        </View>
+        <View style={styles.statsRow}>
+          <MiniStat
+            label={t('profile.statSessions')}
+            value={`${totalWorkouts}`}
+            unit={t('profile.statUnits')}
+            icon="dumbbell"
+            iconColor={colors.primary}
+          />
+          <MiniStat
+            label={t('profile.statStreak')}
+            value={`${streak}`}
+            unit={t('profile.statUnits')}
+            icon="flame"
+            iconColor={colors.accent}
+          />
+          <MiniStat
+            label={t('profile.statVolume')}
+            value={formatCompactCount(totalVolume)}
+            unit={volumeUnitLabel}
             icon="lightning-bolt"
-            text={`${t('workout.statsVolume')} · ${formatCompactCount(totalVolume)} ${volumeUnitLabel}`}
-            accent={colors.primary}
+            iconColor={colors.success}
+          />
+          <MiniStat
+            label={t('profile.statFavorites')}
+            value={`${favoriteIds.length}`}
+            unit={t('profile.statUnitFav')}
+            icon="heart-outline"
+            iconColor={colors.info}
           />
         </View>
 
@@ -557,7 +733,7 @@ function SettingRow({
   icon,
   label,
   desc,
-  accent = colors.primary,
+  accent,
   right,
 }: {
   icon: string;
@@ -566,15 +742,55 @@ function SettingRow({
   accent?: string;
   right: React.ReactNode;
 }) {
+  const colors = useThemeColors();
+  const s = useMemo(() => StyleSheet.create({
+    sRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: spacing.md + 2,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      borderRadius: radius.lg,
+      marginBottom: spacing.sm,
+      gap: spacing.sm,
+    },
+    sIcon: {
+      width: 38,
+      height: 38,
+      borderRadius: radius.md,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    sBody: {
+      flex: 1,
+      minWidth: 0,
+      paddingRight: spacing.sm,
+    },
+    sLabel: {
+      fontSize: 14,
+      fontWeight: '800',
+      color: colors.textPrimary,
+      letterSpacing: -0.1,
+      marginBottom: 2,
+    },
+    sDesc: {
+      fontSize: 12,
+      fontWeight: '500',
+      color: colors.textSecondary,
+      lineHeight: 18,
+    },
+  }), [colors]);
+  const accentColor = accent ?? colors.primary;
   return (
     <View style={s.sRow}>
       <View
         style={[
           s.sIcon,
-          { backgroundColor: accent + '16' },
+          { backgroundColor: accentColor + '16' },
         ]}
       >
-        <Icon name={icon} size={16} color={accent} />
+        <Icon name={icon} size={16} color={accentColor} />
       </View>
       <View style={s.sBody}>
         <Text style={s.sLabel} numberOfLines={1}>
@@ -602,6 +818,44 @@ function InfoCard({
   desc: string;
   accent: string;
 }) {
+  const colors = useThemeColors();
+  const i = useMemo(() => StyleSheet.create({
+    card: {
+      flexDirection: 'row',
+      gap: spacing.sm,
+      padding: spacing.md + 2,
+      backgroundColor: colors.surface,
+      borderRadius: radius.lg,
+      borderWidth: 1,
+      borderColor: colors.surfaceBorder,
+      marginBottom: spacing.sm,
+    },
+    left: {
+      width: 36,
+      height: 36,
+      borderRadius: radius.md,
+      borderWidth: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexShrink: 0,
+    },
+    body: {
+      flex: 1,
+      minWidth: 0,
+    },
+    title: {
+      fontSize: 13,
+      fontWeight: '800',
+      letterSpacing: -0.1,
+      marginBottom: 4,
+    },
+    desc: {
+      fontSize: 12,
+      fontWeight: '500',
+      color: colors.textSecondary,
+      lineHeight: 18,
+    },
+  }), [colors]);
   return (
     <View style={i.card}>
       <View
@@ -619,274 +873,3 @@ function InfoCard({
     </View>
   );
 }
-
-// ============================================================
-// Styles
-// ============================================================
-
-const styles = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: colors.bg },
-  content: { paddingHorizontal: layout.paddingHorizontal, paddingTop: spacing.sm },
-  header: { marginBottom: spacing.md },
-  brandLine: {
-    color: colors.primary,
-    letterSpacing: 1.4,
-    textTransform: 'uppercase',
-    fontSize: 11,
-    fontWeight: '800',
-    marginBottom: 2,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: '900',
-    letterSpacing: -0.6,
-    lineHeight: 34,
-    color: colors.textPrimary,
-  },
-  heroCard: {
-    backgroundColor: colors.surface,
-    borderRadius: radius.lg,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    padding: spacing.lg,
-    marginBottom: spacing.xl,
-  },
-  heroTop: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.md,
-  },
-  avatarTray: {
-    width: 54,
-    height: 54,
-    borderRadius: radius.lg,
-    backgroundColor: colors.primary + '18',
-    borderWidth: 1,
-    borderColor: colors.primaryStroke,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  heroLeftCol: {
-    flex: 1,
-    minWidth: 0,
-  },
-  heroName: {
-    fontSize: 20,
-    fontWeight: '900',
-    letterSpacing: -0.3,
-    color: colors.textPrimary,
-    lineHeight: 26,
-    marginBottom: 2,
-  },
-  heroSubtitle: {
-    fontSize: 12,
-    fontWeight: '500',
-    color: colors.textSecondary,
-  },
-  heroRank: {
-    alignItems: 'center',
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-    borderRadius: radius.md,
-    backgroundColor: colors.surfaceElevated,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-  },
-  heroRankVal: {
-    fontSize: 20,
-    fontWeight: '900',
-    letterSpacing: -0.3,
-    color: colors.accent,
-    lineHeight: 22,
-  },
-  heroRankLabel: {
-    fontSize: 10,
-    fontWeight: '800',
-    color: colors.textTertiary,
-    letterSpacing: 0.6,
-    textTransform: 'uppercase',
-  },
-  heroStats: {
-    flexDirection: 'row',
-    paddingVertical: spacing.md,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: colors.surfaceDivider,
-  },
-  sectionHeaderRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: spacing.md,
-    marginTop: spacing.sm,
-    gap: spacing.md,
-  },
-  sectionTitle: {
-    fontSize: 14,
-    fontWeight: '800',
-    color: colors.textPrimary,
-    letterSpacing: -0.1,
-  },
-  sectionCount: {
-    fontSize: 10,
-    fontWeight: '800',
-    color: colors.textTertiary,
-    letterSpacing: 0.4,
-    textTransform: 'uppercase',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  pillBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.xs + 1,
-    borderRadius: 999,
-    backgroundColor: colors.surfaceElevated,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    minHeight: 30,
-    paddingRight: 6,
-  },
-  pillBtnLabel: {
-    fontSize: 12,
-    fontWeight: '800',
-    color: colors.textSecondary,
-    maxWidth: 140,
-  },
-  pillInfoAccent:    { color: colors.info },
-  pillPrimaryAccent: { color: colors.primary },
-  pillWarningAccent: { color: colors.warning },
-  dangerBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.sm,
-    padding: spacing.lg,
-    borderRadius: radius.lg,
-    backgroundColor: colors.danger + '0E',
-    borderWidth: 1,
-    borderColor: colors.danger + '28',
-    marginBottom: spacing.xl,
-  },
-  dangerIconTray: {
-    width: 36,
-    height: 36,
-    borderRadius: radius.md,
-    alignItems: 'center',
-    justifyContent: 'center',
-    // Previously applied as inline `colors.danger + '18'`.  Keeping the
-    // tint inline with a semantic style name so DangerZone card keeps its
-    // signature look without needing to compute the alpha in render.
-    backgroundColor: colors.danger + '18',
-  },
-  dangerBody: {
-    flex: 1,
-  },
-  dangerTitle: {
-    fontSize: 14,
-    fontWeight: '800',
-    color: colors.danger,
-    letterSpacing: -0.1,
-    marginBottom: 2,
-  },
-  dangerSub: {
-    fontSize: 12,
-    fontWeight: '500',
-    color: colors.textSecondary,
-    lineHeight: 18,
-  },
-  versionRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 4,
-    marginBottom: spacing.md,
-  },
-  versionText: {
-    fontSize: 10,
-    fontWeight: '700',
-    color: colors.textTertiary,
-    letterSpacing: 0.6,
-    textTransform: 'uppercase',
-  },
-  gapMd: { height: spacing.md },
-  bottomInset: { height: layout.tabBarHeight + spacing.xxl },
-});
-
-const s = StyleSheet.create({
-  sRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: spacing.md + 2,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    borderRadius: radius.lg,
-    marginBottom: spacing.sm,
-    gap: spacing.sm,
-  },
-  sIcon: {
-    width: 38,
-    height: 38,
-    borderRadius: radius.md,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  sBody: {
-    flex: 1,
-    minWidth: 0,
-    paddingRight: spacing.sm,
-  },
-  sLabel: {
-    fontSize: 14,
-    fontWeight: '800',
-    color: colors.textPrimary,
-    letterSpacing: -0.1,
-    marginBottom: 2,
-  },
-  sDesc: {
-    fontSize: 12,
-    fontWeight: '500',
-    color: colors.textSecondary,
-    lineHeight: 18,
-  },
-});
-
-const i = StyleSheet.create({
-  card: {
-    flexDirection: 'row',
-    gap: spacing.sm,
-    padding: spacing.md + 2,
-    backgroundColor: colors.surface,
-    borderRadius: radius.lg,
-    borderWidth: 1,
-    borderColor: colors.surfaceBorder,
-    marginBottom: spacing.sm,
-  },
-  left: {
-    width: 36,
-    height: 36,
-    borderRadius: radius.md,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexShrink: 0,
-  },
-  body: {
-    flex: 1,
-    minWidth: 0,
-  },
-  title: {
-    fontSize: 13,
-    fontWeight: '800',
-    letterSpacing: -0.1,
-    marginBottom: 4,
-  },
-  desc: {
-    fontSize: 12,
-    fontWeight: '500',
-    color: colors.textSecondary,
-    lineHeight: 18,
-  },
-});
