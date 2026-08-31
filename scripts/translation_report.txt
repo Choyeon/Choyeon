@@ -1,0 +1,231 @@
+archer pull up                                               -> Archer引体向上
+archer push up                                               -> Archer俯卧撑
+arms overhead full sit-up (male)                             -> 臂Overhead全sit上（男）
+band bicycle crunch                                          -> 弹力带Bicycle卷腹
+band one arm overhead biceps curl                            -> 弹力带单臂Overhead二头弯举
+barbell floor calf raise                                     -> 杠铃Floor提踵
+barbell seated overhead triceps extension                    -> 杠铃坐姿Overhead三头伸展
+barbell standing overhead triceps extension                  -> 杠铃站姿Overhead三头伸展
+bench dip on floor                                           -> 凳双杠臂屈伸Floor
+bodyweight squatting row                                     -> 自重Squatting划船
+cable floor seated wide-grip row                             -> 绳索Floor坐姿宽握划船
+cable high pulley overhead tricep extension                  -> 绳索高PulleyOverhead三头伸展
+cable overhead curl                                          -> 绳索Overhead弯举
+cable overhead curl on exercise ball                         -> 绳索Overhead弯举瑜伽球
+cable palm rotational row                                    -> 绳索palmRotational划船
+cable rear delt row (stirrups)                               -> 绳索后束划船Stirrups
+cable rear drive                                             -> 绳索后Drive
+cable rope elevated seated row                               -> 绳索绳Elevated坐姿划船
+cable rope high pulley overhead tricep extension             -> 绳索绳高PulleyOverhead三头伸展
+cable rope lying on floor tricep extension                   -> 绳索绳仰卧Floor三头伸展
+cable russian twists (on stability ball)                     -> 绳索Russian扭转稳定球
+cable seated overhead curl                                   -> 绳索坐姿Overhead弯举
+cable squatting curl                                         -> 绳索Squatting弯举
+cable standing reverse grip one arm overhead tricep extension -> 绳索站姿反握单臂Overhead三头伸展
+cable thibaudeau kayak row                                   -> 绳索ThibaudeauKayak划船
+calf push stretch with hands against wall                    -> 小腿推拉伸手Against墙
+calf stretch with hands against wall                         -> 小腿拉伸手Against墙
+cambered bar lying row                                       -> Cambered杠仰卧划船
+captains chair straight leg raise                            -> CaptainsChair直举腿
+chair leg extended stretch                                   -> Chair腿Extended拉伸
+circles knee stretch                                         -> Circles膝拉伸
+clock push-up                                                -> Clock推上
+cocoons                                                      -> Cocoons
+crunch (hands overhead)                                      -> 卷腹手Overhead
+crunch floor                                                 -> 卷腹Floor
+curtsey squat                                                -> Curtsey深蹲
+cycle cross trainer                                          -> Cycle交叉Trainer
+diamond push-up                                              -> Diamond推上
+donkey calf raise                                            -> Donkey提踵
+dumbbell alternating bicep curl with leg raised on exercise ball -> 哑铃交替二头弯举腿Raised瑜伽球
+dumbbell around pullover                                     -> 哑铃Around上拉
+dumbbell bicep curl lunge with bowling motion                -> 哑铃二头弯举弓步Bowling动态
+dumbbell bicep curl on exercise ball with leg raised         -> 哑铃二头弯举瑜伽球腿Raised
+dumbbell bicep curl with stork stance                        -> 哑铃二头弯举StorkStance
+dumbbell biceps curl v sit on bosu ball                      -> 哑铃二头弯举五式sitBOSU球
+dumbbell contralateral forward lunge                         -> 哑铃Contralateral前迈弓步
+dumbbell finger curls                                        -> 哑铃Finger弯举
+dumbbell incline breeding                                    -> 哑铃上斜Breeding
+dumbbell lying extension (across face)                       -> 哑铃仰卧伸展Acrossface
+dumbbell lying femoral                                       -> 哑铃仰卧Femoral
+dumbbell lying on floor rear delt raise                      -> 哑铃仰卧Floor后束平举
+dumbbell lying pronation                                     -> 哑铃仰卧Pronation
+dumbbell lying pronation on floor                            -> 哑铃仰卧PronationFloor
+dumbbell lying supination                                    -> 哑铃仰卧Supination
+dumbbell lying supination on floor                           -> 哑铃仰卧SupinationFloor
+dumbbell one arm french press on exercise ball               -> 哑铃单臂French推举瑜伽球
+dumbbell one arm lateral raise with support                  -> 哑铃单臂侧平举Support
+dumbbell one arm reverse fly (with support)                  -> 哑铃单臂反向飞鸟Support
+dumbbell one arm zottman preacher curl                       -> 哑铃单臂Zottman斜托弯举
+dumbbell over bench revers wrist curl                        -> 哑铃凳Revers腕弯举
+dumbbell palm rotational bent over row                       -> 哑铃palmRotational俯身划船
+dumbbell palms in incline bench press                        -> 哑铃Palms上斜卧推
+dumbbell peacher hammer curl                                 -> 哑铃Peacher锤式弯举
+dumbbell pronate-grip triceps extension                      -> 哑铃Pronate握三头伸展
+dumbbell rear delt row_shoulder                              -> 哑铃后三角肌束Row_Shoulder
+dumbbell rear lateral raise (support head)                   -> 哑铃后侧平举Supporthead
+dumbbell revers grip biceps curl                             -> 哑铃Revers握二头弯举
+dumbbell scott press                                         -> 哑铃Scott推举
+dumbbell seated one arm bicep curl on exercise ball with leg raised -> 哑铃坐姿单臂二头弯举瑜伽球腿Raised
+dumbbell seated one arm rotate                               -> 哑铃坐姿单臂Rotate
+dumbbell seated revers grip concentration curl               -> 哑铃坐姿Revers握集中弯举
+dumbbell seated reverse grip one arm overhead tricep extension -> 哑铃坐姿反握单臂Overhead三头伸展
+dumbbell single leg deadlift with stepbox support            -> 哑铃单腿硬拉StepboxSupport
+dumbbell standing around world                               -> 哑铃站姿AroundWorld
+dumbbell standing front raise above head                     -> 哑铃站姿前平举Abovehead
+dumbbell standing palms in press                             -> 哑铃站姿Palms推举
+dumbbell standing zottman preacher curl                      -> 哑铃站姿Zottman斜托弯举
+dumbbell tricep kickback with stork stance                   -> 哑铃三头后踢StorkStance
+dumbbell upright shoulder external rotation                  -> 哑铃Upright肩外旋转
+dumbbell waiter biceps curl                                  -> 哑铃Waiter二头弯举
+dumbbell zottman curl                                        -> 哑铃Zottman弯举
+dumbbell zottman preacher curl                               -> 哑铃Zottman斜托弯举
+elevator                                                     -> Elevator
+exercise ball back extension with arms extended              -> 瑜伽球山羊挺身臂Extended
+exercise ball back extension with knees off ground           -> 瑜伽球山羊挺身膝Ground
+exercise ball lower back stretch (pyramid)                   -> 瑜伽球下背拉伸Pyramid
+exercise ball on the wall calf raise (tennis ball between ankles) -> 瑜伽球墙提踵Tennis球间踝
+exercise ball on the wall calf raise (tennis ball between knees) -> 瑜伽球墙提踵Tennis球间膝
+exercise ball one legged diagonal kick hamstring curl        -> 瑜伽球单Legged对角踢腘绳弯举
+ez bar french press on exercise ball                         -> EZ曲杆French推举瑜伽球
+ez bar standing french press                                 -> EZ曲杆站姿French推举
+ez barbell anti gravity press                                -> EZ曲杆antiGravity推举
+ez barbell decline close grip face press                     -> EZ曲杆下斜窄距face推举
+finger curls                                                 -> Finger弯举
+floor fly (with barbell)                                     -> 杠铃Floor飞鸟
+flutter kicks                                                -> Flutter踢
+frankenstein squat                                           -> Frankenstein深蹲
+full maltese                                                 -> 全Maltese
+gironda sternum chin                                         -> GirondaSternumchin
+gorilla chin                                                 -> Gorillachin
+groin crunch                                                 -> Groin卷腹
+half knee bends (male)                                       -> 半膝Bends（男）
+hands clasped circular toe touch (male)                      -> 手ClaspedCircular触脚尖（男）
+hands reversed clasped circular toe touch (male)             -> 手ReversedClaspedCircular触脚尖（男）
+hanging oblique knee raise                                   -> 悬垂Oblique屈膝举腿
+high knee against wall                                       -> 高膝Against墙
+hug keens to chest                                           -> hugKeens至胸
+hyght dumbbell fly                                           -> Hyght哑铃飞鸟
+impossible dips                                              -> Impossible双杠臂屈伸
+incline push up depth jump                                   -> 上斜俯卧撑Depthjump
+incline scapula push up                                      -> 上斜Scapula俯卧撑
+intermediate hip flexor and quad stretch                     -> Intermediate髋Flexor股四拉伸
+inverse leg curl (bench support)                             -> 反向腿弯举凳Support
+inverted row with straps                                     -> 反向划船Straps
+isometric wipers                                             -> 静力Wipers
+jack jump (male)                                             -> jackjump（男）
+jackknife sit-up                                             -> Jackknifesit上
+janda sit-up                                                 -> Jandasit上
+kettlebell advanced windmill                                 -> 壶铃进阶Windmill
+kettlebell alternating press on floor                        -> 壶铃交替推举Floor
+kettlebell bottoms up clean from the hang position           -> 壶铃举杯式翻悬垂Position
+kettlebell double windmill                                   -> 壶铃双Windmill
+kettlebell extended range one arm press on floor             -> 壶铃Extended幅度单臂推举Floor
+kettlebell figure 8                                          -> 壶铃Figure8
+kettlebell pirate supper legs                                -> 壶铃PirateSupper腿
+kettlebell seesaw press                                      -> 壶铃Seesaw推举
+kettlebell turkish get up (squat style)                      -> 壶铃土耳其起身深蹲Style
+kettlebell windmill                                          -> 壶铃Windmill
+kipping muscle up                                            -> Kipping双力臂
+knee touch crunch                                            -> 膝Touch卷腹
+korean dips                                                  -> Korean双杠臂屈伸
+l-sit on floor                                               -> sitFloor
+left hook. boxing                                            -> lefthook箱
+lever donkey calf raise                                      -> 水平Donkey提踵
+lever gripless shrug                                         -> 水平Gripless耸肩
+lever gripless shrug v. 2                                    -> 水平Gripless耸肩五式2
+lever gripper hands                                          -> 水平Gripper手
+lever rotary calf                                            -> 水平Rotary小腿
+london bridge                                                -> London桥
+low glute bridge on floor                                    -> 低臀桥Floor
+medicine ball catch and overhead throw                       -> 药球CatchOverhead投
+medicine ball chest push from 3 point stance                 -> 药球胸推3PointStance
+medicine ball chest push multiple response                   -> 药球胸推MultipleResponse
+medicine ball chest push single response                     -> 药球胸推单Response
+medicine ball overhead slam                                  -> 药球Overhead砸
+modified hindu push-up (male)                                -> 改良Hindu推上（男）
+monster walk                                                 -> Monster走
+muscle-up (on vertical bar)                                  -> Muscle上垂直杠
+negative crunch                                              -> Negative卷腹
+oblique crunch v. 2                                          -> Oblique卷腹五式2
+oblique crunches floor                                       -> Oblique卷腹Floor
+one arm against wall                                         -> 单臂Against墙
+one arm towel row                                            -> 单臂Towel划船
+one leg donkey calf raise                                    -> 单腿Donkey提踵
+one leg floor calf raise                                     -> 单腿Floor提踵
+outside leg kick push-up                                     -> Outside腿踢推上
+overhead triceps stretch                                     -> Overhead三头拉伸
+pelvic tilt                                                  -> Pelvictilt
+pelvic tilt into bridge                                      -> Pelvictilt桥
+peroneals stretch                                            -> Peroneals拉伸
+pike-to-cobra push-up                                        -> pike至Cobra推上
+posterior step to overhead reach                             -> 后步至OverheadReach
+posterior tibialis stretch                                   -> 后Tibialis拉伸
+potty squat                                                  -> Potty深蹲
+potty squat with support                                     -> Potty深蹲Support
+power point plank                                            -> PowerPoint平板支撑
+prisoner half sit-up (male)                                  -> Prisoner半sit上（男）
+push-up inside leg kick                                      -> 推上Inside腿踢
+quarter sit-up                                               -> Quartersit上
+quick feet v. 2                                              -> Quick足五式2
+reclining big toe pose with rope                             -> Recliningbig脚尖式绳
+roller body saw                                              -> 轴bodysaw
+roller seated shoulder flexor depresor retractor             -> 轴坐姿肩FlexorDepresorRetractor
+roller seated single leg shoulder flexor depresor retractor  -> 轴坐姿单腿肩FlexorDepresorRetractor
+run (equipment)                                              -> 跑Equipment
+runners stretch                                              -> Runners拉伸
+scapula dips                                                 -> Scapula双杠臂屈伸
+scapula push-up                                              -> Scapula推上
+scapular pull-up                                             -> Scapular拉上
+scissor jumps (male)                                         -> Scissor跳（男）
+seated wide angle pose sequence                              -> 坐姿宽Angle式Sequence
+self assisted inverse leg curl (on floor)                    -> self辅助反向腿弯举Floor
+short stride run                                             -> ShortStride跑
+side lying floor stretch                                     -> 侧仰卧Floor拉伸
+single leg bridge with outstretched leg                      -> 单腿桥Outstretched腿
+single leg platform slide                                    -> 单腿Platform滑
+single leg squat (pistol) male                               -> 单腿深蹲Pistol（男）
+skater hops                                                  -> Skater跳
+ski ergometer                                                -> 滑雪Ergometer
+sled 45 degrees one leg press                                -> 雪橇45Degrees单腿举
+sled closer hack squat                                       -> 雪橇Closer哈克深蹲
+sled forward angled calf raise                               -> 雪橇前向Angled提踵
+sledge hammer                                                -> Sledge大锤
+smith chair squat                                            -> 史密斯机Chair深蹲
+smith one leg floor calf raise                               -> 史密斯机单腿Floor提踵
+spell caster                                                 -> SpellCaster
+sphinx                                                       -> Sphinx
+spider crawl push up                                         -> Spider爬俯卧撑
+split squats                                                 -> Split深蹲
+squat to overhead reach                                      -> 深蹲至OverheadReach
+squat to overhead reach with twist                           -> 深蹲至OverheadReach扭转
+stalder press                                                -> Stalder推举
+standing archer                                              -> 站姿Archer
+standing calf raise (on a staircase)                         -> 站姿提踵Staircase
+standing hamstring and calf stretch with strap               -> 站姿腘绳小腿拉伸Strap
+standing pelvic tilt                                         -> 站姿Pelvictilt
+star jump (male)                                             -> starjump（男）
+straddle maltese                                             -> StraddleMaltese
+straddle planche                                             -> Straddle俄挺
+suspended abdominal fallout                                  -> Suspended腹肌Fallout
+suspended push-up                                            -> Suspended推上
+suspended reverse crunch                                     -> Suspended反向卷腹
+suspended row                                                -> Suspended划船
+suspended split squat                                        -> Suspended分腿蹲
+swimmer kicks v. 2 (male)                                    -> Swimmer踢五式2（男）
+three bench dip                                              -> Three凳双杠臂屈伸
+triceps dips floor                                           -> 三头双杠臂屈伸Floor
+twin handle parallel grip lat pulldown                       -> twinHandle双杠握高位下拉
+upward facing dog                                            -> 向上Facingdog
+v-sit on floor                                               -> 五式sitFloor
+walk elliptical cross trainer                                -> 走椭圆机交叉Trainer
+walking on stepmill                                          -> 走Stepmill
+weighted close grip chin-up on dip cage                      -> 负重窄距chin上双杠臂屈伸cage
+weighted cossack squats (male)                               -> 负重Cossack深蹲（男）
+weighted donkey calf raise                                   -> 负重Donkey提踵
+weighted overhead crunch (on stability ball)                 -> 负重Overhead卷腹稳定球
+weighted round arm                                           -> 负重Round臂
+weighted svend press                                         -> 负重Svend推举
+weighted three bench dips                                    -> 负重Three凳双杠臂屈伸
+world greatest stretch                                       -> WorldGreatest拉伸
+wrist rollerer                                               -> 腕Rollerer
