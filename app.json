@@ -14,7 +14,7 @@
     "android": {
       "package": "com.choyeon.exercises",
       "adaptiveIcon": {
-        "backgroundColor": "#0B0D12",
+        "backgroundColor": "#AA3179",
         "foregroundImage": "./assets/adaptive/ic_launcher_foreground.png",
         "backgroundImage": "./assets/adaptive/ic_launcher_background.png"
       },

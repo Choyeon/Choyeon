@@ -136,26 +136,6 @@ export default function ExerciseDetailScreen() {
       backgroundColor: colors.surfaceElevated,
       position: 'relative',
     },
-    heroBottomBand: {
-      position: 'absolute',
-      left: spacing.sm,
-      bottom: spacing.sm,
-      right: spacing.sm,
-      flexDirection: 'row',
-      gap: spacing.sm,
-      padding: spacing.sm,
-      borderRadius: radius.md,
-      borderWidth: 1,
-      borderColor: colors.surfaceBorder,
-      flexWrap: 'wrap',
-    },
-    heroAccent: {
-      position: 'absolute',
-      left: 0,
-      top: 0,
-      bottom: 0,
-      width: 3,
-    },
     heroPlaceholder: {
       flex: 1,
       alignItems: 'center',
@@ -445,19 +425,6 @@ export default function ExerciseDetailScreen() {
               active={showAnim}
               tint={muscleColor}
             />
-            <View style={[styles.heroBottomBand, { backgroundColor: muscleColor + '14' }]}>
-              <Badge
-                icon={iconForBodyPart(exercise.body_part)}
-                label={labelForBodyPart(exercise.body_part, effectiveLang)}
-                color={muscleColor}
-              />
-              <Badge
-                icon={iconForEquipment(exercise.equipment)}
-                label={labelForEquipment(exercise.equipment, effectiveLang)}
-                color={colors.info}
-              />
-            </View>
-            <View style={[styles.heroAccent, { backgroundColor: muscleColor }]} />
           </View>
 
           <View style={styles.animationRow}>
@@ -490,27 +457,11 @@ export default function ExerciseDetailScreen() {
           </View>
         </View>
 
-        {/* NAME — single language, no bilingual clutter */}
+        {/* NAME — single language only */}
         <View style={styles.titleBlock}>
-          <View style={styles.zhRow}>
-            <Text style={styles.zhName} numberOfLines={2}>
-              {effectiveLang === 'zh' ? displayNameZh(exercise) : exercise.name}
-            </Text>
-          </View>
-          {effectiveLang !== 'zh' && exercise.name_zh && /[\u4e00-\u9fff]/.test(exercise.name_zh) ? (
-            <View style={styles.enRow}>
-              <Text style={styles.enName} numberOfLines={1}>
-                {exercise.name_zh}
-              </Text>
-            </View>
-          ) : null}
-          {effectiveLang === 'zh' && exercise.name_zh && !/[\u4e00-\u9fff]/.test(exercise.name_zh) ? null : effectiveLang === 'zh' ? (
-            <View style={styles.enRow}>
-              <Text style={styles.enName} numberOfLines={1}>
-                {exercise.name}
-              </Text>
-            </View>
-          ) : null}
+          <Text style={styles.zhName} numberOfLines={2}>
+            {effectiveLang === 'zh' ? displayNameZh(exercise) : exercise.name}
+          </Text>
           <View style={styles.targetRow}>
             <Badge
               icon="crosshairs-gps"
